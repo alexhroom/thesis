@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       1138c0e6-e12c-47a3-a9bc-37b66d2a747f
+:END:
+#+TITLE: Spectrum of a Multiplication Operator
+#+FILETAGS: theorem
+
+For a [[id:22b7c3dc-4cad-455b-85ae-a42e3db9c60e][Multiplication Operator]] $M_f$, the [[id:b6c07176-104f-474f-a4d3-b34607ad64fd][Spectrum]] of $M_f$ is given
+by the [[id:d88beadd-f480-4f82-8abc-4199f48a232e][Essential Range]] of $f$.
+
+In particular, if $f$ is continuous, $\sigma(M_f)$ is the range of $f$.

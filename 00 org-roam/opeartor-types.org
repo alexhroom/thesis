@@ -1,0 +1,48 @@
+#+TITLE: Types of Operators
+#+FILETAGS: object
+
+* Multiplication operator
+:PROPERTIES:
+:ID:       22b7c3dc-4cad-455b-85ae-a42e3db9c60e
+:END:
+The multiplication operator of a function $f \in L^{\inf}$ is the operator
+$M_f$ with action $(M_f \xi)(x) = f(x)\xi(x)$.
+
+* Shift operator
+:PROPERTIES:
+:ID:       b0de7ba9-b4ca-442d-a9a0-9439b026f816
+:END:
+A shift operator $S_h$ is an operator with action $S_hf(x) = f(x+h)$ for some $h$.
+
+Of particular note is the unilateral shift operator $S$ on $\ell^2$, defined $S = S_1$,
+i.e.  $S(u_1, u_2, u_3, \ldots) = (0, u_1, u_2, u_3, \ldots)$, and its adjoint, the
+bilateral shift $S^* = S_{-1}$, so $S^*(u_1, u_2, u_3, \ldots) = (u_2, u_3, u_4, \ldots)$.
+These shift operators are [[id:803803c5-6813-4199-adfb-072e7cca5e33][Toeplitz operators]] with symbols $\zeta: z \rightarrow z$ and
+$\bar{\zeta}: z \rightarrow \bar{z}$ respectively.
+
+* Toeplitz operator
+:PROPERTIES:
+:ID:       803803c5-6813-4199-adfb-072e7cca5e33
+:END:
+A Toeplitz operator is the compression of a [[id:22b7c3dc-4cad-455b-85ae-a42e3db9c60e][Multiplication operator]] $M_\phi$ to
+the [[id:67b9f43f-d173-46ca-8909-2c76ee8deacb][Hardy space]]. It is denoted $T_\phi$; $T_\phi = P_+ M_\phi |_{H^2}$, where
+$P_+ is the projection $L^2 \rightarrow H^2$. The function $\phi$ is called the
+symbol of the Toeplitz operator.
+
+* Laplace operator
+:PROPERTIES:
+:ID:       cdbdce57-456e-4e90-9b3e-b583ac06a636
+:END:
+The Laplace operator $\Delta$ is a second order self-adjoint operator found in many PDEs.
+For example, for a two-dimensional function it acts $\Delta f$ = $\partial_x f + \partial_y f$.
+
+The discrete Laplace operator is the equivalent of $\Delta$ for $\ell^2$, via
+a finite difference formula. For example, in one dimension it is given by $S + S^*$, where
+$S$ is the unilateral [[id:b0de7ba9-b4ca-442d-a9a0-9439b026f816][Shift operator]].
+
+* Schrodinger operator
+:PROPERTIES:
+:ID:       8eeedad6-8244-4c94-b788-c29f5a3bacc1
+:END:
+The Schrodinger operator $-\Delta + M_V$is the combination of the [[id:cdbdce57-456e-4e90-9b3e-b583ac06a636][Laplace operator]] with a 'potential', a
+real-valued function $V$ on $\mathbb{R}^n$. It is sometimes denoted as $H$, for 'Hamiltonian'.

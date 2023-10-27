@@ -1,0 +1,10 @@
+#+TITLE: Spectral Theorem
+#+FILETAGS: theorem
+
+The spectral theorem refers to several unrelated theorems.
+
+* Spectral theorem (normal operators on separable Hilbert spaces)
+:PROPERTIES:
+:ID:       294e24dd-6487-46cc-8e94-923635c3cf90
+:END:
+Every [[id:491bae87-9dbf-4469-b966-1ed4e825d959][Normal operator]] on a separable Hilbert space is a [[id:9ffe6e35-0a5d-45fb-a644-144bc6daa7c7][Diagonalisable operator]].

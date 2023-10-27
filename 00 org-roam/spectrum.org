@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       b6c07176-104f-474f-a4d3-b34607ad64fd
+:CITE:     arveson2002short
+:END:
+#+Title: Spectrum
+#+filetags: definition object
+
+The spectrum of an operator $A$ on Banach space E, denoted $\sigma(A)$ or $Spec(A)$,
+is the set of all $\lambda$ in $\mathbb{C}$ such that $(A - \lambda I) does not have a
+bounded inverse.
+
+For a [[id:7b68fd46-8ccb-450d-9708-21dc66ef66d4][Self-adjoint operator]], the spectrum is the union of the [[id:7273df75-67d0-4226-994f-8972b618f1e3][Point spectrum]] and the [[id:16f1b076-e7bf-40f3-8d72-14ad45449ef0][Essential Spectrum]].

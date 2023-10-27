@@ -1,0 +1,92 @@
+#+TITLE: Properties of Operators
+#+FILETAGS: property
+
+* Normal operator
+:PROPERTIES:
+:ID:       491bae87-9dbf-4469-b966-1ed4e825d959
+:END:
+An operator $A$ is normal if it commutes with its [[id:f979e530-7ce2-4bd6-b653-8bf37f87acaa][Adjoint]],
+i.e. $A^*A = AA^*$.
+
+* Self-adjoint operator
+:PROPERTIES:
+:ID:       7b68fd46-8ccb-450d-9708-21dc66ef66d4
+:END:
+An operator is self-adjoint if it is equal to its [[id:f979e530-7ce2-4bd6-b653-8bf37f87acaa][Adjoint]]: $A^* = A$.
+
+* Isometric operator
+:PROPERTIES:
+:ID:       ef73f5fc-6fd5-4ede-a550-266f456077de
+:END:
+An operator $A$ is isometric if $\langle A\xi, A\xi \rangle = \langle \xi, \xi \rangle$,
+or equivalently if $A^*A = I$.
+
+* Unitary operator
+:PROPERTIES:
+:ID:       59b909d9-e28f-42d6-8c7a-9c51c5263212
+:END:
+An operator $A$ is unitary if it is both a [[id:491bae87-9dbf-4469-b966-1ed4e825d959][Normal operator]] and an [[id:ef73f5fc-6fd5-4ede-a550-266f456077de][Isometric operator]], i.e. $A^*A = AA^* = I$.
+
+* Positive operator
+:PROPERTIES:
+:ID:       1565a16e-1b03-4b1a-91e9-0abc57eb6bf6
+:END:
+An operator is positive if it is a [[id:7b68fd46-8ccb-450d-9708-21dc66ef66d4][Self-adjoint operator]] and its [[id:b6c07176-104f-474f-a4d3-b34607ad64fd][Spectrum]] is non-negative.
+
+* Projection operator
+:PROPERTIES:
+:ID:       d1e9c0c0-39a5-4b93-9efd-995a0d497e98
+:END:
+An operator $A$ is a projection if $A^2 = A = A^*$, i.e. it is an idempotent [[id:7b68fd46-8ccb-450d-9708-21dc66ef66d4][Self-adjoint operator]].
+
+* Diagonalisable operator
+:PROPERTIES:
+:ID:       9ffe6e35-0a5d-45fb-a644-144bc6daa7c7
+:END:
+An operator $A$ on a separable Hilbert space $H$ is diagonalisable if there is a $\sigma$-finite measure
+space $(X, \mu)$, a function $f \in L^{\infty}(X, \mu)$, and a [[id:59b909d9-e28f-42d6-8c7a-9c51c5263212][Unitary operator]] $W: L^2(X, \mu) \rightarrow H$
+such that $W M_f = AW$.
+
+* Compact operator
+:PROPERTIES:
+:ID:       073bfb3a-dd5a-4e05-a710-ebb0961a35fd
+:END:
+An operator $A$ is compact if its image on the open ball $\{A\xi : |\xi| \leq 1\} is totally bounded.
+
+The space of compact operators on a space $E$ is denoted $\mathcal{K}(E)$, and is a C*-algebra.
+
+* Hilbert-Schmidt operator
+:PROPERTIES:
+:ID:       d5f5a51f-cedc-4e2b-96cf-a780031d7818
+:END:
+An operator $A$ on a Hilbert space $H$ is Hilbert-Schmidt if
+$\Sigma_{n=1}^{\infty} \|Ae_n\|^2 < \infty$, or alternatively if
+A^*A is a [[id:b46ab9c4-c83a-4773-bc9e-b17f68e16845][Trace-class operator]].
+Hilbert-Schmidt operators are automatically bounded and [[id:073bfb3a-dd5a-4e05-a710-ebb0961a35fd][Compact operators]].
+
+The space of all Hilbert-Schmidt operators is denoted $\mathcal{L}^2$, and is a Hilbert space under
+the inner product $\langle A, B \rangle = trB^*A$.
+
+* Trace-class operator
+:PROPERTIES:
+:ID:       b46ab9c4-c83a-4773-bc9e-b17f68e16845
+:END:
+An operator is trace-class if it is a [[id:1565a16e-1b03-4b1a-91e9-0abc57eb6bf6][Positive operator]] with finite [[id:8e34e324-818c-4bb8-8446-7e08d0c13ee2][Trace]].
+
+The space of all trace-class operators is denoted $\mathcal{L}^1$.
+
+* Fredholm operator
+:PROPERTIES:
+:ID:       150af45f-6b24-4494-b7d6-ed9a16b45f15
+:END:
+An operator $T$ is said to be Fredholm if it has finite-dimensional [[id:f5821040-369c-40d9-a662-e2f6d54cd586][Kernel]]
+and [[id:8a0a1de4-6ac7-4f9a-913e-c623dcaf87df][Cokernel]]. Equivalently, by [[id:796b78fb-c069-475b-b8f0-8cb1bce897bd][Atkinson's Theorem]], a bounded operator $T$ is
+Fredholm iff there exists a bounded operator $S$ such that $I-TS$ and $I-ST$
+are both [[id:073bfb3a-dd5a-4e05-a710-ebb0961a35fd][Compact]].
+
+The set of Fredholm operators on a space $E$ is denoted $\mathcal{F}(E)$. $\mathcal{F}(E)$
+is an open set, is stable under compact perturbations, contains all invertible bounded operators,
+and is closed under operator multiplication.
+
+By the [[id:c8e06286-f6ae-4607-9948-8219fef709ea][Fredholm alternative]], any [[id:073bfb3a-dd5a-4e05-a710-ebb0961a35fd][Compact operator]] $T$ has $\lambda - T$ Fredholm
+for $\lambda \neq 0$.

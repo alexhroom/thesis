@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       364c50e5-ba8b-4fc2-b51f-e53215514244
+:END:
+#+TITLE: Spectrum of a Toeplitz Operator with Continuous Symbol
+#+FILETAGS: theorem
+
+Let $f \in C(\mathbb{T})$ be a continuous function on the circle, and decompose its
+complement: $\mathbb{C} \setminus f(\mathcal{T}) = \Omega_\infty \cup \Omega_1 \cup \ldots$
+where $\Omega_\infty$ is the unbounded component and $(\Omega_k)_{k}$ the holes in $\mathbb{C} \setminus f(\mathcal{T})$.
+
+For each finite $k$ and $\lambda \in \Omega_k$, the winding number $w_k = \#(f-\lambda)$ is a constant
+independent of $\lambda$, and the [[id:b6c07176-104f-474f-a4d3-b34607ad64fd][Spectrum]] of the [[id:803803c5-6813-4199-adfb-072e7cca5e33][Toeplitz operator]] $T_f$ is the union of $f(\mathbb{T})$
+with the holes $\Omega(k)$ for which $w_k \neq 0$.
+
+* Examples
+Consider the unilateral [[id:b0de7ba9-b4ca-442d-a9a0-9439b026f816][Shift operator]] $S$ on $\ell^2$. There is a natural mapping of $\ell^2$ into
+[[id:67b9f43f-d173-46ca-8909-2c76ee8deacb][Hardy space]] given by $(a_n) \rightarrow \Sigma_{n=0}^\infty a_n z^n$; in this space, the operator
+$S$ becomes the Toeplitz operator $T_\zeta$ where $\zeta: z \rightarrow z$, i.e. multiplication
+by the monomial $z$. This function has no holes, so its spectrum is \zeta(\mathbb{T}), which is
+the interval $[-1, 1]$.
+
+For an extra level of complication, we consider the discrete [[id:cdbdce57-456e-4e90-9b3e-b583ac06a636][Laplace operator]] $\Delta$ on $\ell^2$,
+which is equal to $S + S^*$. These map to the Toeplitz operators $T_\zeta$ and $T_\bar{\zeta}$, where
+$\bar{\zeta}: z \rightarrow \bar{z}$; on the unit circle this is equivalent to mulitplication by $z^{-1}$.
+Then we can see that $S + S^* = T_\zeta + T_\bar{\zeta} = T_{\zeta + \bar{\zeta}} = T_{2\cos\theta}$ which
+has image $2cos(\mathbb{T}) = [-2, 2].

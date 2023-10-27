@@ -1,0 +1,56 @@
+:PROPERTIES:
+:ID:       522ba783-7117-498f-b447-57a776f3bfad
+:END:
+#+TITLE: Numerical Range
+#+FILETAGS: object
+
+The numerical range $\text{Num}(T)$ of an operator $T$ on a Hilbert space $H$
+is defined
+$\text{Num}(T) = \{\langle Tu, u \rangle : u \in \text{Dom}(T), \|u\| = 1\}$
+or equivalently
+$\text{Num}(T) = \frac{\langle Tu, u \rangle}{\langle u, u \rangle} : u \in \text{Dom}(T), u \neq 0\}$.
+
+It has the following properties, which make it very useful for rough estimates for
+the spectra of both operators and their truncations:
+1) $\text{Num}(T) \subseteq \mathbb{R}$ iff $T$ is [[id:7b68fd46-8ccb-450d-9708-21dc66ef66d4][Self-adjoint]];
+2) $\text{Num}(T_\mathcal{L}) \subseteq \text{Num}(T)$, where $T_\mathcal{L}$ is the [[id:741d9935-e753-46ff-ba5a-490e16bbf854][Truncation]] $PTP|_\mathcal{L}$ of $T$;
+3) $\text{Num}(T)$ is convex.
+4) The [[id:b6c07176-104f-474f-a4d3-b34607ad64fd][Spectrum]] of $T$ is a subset of the closure $\bar{\text{Num}(T)}$;
+
+Proofs:
+1) Let $T$ be self-adjoint and $\langle Tu, u \rangle$ be in $\text{Num}(T)$. Then
+   $\langle Tu, u \rangle = \langle u, Tu \rangle = $
+
+   Conversely, let $\text{Num}(T) \subseteq \mathbb{R}$. Then
+   $\langle Tu, u \rangle = \bar{\langle u, Tu \rangle} = \langle u, Tu \rangle$.
+   Thus $T$ is self-adjoint.
+
+2) $\text{Num}(T_\mathcal{L}) = \{\langle PTPu, u \rangle : u \in \mathcal{L}, \|u\|=1\}}$.
+   We then see
+   $\langle PTPu, u \rangle = \langle TPu, Pu \rangle$
+   as P is self-adjoint. Then as $u \in \mathcal{L}, \|Pu\| = \|u\| = 1$,
+   so $\langle T(Pu), (Pu) \rangle \in \text{Num}(T)$, as required.
+
+   /Note that this does not hold if we take $PTP: H \rightarrow \mathcal{L}$;/
+   /this can be seen by taking an operator $T$ with $0 \notin \text{Num}(T)$/
+   /(such as the identity operator) and then showing $0 \in \text{Num}(PTP)$/
+   /if we take any unit vector $v \in \mathcal{L}^\perp$!/
+
+3) See Numerical Range by Karl E. Gustafson Duggirala, K.M. Rao. We use
+   (2) to reduce to the case of a 2x2 matrix, and then directly prove the numerical
+   range of a 2x2 matrix is eliptical.
+
+4) $\bar{\text{Num}(T)}$ is the set of all points $\lambda$ such that there is a sequence of unit vectors $u_n$ where
+   $\lim_{n=0}\langle Tu_n, u_n \rangle = \lambda$.
+
+   The approximate point spectrum:
+   $\sigma_{ap}(T) = \{\lambda \in \mathbb{C}: \text{lim}_{n \rightarrow \infty}\|(T - \lambda)u_n\| \text{ for some sequence } (u_n), \|u_n\| = 1\}$
+   can be shown to contain the boundary of the spectrum of $T$. Then by the Cauchy-Schwarz inequality,
+   $|\langle (T - \lambda)u_n, u_n \rangle| \leq \|(T - \lambda)u_n\| \rightarrow 0$
+   so $|\langle (T - \lambda)u_n, u_n \rangle|$
+      $= |\langle (Tu_n, u_n) \rangle - \langle \lambda u_n, u_n \rangle$
+      $= |\langle (Tu_n, u_n) \rangle - \lambda \|u_n\|^2|$
+      $= |\langle (Tu_n, u_n) \rangle - \lambda| \rightarrow 0$.
+
+   Thus the boundary of the spectrum is in the closure of the numerical range; as the numerical range is convex,
+   this means the whole spectrum must be.

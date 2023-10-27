@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       d88beadd-f480-4f82-8abc-4199f48a232e
+:END:
+#+TITLE: Essential range
+#+FILETAGS: object definition
+
+The essential range of a function $f: X \rightarrow Y$ is the set
+$\{ \lambda \in \mathbb{C} : \forall \epsilon > 0, \mu\{p \in X: |f(p) - \lambda| < \epsilon\} > 0 \}$
+i.e. the traditional range, ignoring where f is zero at 'bad points'.

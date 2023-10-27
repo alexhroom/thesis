@@ -1,0 +1,20 @@
+#+TITLE: Asymptotic eigenvalue lemmas
+#+FILETAGS: theorem
+
+* Asymptotic eigenvalue lemma for normal operators
+:PROPERTIES:
+:ID:       d4413657-38c8-40f5-942e-45c1b8fe0c3f
+:CITE:     arveson
+:END:
+Let $N$ be a [[id:491bae87-9dbf-4469-b966-1ed4e825d959][Normal operator]] on an infinite-dimensional Hilbert space $H$. For
+every accumulation point $\lambda$ in $\sigma(N)$, there is an orthonormal sequence
+$(\xi_n)_{n \in \mathbb{N}}$ in H such that $lim_{n \rightarrow \inf}\|N\xi_n - \lambda\xi_n\| = 0.
+
+* Asymptotic eigenvalue lemma for self-adjoint operators
+:PROPERTIES:
+:ID:       8a249c72-b6f7-4c10-9269-af2d1d68b0f3
+:CITE:     davies1995spectral
+:END:
+Let $H$ be a [[id:7b68fd46-8ccb-450d-9708-21dc66ef66d4][Self-adjoint operator]]. A number $\lambda \in \mathbb{R}$ lies in $\sigma(H)$ iff
+there exists a sequence of functions $f_n \in Dom(H)$ with $\|f_n\| = 1$ such that
+$\lim_{n \rightarrow \infty}\|Hf_n - \lambda f_n\|$ = 0.

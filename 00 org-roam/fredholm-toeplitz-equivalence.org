@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       79fbb337-3c3d-4c18-805f-fcdbdb196f51
+:END:
+#+TITLE: Fredholm and Toeplitz operators
+#+FILETAGS: Theorem
+
+A [[id:803803c5-6813-4199-adfb-072e7cca5e33][Toeplitz operator]] $T_f + \mathcal{K}$ (where \mathcal{K} is the space
+of [[id:073bfb3a-dd5a-4e05-a710-ebb0961a35fd][Compact operators]]) is [[id:150af45f-6b24-4494-b7d6-ed9a16b45f15][Fredholm]] iff its symbol $f$ is invertible.

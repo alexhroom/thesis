@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       518f0425-cf31-4126-a5c4-20dfeed532d7
+:END:
+#+TITLE: Spectral pollution
+#+FILETAGS: object
+
+Spectral pollution refers to a point in the approximation of the [[id:b6c07176-104f-474f-a4d3-b34607ad64fd][Spectrum]] of an operator
+which does not correspond to a point in the actual spectrum.
+
+* Spectral pollution in the Ritz method
+Spectral pollution occurs in the [[id:08b3aaed-effb-46d5-bd25-9f760d5cf857][Ritz (truncation) method]] in any gap in the [[id:16f1b076-e7bf-40f3-8d72-14ad45449ef0][Essential spectrum]]
+of the operator (Levitin and Shargorodsky, 2004).
+
+Davies and Plum, 2004 defines $\lambda$ as a point of spectral pollution if for an increasing
+series of subspaces $\mathcal{L}_n$, there is a point $\lambda_n \in \sigma(A_{\mathcal{L}_n})$ such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \sigma(A)$.

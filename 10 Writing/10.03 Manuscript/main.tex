@@ -1,0 +1,86 @@
+\documentclass{article}
+
+%% page formatting
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage[justification=centering]{caption}
+\usepackage{blindtext}
+\usepackage{fix-cm}
+
+%% bibliography
+\usepackage[style=numeric, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+
+%% extra colours
+\usepackage[x11names]{xcolor}
+\definecolor{IKB}{HTML}{002FA7}
+
+%% section header formatting
+\usepackage[explicit]{titlesec}
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}[hang]{\newpage\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
+
+%% hyperlink formatting
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+%% theorem definitions
+\usepackage{amsthm}
+\newtheorem*{definition}{Definition}
+\newtheorem{example}{Example}
+
+%% symbol definitions
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\Spec}{\text{Spec}} % spectrum
+\newcommand{\Dom}{\text{Dom}} % domain
+\newcommand{\Ran}{\text{Ran}} % range
+\newcommand{\1}{\mathbf{1}} % characteristic fucntion
+
+\begin{document}
+  \begin{titlepage}
+    \vspace*{\fill}
+    \begin{center}
+      {\Huge Title}\\[0.5cm]
+      {\Large Alex H. Room}\\[0.4cm]
+      {\Large \today}
+    \end{center}
+     \vspace{\fill}
+     {\normalsize\textbf{Abstract} {\blindtext}}
+     \vspace*{\fill}
+  \end{titlepage}
+\tableofcontents
+
+
+\section{Introduction}
+The computation of spectra can be boldly considered the 'fundamental problem of operator theory' \parencite{arveson2002short}; 
+
+\section{Spectra}
+We must first discuss our quantity of interest: the spectrum of an operator.
+\begin{definition}{\textbf{(Resolvent and spectrum)}}
+(Adapted from \parencite{evans2010partial}) Let $T$ be a linear operator on a Banach space.
+The resolvent of $T$ is the set $\rho(T) := \{\eta \in \mathbb{C} : (T - \eta I)\text{ is bijective}\}$, where I is the identity operator. 
+
+The spectrum of $T$, denoted
+$\Spec(T)$, is $\mathbb{C} \setminus \rho(T)$, i.e. the set of all complex numbers $\lambda$ such that the operator $(T - \lambda I)$ does not have a bounded inverse.
+\end{definition}
+Indeed, if the Banach space is finite-dimensional, this definition coincides with that of the eigenvalues of a matrix. An infinite-dimensional operator also has eigenvalues, but these are just a subset of the whole spectrum (and sometimes can even be none of the spectrum), as we will see below. One can very simply check that if a non-zero vector $x$ satisfies $Tx = \lambda x$, then $\lambda$ must be in $\Spec(T)$.
+
+\begin{example}
+Let $M_f$ denote the multiplication operator by a function $f$ on $L^2(0, 1)$; this operator has action $M_f u(x)$ = $f(x)u(x)$. If $f$ is continuous, then $\Spec(M_f)$ is equal to the range of $f$.
+\end{example}
+\begin{proof}
+Let the range of $f$ be denoted $\Ran(f)$, and consider the function $g = \frac{1}{f(x) - \lambda}$. If $\lambda \notin \Ran(f)$, $g$ is bounded, and so one can see that $M_g$ is an inverse to $M_f - \lambda I$:
+$$M_g(M_f - \lambda I)u(x) = M_g(f(x) - \lambda)u(x) = \frac{f(x) - \lambda}{f(x) - \lambda}u(x) = u(x).$$
+
+Now take $\lambda \in \Ran(f)$. Then 
+\end{proof}
+
+\printbibliography
+\end{document}

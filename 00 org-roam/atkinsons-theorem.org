@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       796b78fb-c069-475b-b8f0-8cb1bce897bd
+:END:
+#+TITLE: Atkinson's Theorem
+#+FILETAGS: theorem
+
+A bounded operator $T$ on $E$ is [[id:150af45f-6b24-4494-b7d6-ed9a16b45f15][Fredholm]] if and only if
+$T + \mathcal{K}(E)$ is invertible in the [[id:c2ceadf4-71d1-42e0-b9ae-09de375ebea6][Calkin algebra]].

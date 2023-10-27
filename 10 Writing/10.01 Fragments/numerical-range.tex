@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[margin=0.6in]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\usepackage{enumitem}
+
+\usepackage[style=numeric, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\newcommand{\Num}{\text{Num}}
+\newcommand{\Spec}{\text{Spec}}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\title{Numerical Range and Computing Spectra}
+
+\begin{document}
+\maketitle
+
+\begin{definition}{(Numerical range of an operator)} Let $T$ be an operator on a Hilbert space $H$. The
+numerical range $\Num(T)$ is defined
+
+$$\Num(T) = \{\langle Tu, u \rangle : u \in \text{Dom}(T), \|u\|=1\}$$
+
+where $\text{Dom}(T)$ is the domain of $T$.
+\end{definition}
+
+The numerical range has a variety of interesting properties which make them useful for roughly approximating
+the location of spectra.
+
+\begin{proposition}
+The numerical range $\Num(T)$ of an operator $T$ has the following properties:
+\begin{enumerate}
+\item (Hausdorff–Toeplitz theorem) $\Num(T)$ is a convex set;
+\item $\Num(T) \in \mathbb{R}$ iff $T$ is self-adjoint;
+\end{enumerate}
+And, most importantly for our discussion:
+\begin{enumerate}[resume]
+\item $\Spec(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$;
+\item $\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the truncation of $T$ to the closed subspace $\mathcal{L}$.
+\end{enumerate}
+\end{proposition}
+
+We will not prove the first two of these. For a proof of the Hausdorff–Toeplitz theorem see \cite{gustafson1997numerical}; the general idea
+is to use \emph{4.} to reduce to the case of a two-dimensional operator, and then prove directly that the numerical range of a two-dimensional
+operator is eliptical (with foci at either eigenvalue of $T$!).
+
+Before proving the other two, it is important to state the usefulness of these properties. Not only does $\Num(T)$ bound the spectrum of $T$,
+it bounds the spectrum of $T_\mathcal{L}$ - effectively, bounding the region in which spectral pollution can occur to a convex set around $\Spec(T)$.
+
+\begin{proof}
+(3.) $\overline{\text{Num}(T)}$ is the set of all points $\lambda$ such that there is a sequence of unit vectors $u_n$ where
+$$\lim_{n\rightarrow0}\langle Tu_n, u_n \rangle = \lambda.$$
+
+The approximate point spectrum
+$\sigma_{ap}(T) = \{\lambda \in \mathbb{C}: \text{lim}_{n \rightarrow \infty}\|(T - \lambda)u_n\| \text{ for some sequence } (u_n), \|u_n\| = 1\}$
+can be shown to contain the boundary of the spectrum of $T$. Then by the Cauchy-Schwarz inequality,
+$|\langle (T - \lambda)u_n, u_n \rangle| \leq \|(T - \lambda)u_n\| \rightarrow 0$, and so
+\begin{equation*}
+\begin{split}
+|\langle (T - \lambda)u_n, u_n \rangle| &  = |\langle (Tu_n, u_n) \rangle - \langle \lambda u_n, u_n \rangle| \\
+& = |\langle (Tu_n, u_n) \rangle - \lambda \|u_n\|^2| \\
+& = |\langle (Tu_n, u_n) \rangle - \lambda| \rightarrow 0; \\
+& \implies \langle Tu_n, u_n \rangle \rightarrow \lambda.
+\end{split}
+\end{equation*}
+
+Thus the boundary of the spectrum is in the $\overline{\Num(T)}$; as the numerical range is convex,
+this means the whole spectrum must be.\\
+
+(4.) $\Num(T_\mathcal{L}) = \{\langle PTPu, u \rangle : u \in \mathcal{L}, \|u\|=1\}$.
+We then use the self-adjointness of $P$ to see
+$$\langle PTPu, u \rangle = \langle TPu, Pu \rangle$$
+Then as $u \in \mathcal{L}, \|Pu\| = \|u\| = 1$,
+so $\langle T(Pu), (Pu) \rangle \in \text{Num}(T)$, and the result follows.
+
+\end{proof}
+
+\printbibliography
+\end{document}

@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage[justification=centering]{caption}
+
+\usepackage[style=numeric, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{utopia}
+\renewcommand{\sfdefault}{cmr}
+
+\usepackage[x11names]{xcolor}
+\definecolor{IKB}{HTML}{002FA7}
+
+\usepackage[explicit]{titlesec}
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}[hang]{\newpage\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newtheorem*{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\begin{document}
+
+\section{Example: spectral pollution in a multiplication operator}
+
+For a given function $a \in L^\infty$, the multiplication operator $M_a$ on $L^2$ is defined by
+the action $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with $a$.
+
+The spectrum of a multiplcation operator is easy to calculate. We first
+need to define the 'essential range' of a function. Intuitively, this is
+similar to the standard range of a function, but ignoring values taken by
+the function on a set of measure zero - two functions which are equal
+almost everywhere will have the same essential range.
+The following classical results are taken from \citet{davies1995spectral}.
+
+\begin{definition}{Essential range}
+  The essential range of a function $a$ is the set:
+  $$\{k \in \mathbb{R} : \forall \epsilon > 0, \mu{x : |a(x) - k| < \epsilon} > 0\}$$
+\end{definition}
+
+\begin{lemma}{Spectrum of a multiplication operator}
+  The spectrum of the multiplication operator $M_a$ is the essential range of the function $a$.
+\end{lemma}
+\begin{proof}
+  The spectrum of $M_a$ is the set of $\lambda$ for which $(A - \lambda I)$ has no inverse. Note
+  for a function $f$, $(A - \lambda I)f(x) = (a(x) - \lambda)f(x).$.
+
+  Let $\lambda$ be outside of the essential range of $a$. Then see the function
+  $$g(x) = \frac{1}{\lambda - a(x)}$$
+  is defined and bounded almost everywhere, so defines a multiplication operator $M_g$ on $L^2$.
+  It is then easy to see that $M_g((a(x) - lambda)f(x)) = f(x)$, and thus
+  $M_g$ is an inverse to $(A - \lambda I)$, so $\lambda \notin \sigma(M_a)$.
+
+  Conversely, take $\lambda$ in the essential range of $a$. Then we take the sets
+  $S_n := {x: |a(x) - \lambda| < 2^{-n}}$. By definition of the essential range,
+  these sets have non-zero measure. Then with $\phi_n$ = $\mathbb{1}_{S_n}$ as the indicator
+  functions of $S_n$, we see
+  $$\|M_a\phi_n - \lambda \phi_n\| < 2^{-n}\|\phi_n\|$$
+  and so $\lambda \in \sigma(M_a)$.
+\end{proof}
+
+We will now take advantage of the ability to create simply-defined operators with easy-to-calculate
+spectra to observe the existence of spectral pollution.
+Indeed, take the operator $M_{sign}$ on $L^2[-1, 1]$, where $sign(x)$ is 1 if
+$x$ is positive or zero, and -1 if $x$ is negative. By our above results, $\sigma(M_{sign}) = \{-1, 1\}$.
+
+\printbibliography
+\end{document}
