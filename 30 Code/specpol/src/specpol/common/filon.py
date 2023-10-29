@@ -8,7 +8,7 @@ def filon_sin(
     func: Callable, interval: Tuple[float, float], num_points: int, sin_coeff: float
 ) -> float:
     """
-    Filon quadrature rule for `func` multiplied by sin(Mx) over the interval [0, 1].
+    Filon quadrature rule for `func` multiplied by sin(mx) over an interval.
     Adapted from QUADPACK.
 
     Citation:
@@ -24,14 +24,14 @@ def filon_sin(
         The interval to integrate over.
     num_points: int
         The number of datapoints at which the function is evaluated, including the
-        endpoints. Must be an odd number greater than 1.
+        endpoints. Must be an odd integer greater than 1.
     sin_coeff: float
-        The coefficient of the sine function in the integrand; M in 'sin(Mx)'
+        The coefficient of the sine function in the integrand; `m` in 'sin(mx)'
 
     Returns
     -------
     float
-        The quadrature estimate of the integral func(x)*sin(m pi x) over the interval [0, 1].
+        The quadrature estimate of the integral func(x)*sin(mx) over the interval given.
     """
     if (num_points % 2 == 0) or (num_points < 2):
         err = "num_points must be an odd integer greater than 1."
@@ -39,7 +39,7 @@ def filon_sin(
 
     h = (interval[1] - interval[0]) / (num_points - 1)
 
-    # calculation of endpoints
+    # create mesh and calculate theta
     values = np.linspace(interval[0], interval[1], num_points)
     theta = sin_coeff * h
 
