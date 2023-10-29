@@ -114,16 +114,30 @@ of $f$ with $f(x_0) = \lambda$, we see that $M_f \delta_{x_0} = \lambda \delta_{
 Dirac delta centred at $x_0$. Again, $\delta_{x_0}$ is not an eigenfunction of $M_f$ as it is not in the correct domain - this time, 
 it isn't even strictly a function (it is a distribution).
 
-Now consider a Friedrichs mollifier $\rho$. This is a function in $C^\infty_0(0, 1)$ with the property that $\sqrt{n}\rho(ny) \rightarrow \delta_0$ as $n \rightarrow \infty$; we renormalise it such that $\|\rho\|_2 = 1$, and take the sequence
-$u_n: x \mapsto \sqrt{n}\rho(n(x-x_0))$; thus $u_n$ converges to $\delta_{x_0}$. Note that $\|u_n\|_2 = \|\rho\|_2 = 1$ for all $n$, and this sequence converges weakly to 0:
+Now consider a Friedrichs mollifier $\rho$. This is a function in $C^\infty_0(\mathbb{R})$ with the property that $\sqrt{n}\rho(ny) \rightarrow \delta_0$ as $n \rightarrow \infty$; we renormalise it such that $\|\rho\|_2 = 1$, and take the sequence 
+
+$$u_n: x \mapsto 
+\begin{cases}
+  \sqrt{n}\rho(n(x-x_0)) & x \in (0, 1) \\
+  0 & \text{otherwise}
+\end{cases}
+$$
+
+thus $u_n$ "converges to $\delta_{x_0}$" in the sense of distributions. Note that $\|u_n\|_2 = \|\rho\|_2 = 1$ for all $n$, and this sequence converges weakly to 0:
 \begin{align*}
 |( u_n, g )| & = \int_{\supp{u_n}}\sqrt{n}\rho(n(x-x_0))g(x) & \text{\emph{(for any $g \in L^2(0, 1)$)}} \\
 & \leq \|u_n\|_2 \sqrt{\int_{\supp{u_n}} |g(x)|^2} & \text{\emph{(by H\"older's inequality)}} \\
 & = \sqrt{\int_{\supp{u_n}} |g(x)|^2} \rightarrow 0, \quad \text{as $\supp(u_n)$ decreases to 0.} &
 \end{align*}
 
-Then we see $\|(M_f - \lambda)u_n\|_2$ converges to zero as $f$ is continuous on a bounded interval, thus $M_f$ is bounded; so $$\|(M_f - \lambda)u_n\|_2 \rightarrow \|(M_f - \lambda)\delta_{x_0}\|_2 = 0.$$
-as required.
+Then we see $\|(M_f - \lambda)u_n\|_2$ converges to zero by similar reasoning:
+\begin{align*}
+\|(M_f - \lambda)u_n\|^2_2 & = \int_{\supp \rho_n} |(f(x) - f(x_0) \sqrt{n} \rho(n(x-x_0))|^2 & \text{\emph{(using that $\lambda = f(x_0)$)}} \\
+& = \|(f(x) - f(x_0))^2\|_{L^\infty (\supp \rho_n)} \|\rho_n^2\|_1 & \text{\emph{(by H\"older's inequality)}} \\
+& = \sup_{x \in \supp \rho_n} \|(f(x) - f(x_0))^2\| \rightarrow 0 & \text{\emph{(note $\|\rho_n^2\|_{L^1} = \|\rho_n\|_2 = 1$)}} \\
+\end{align*}
+converging to zero as $\supp \rho_n$ shrinks around $x_0$ by the continuity of $f$.
+
 \end{proof}
 
 \printbibliography
