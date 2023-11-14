@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
 \usepackage[justification=centering]{caption}
+\usepackage{enumerate}
+\usepackage{csquotes}
 
 \usepackage[style=numeric, sorting=none]{biblatex}
 \addbibresource{bibliography.bib}
@@ -15,8 +17,7 @@
 \definecolor{IKB}{HTML}{002FA7}
 
 \usepackage[explicit]{titlesec}
-\renewcommand{\thesection}{\Roman{section}}
-\titleformat{\section}[hang]{\newpage\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
+\titleformat{\section}[hang]{\newpage\color{IKB}\Large\scshape\bfseries}{\Roman{section}}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -26,34 +27,43 @@
     citecolor=black
 }
 
+\usepackage{amssymb}
+\newcommand{\Spec}{\text{Spec}}
+\newcommand{\1}{\mathbf{1}}
+
 \usepackage{amsmath}
 \usepackage{amsthm}
-\newtheorem*{definition}{Definition}
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}{Example}[section]
 
 \begin{document}
 
-\section{Example: spectral pollution in a multiplication operator}
-
-For a given function $a \in L^\infty$, the multiplication operator $M_a$ on $L^2$ is defined by
-the action $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with $a$.
+\section{Spectral pollution in a multiplication operator}
+\subsection{The spectrum of a multiplication operator}
+\begin{definition}{\textbf{(Multiplication operator)}}
+For a given function $a \in L^\infty(\Omega)$, the multiplication operator $M_a$ on $L^2(\Omega)$ is defined by
+the action $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with $a$. We call $a$ the `symbol' of
+the multiplication operator.
+\end{definition}
 
 The spectrum of a multiplcation operator is easy to calculate. We first
 need to define the 'essential range' of a function. Intuitively, this is
 similar to the standard range of a function, but ignoring values taken by
 the function on a set of measure zero - two functions which are equal
 almost everywhere will have the same essential range.
-The following classical results are taken from \citet{davies1995spectral}.
+The following classical results are taken from \cite{davies1995spectral}.
 
-\begin{definition}{Essential range}
-  The essential range of a function $a$ is the set:
-  $$\{k \in \mathbb{R} : \forall \epsilon > 0, \mu{x : |a(x) - k| < \epsilon} > 0\}$$
+\begin{definition}{\textbf{(Essential range)}}\label{defn:essential-range}
+  The essential range of a real-valued function $a$ is the set:
+  $$\{k \in \mathbb{R} : \forall \varepsilon > 0, \mu\{x : |a(x) - k| < \varepsilon\} > 0\}$$
+  where $\mu$ is the Lebesgue measure.
 \end{definition}
 
-\begin{lemma}{Spectrum of a multiplication operator}
-  The spectrum of the multiplication operator $M_a$ is the essential range of the function $a$.
-\end{lemma}
+\begin{theorem}\label{thm:mult-op-spec}
+  The spectrum of the multiplication operator $M_a$ is the essential range of its symbol $a$.
+\end{theorem}
 \begin{proof}
   The spectrum of $M_a$ is the set of $\lambda$ for which $(A - \lambda I)$ has no inverse. Note
   for a function $f$, $(A - \lambda I)f(x) = (a(x) - \lambda)f(x).$.
@@ -61,21 +71,186 @@ The following classical results are taken from \citet{davies1995spectral}.
   Let $\lambda$ be outside of the essential range of $a$. Then see the function
   $$g(x) = \frac{1}{\lambda - a(x)}$$
   is defined and bounded almost everywhere, so defines a multiplication operator $M_g$ on $L^2$.
-  It is then easy to see that $M_g((a(x) - lambda)f(x)) = f(x)$, and thus
-  $M_g$ is an inverse to $(A - \lambda I)$, so $\lambda \notin \sigma(M_a)$.
+  It is then easy to see that $M_g((a(x) - \lambda)f(x)) = f(x)$, meaning
+  $M_g$ is an inverse to $(A - \lambda I)$, so $\lambda \notin \Spec(M_a)$.
 
   Conversely, take $\lambda$ in the essential range of $a$. Then we take the sets
   $S_n := {x: |a(x) - \lambda| < 2^{-n}}$. By definition of the essential range,
-  these sets have non-zero measure. Then with $\phi_n$ = $\mathbb{1}_{S_n}$ as the indicator
+  these sets have non-zero measure. Then with $\phi_n$ = $\1_{S_n}$ as the indicator
   functions of $S_n$, we see
   $$\|M_a\phi_n - \lambda \phi_n\| < 2^{-n}\|\phi_n\|$$
-  and so $\lambda \in \sigma(M_a)$.
+  and so $\lambda \in \Spec(M_a)$.
 \end{proof}
 
 We will now take advantage of the ability to create simply-defined operators with easy-to-calculate
 spectra to observe the existence of spectral pollution.
-Indeed, take the operator $M_{sign}$ on $L^2[-1, 1]$, where $sign(x)$ is 1 if
-$x$ is positive or zero, and -1 if $x$ is negative. By our above results, $\sigma(M_{sign}) = \{-1, 1\}$.
+
+\subsubsection{Estimating spectra computationally}
+\begin{example}
+Let $M_f$ be the multiplication operator on $L^2(0, 1)$ with symbol
+
+$$
+f: x \mapsto \begin{cases}
+x & x < 1/2 \\
+x + 1/2 & \text{otherwise.}
+\end{cases}
+$$
+By Theorem \ref{thm:mult-op-spec}, the spectrum of $M_f$ is the set $[0, 1/2] \cup [1, 3/2]$. If our Ritz approximation works as expected, we should
+see the approximation create two dense clusters of eigenvalues which approach these intervals.
+\end{example}
+
+\subsubsection{The structure of approximations}
+If we take a closer look at the structure of our approximating Ritz matrices we uncover deeper structure, which will lead
+to our next topic.
+\begin{example}\label{exp:mult-op-toeplitz}
+Let $M_f$ be a multiplication operator on $L^2(0, 1)$. Now we create the Ritz matrix, $A_{j,k} = (M_f \phi_j, \phi_k)$, 
+choosing the orthonormal basis $\phi_n(x) = \exp(2 \pi i n x).$
+
+We now note that there is a structure to our matrix:
+\begin{align*}
+(M_f \phi_j, \phi_k) & = \int_0^1 f(x) \exp(2 \pi i j x) \exp(-2 \pi i k x) dx \\
+& = \int_0^1 f(x) \exp(2 \pi i (j-k) x)\\
+& = c_{j-k}
+\end{align*}
+where $c_n$ is the n'th Fourier coefficient. Thus our Ritz matrix depends only on the value of $j-k$; in particular, it is constant
+along each diagonal. This is a special type of matrix known as a Toeplitz matrix.
+\end{example}
+As a result, the approximation of our operator $M_f$ is equal to the approximation of a infinite matrix $(T_f)_{j,k} = c_{j-k},
+j,k \in \mathbb{N}_0$ by its truncations $(T_{f,n})_{j,k} = c_{j-k}$ for $j, k \leq n$. And nowhere in this derivation did we use particular
+properties of $f$; we can repeat this reasoning with any function capable of being represented by a Fourier series. Let us systematise
+what we have seen.
+
+\subsection{Toeplitz operators}
+\subsubsection{Toeplitz operators, Toeplitz matrices, and their equivalence}
+
+The approximation of spectra provides a natural gateway to the study of Toeplitz operators, a type of operator with an elegant cluster
+of representations that will provide intuitive and concrete insight into spectral pollution. A full account of Toeplitz theory is the subject
+of whole monographs (such as \parencite{bottcher2006analysis}) and is an entire subfield in itself;
+here we will stick to exploring their spectra, and how these relate to the spectra of their multiplication operator neighbours. 
+
+\begin{definition}{\textbf{(Toeplitz matrix)}}
+A matrix $A$ (finite or infinite) is Toeplitz if it is constant along its diagonals; that is, $A_{i,j} = A_{i+1,j+1}$
+for any $i, j$ (where $i,j < N \in \mathbb{N}$ if $A$ is finite, or $i,j \in \mathbb{Z}_+$ when $A$ is infinite).
+\end{definition}
+
+Note that an infinite Toeplitz matrix induces an operator on $\ell^2(\mathbb{Z}_+)$.
+We see from our example that if $f \in L^\infty$ is represented by the Fourier series
+$$f(z) = \sum_{k=-\infty}^{\infty} c_k e^{i n \theta},$$
+then it induces a Toeplitz matrix $T_f$ with $(T_f)_{j,k} = c_{j-k}$.
+A natural question is to then ask whether a Toeplitz matrix induces a function, and the answer is affirmative. Firstly, we must define a relevant setting for our matrices; indeed, an important part of our
+example was that $M_f \exp(2 \pi i j x)$ was well-defined. The following definitions are adapted from \parencite{arveson2002short}.
+
+\begin{definition}{\textbf{(Hardy space)}}
+Let $\zeta$ be the monomial function on $L^2(\mathbb{T})$, $\zeta(z) = z$, where $\mathbb{T}$ is the unit circle. Then the
+Hardy space $H^2$ is the span of all non-negative exponents of $\zeta$; $\text{span}\{1, \zeta, \zeta^2...\}$.
+\end{definition}
+
+As we are on the unit circle, $z$ is more familiarly $e^{i \theta}$ for some $\theta$; then the basis of Hardy space becomes $\{e^{i n \theta}\}_{n \in \mathbb{Z}_+}$. Then we can identify any element $f \in H^2$ as any square-integrable function defined on the unit circle with the Fourier series 
+$$f(e^{i \theta}) \sim \sum_{k=0}^\infty c_k e^{i k \theta},$$
+
+that is, with all negative Fourier coefficients equal to zero. This can be identified with the operator on $\ell^2(\mathbb{Z}+)$ via the isomorphism $\sum_{k=0}^\infty c_k e^{i k \theta} \mapsto (c_k)_{k \in \mathbb{Z}_+}$ \parencite{bottcher2006analysis}.
+
+ A generalised definition can be made for $H^p$ via any $L^p(\mathbb{T})$; we will almost entirely use $H^2$ (with the exception of needing $H^1$ later on), which is often defined as `the' Hardy space.
+
+\begin{definition}{\textbf{(Toeplitz operator)}}
+Let $\phi \in L^{\infty}(\mathbb{T})$ be bounded and measurable on the unit circle. The Toeplitz operator $T_\phi$ is the compression of $M_\phi$ 
+to the Hardy space: $T_{\phi} = P_{H^2} M_\phi \big|_{H^2}$. We call $\phi$ the `symbol' of $T_\phi$.
+\end{definition}
+
+One may notice what appears like a clash of notation between the induced Toeplitz matrix that was just discussed with the Toeplitz operator. This is not
+so; there is an elegant relation between Toeplitz operators and Toeplitz matrices.
+
+\begin{theorem}
+Let $A$ be a bounded operator on $H^2$ such that $(A \zeta^j, \zeta^k) = a_{j-k}$ for some sequence $(a_n)_{n \in \mathbb{Z}}$. Then there is
+some function $\phi \in L^\infty$ such that $A = T_\phi$ and $a_n$ are the Fourier coefficients of $\phi$.
+\end{theorem}
+\begin{proof}
+%%%%%TODO: DO WE PROVE THIS?
+\end{proof}
+
+Many properties of Toeplitz operators are hard to see via infinite matrices. Being able to represent them as both Fourier series and equally as the  
+compressions of multiplication operators puts us on the firmer ground of functional analysis, rather than asymptotic linear algebra. From this, we
+are now in the position to exactly calculate the spectrum of a Toeplitz operator with real-valued symbol.
+
+\subsubsection{The spectrum of a Toeplitz operator with real symbol}
+
+To begin, we require a pair of properties regarding functions in $L^1(\mathbb{T})$'s Hardy space, $H^1$. 
+
+\begin{lemma}{\textbf{(Properties of $H^1$ functions)}}\label{thm:h1-properties}
+Let $H^1$ be the space of all functions $f \in L^1(\mathbb{T})$ where $f$ has the Fourier series
+
+$$f(e^{i \theta}) \sim \sum_{n=0}^\infty a_n e^{i n \theta}$$
+
+i.e. has no negative Fourier coefficients. Then the following properties hold:
+\begin{enumerate}
+\item\label{item:h2-products-in-h1} If $f, g \in H^2$, then $fg \in H^1$;
+\item\label{item:f-h1-const} If $f \in H^1$ and its complex conjugate $\overline{f}$ is also in $H^1$, then $f$ is constant.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(\ref{item:h2-products-in-h1}.) Let $f, g$ be in $H^2$. Then in particular, $f, g \in L^2$, and so their product $fg$ is in $L^1$ (this can be seen directly by the H\"older inequality). We now look at the negative Fourier coefficients of
+$fg$; these are $(fg, \zeta^n)$ for $n \in -\mathbb{N}$. If $f$ and $g$ are finite sums $\sum_{k=0}^N c_k \zeta^k$ then $fg$ is a finite sum of a similar 
+form; the orthogonality of positive exponents of $\zeta$ on the unit circle then means that $(fg, \zeta^n) = 0$. Then by the continuity of scalar products,
+the same holds for any $f, g \in H^2$, and so all the negative Fourier coefficients of $fg$ are zero; therefore $fg$ is an $L^1$ function with no negative 
+Fourier coefficients and is in $H^1$.
+
+(\ref{item:f-h1-const}.) For any function, we have the Fourier series
+\begin{equation*}
+f(e^{i \theta}) \sim \sum_{n=-\infty}^\infty c_n e^{i n \theta} \quad\text{and}\quad \overline{f(e^{i \theta})} \sim \sum_{n=-\infty}^\infty \overline{c_n} e^{-i n \theta}
+\end{equation*}
+and if $f \in H^1$, all of the negative Fourier coefficients must be zero; but from the Fourier series of $\overline{f}$ we can see these are exactly
+the positive Fourier coefficients of $\overline{f}$; vice versa, all of the negative coefficients of $\overline{f}$ are zero and these are the positive
+coefficients of $f$! This only leaves the coefficient for the constant term; thus $f$ has the Fourier series of a constant function, so must itself
+be a constant function in $L^1$.
+\end{proof}
+
+\begin{theorem}{\textbf{(Hartman-Wintner)}}
+Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$ and $M$ are the infimum and supremum of the essential range of $\phi$ (defined in Definition \ref{defn:essential-range}) respectively.
+\end{theorem}
+\begin{proof}
+Our proof will consist of a series of claims about the resolvent set of $T_\phi$, following a proof outlined in an exercise of Arveson \parencite{arveson2002short} (Chapter 4.6, exercises 2-5). 
+Note we already know that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. 
+Furthermore, we will assume that $\phi$ is non-constant, as if $\phi$ is constant then $T_\phi$ is some constant multiple of the identity operator
+and its spectrum is simply the set containing that constant, and the result holds.
+\begin{enumerate}[I.]
+\item Let $\lambda \in \mathbb{R}$ be such that $T_\phi - \lambda$ is invertible. Then there is a non-zero function $f \in H^2$ such that $(T_\phi - \lambda)f(z) = \underline{1}$, where
+$\underline{1}$ is the constant function in $H^2$; $\underline{1} : z \mapsto k$ for some $k \in \mathbb{C}.$ By the definition of invertibility this is true for $f$ = $(T_\phi - \lambda)^{-1}\underline{1}$.
+
+\item Now we claim that $(\phi - \lambda)|f|^2$ is constant almost everywhere. To do this, we first show that it is in $H^1$. Indeed, we have
+$(\phi - \lambda)|f|^2 = ((\phi - \lambda)\overline{f}) f$. Then by the previous part, $$(\phi - \lambda)\overline{f} = \overline{(\phi - \lambda)f} = \overline{\underline{1}}$$
+where $\overline{\underline{1}}$ maps $z$ to $\overline{k}$. Then it is still a constant function so is still in $H^2$, and so by Lemma \ref{thm:h1-properties}.\ref{item:h2-products-in-h1}, $((\phi - \lambda)\overline{f}) f$ is in $H^1$. Now we see that because $\phi$ and $\lambda$ are real-valued, $(\phi - \lambda)|f|^2 = \overline{(\phi - \lambda)|f|^2}$, so $\overline{(\phi - \lambda)|f|^2} \in H^1$. Then by Lemma \ref{thm:h1-properties}.\ref{item:f-h1-const}, $(\phi - \lambda)|f|^2$ is constant; let this constant be called $c$.
+\item Our next claim is that $\phi - \lambda$ crosses the $x$-axis almost nowhere. This is immediate once we invoke a theorem of F. and M. Riesz\footnote{Which can be proven as a corollary of a famous theorem of Buerling; see \parencite{arveson2002short}, chapter 4.5.}, which states
+\begin{displayquote}
+\emph{Let $f$ be a non-zero function in $H^2$. Then the set $\{z \in \mathbb{T} : f(z) = 0\}$ has Lebesgue measure zero.}
+\end{displayquote}
+This means that $(\phi(z) - \lambda) = \frac{c}{|f(z)|^2}$ is well-defined on $L^\infty$. Then because $|f|^2 > 0$ a.e., $(\phi - \lambda)$ is positive almost everywhere if $c > 0$, and negative almost everywhere if $c < 0$. Note that if $c = 0$, then $(\phi(z) - \lambda) = 0$, so $\phi$ is the 
+constant function with value $\lambda$ and the result holds by our remark at the beginning of this proof.
+\item Finally, we show $\Spec(T_\phi) = [m, M]$. As we have seen, if $T_\phi - \lambda$ is invertible, then either:
+\begin{itemize}
+\item $\phi(z) - \lambda < 0$ a.e., so $\phi(z) < \lambda$ a.e., so $\lambda > M$, or
+\item $\phi(z) - \lambda > 0$ a.e., so by the same argument $\lambda < m$.
+\end{itemize}
+Thus $T_\phi - \lambda$ is invertible only outside of the set $[m, M]$, as required.
+\end{enumerate}
+\end{proof}
+
+\subsubsection{Multiplication operators, Toeplitz operators, and spectral pollution}
+Let us now bring the discussion back to spectral pollution, and to our discovery in Example \ref{exp:mult-op-toeplitz}. The Ritz matrices corresponding to the
+multiplication operator $M_f$ is \emph{identical} to the Ritz matrices corresponding to the Toeplitz operator $T_f$ (which are just truncations of the 
+corresponding Toeplitz matrix), but these operators have different spectra. No wonder we are seeing extra eigenvalues in the gap; the approximation
+`cannot tell' the difference between an operator which has the essential range as its spectrum from one which has the same maximum and minimum but with
+all gaps filled in. Heuristically, one may even expect that with a large enough approximation, the \emph{entire gap} could fill up with spurious
+eigenvalues.\\
+
+More rigorously, it is possible to show that for any point in a gap of the multiplication operator's spectrum, some subsequence of truncations will have 
+an approximate eigenvalue converging to that point. 
+
+\begin{theorem}{\textbf{(Schmidt-Spitzer \parencite{schmidt1960toeplitz})}}
+Let $T_n$ be the $n \times n$ matrix from taking the first $n$ rows and columns of a Toeplitz operator $T_f$. Consider the set
+$$B = \{\lambda \in \mathbb{C} : \lambda = \lim_{m \rightarrow \infty} \lambda_{i_m}, \lambda_{i_m} \in \Spec(T_{i_m}), i_m \rightarrow \infty \}.$$
+where $i_m$ is a subsequence of $\mathbb{N}$. Then if $f$ is real-valued, $B = \Spec(T_f)$.
+
+\end{theorem}
 
 \printbibliography
 \end{document}

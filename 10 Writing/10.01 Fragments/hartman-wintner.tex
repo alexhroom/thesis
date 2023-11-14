@@ -1,0 +1,95 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[margin=0.6in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{csquotes}
+
+\usepackage[style=numeric, sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newcommand{\Spec}{\text{Spec}}
+
+\title{Hartman-Wintner theorem}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{lemma}{\textbf{(Properties of $H^1$ functions)}}\label{thm:h1-properties}
+Let $H^1$ be the space of all functions $f \in L^1(\mathbb{T})$ where $f$ has the Fourier series
+
+$$f(e^{i \theta}) \sim \sum_{n=0}^\infty a_n e^{i n \theta}$$
+
+i.e. they have no negative Fourier coefficients. Then the following properties hold:
+\begin{enumerate}
+\item\label{item:h2-products-in-h1} If $f, g \in H^2$, then $fg \in H^1$;
+\item\label{item:f-h1-const} If $f \in H^1$ and its complex conjugate $\overline{f}$ is also in $H^1$, then $f$ is constant.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(\ref{item:h2-products-in-h1}.) Let $f, g$ be in $H^2$. Then in particular, $f, g \in L^2$, and so their product $fg$ is in $L^1$ (this can be seen directly by the H\"older inequality). We now look at the negative Fourier coefficients of
+$fg$; these are $(fg, \zeta^n)$ for $n \in -\mathbb{N}$. If $f$ and $g$ are finite sums $\sum_{k=0}^N c_k \zeta^k$ then $fg$ is a finite sum of a similar 
+form; the orthogonality of positive powers of $\zeta$ on the unit circle then means that $(fg, \zeta^n) = 0$. Then by the continuity of scalar products,
+the same holds for any $f, g \in H^2$, and so all the negative Fourier coefficients of $fg$ are zero; therefore $fg$ is an $L^1$ function with no negative 
+Fourier coefficients and is in $H^1$.
+
+(\ref{item:f-h1-const}.) For any function, we have the Fourier series
+\begin{equation*}
+f(e^{i \theta}) \sim \sum_{n=-\infty}^\infty c_n e^{i n \theta} \quad\text{and}\quad \overline{f(e^{i \theta})} \sim \sum_{n=-\infty}^\infty \overline{c_n} e^{-i n \theta}
+\end{equation*}
+and if $f \in H^1$, all of the negative Fourier coefficients must be zero; but from the Fourier series of $\overline{f}$ we can see these are exactly
+the positive Fourier coefficients of $\overline{f}$; vice versa, all of the negative coefficients of $\overline{f}$ are zero and these are the positive
+coefficients of $f$! This only leaves the coefficient for the constant term; thus $f$ has the Fourier series of a constant function, so must itself
+be a constant function in $L^1$.
+\end{proof}
+
+\begin{theorem}{\textbf{(Hartman-Wintner)}}
+Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$ and $M$ are the infimum and supremum of the essential range of $\phi$ respectively.
+\end{theorem}
+\begin{proof}
+Our proof will consist of a series of claims, following a proof outlined in an exercise of Arveson \parencite{arveson2002short} (Chapter 4.6, exercises 2-5). 
+Note we already know that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. 
+Furthermore, we will assume that $\phi$ is non-constant, as if $\phi$ is constant then $T_\phi$ is some constant multiple of the identity operator
+and its spectrum is simply the set containing that constant, and the result holds.
+\begin{enumerate}[I.]
+\item Let $\lambda \in \mathbb{R}$ be such that $T_\phi - \lambda$ is invertible. Then there is a non-zero function $f \in H^2$ such that $(T_\phi - \lambda)f(z) = \underline{1}$, where
+$\underline{1}$ is the constant function in $H^2$; $\underline{1} : z \mapsto k$ for some $k \in \mathbb{C}.$ By the definition of invertibility this is true for $f$ = $(T_\phi - \lambda)^{-1}\underline{1}$.
+
+\item Now we show that $(\phi - \lambda)|f|^2$ is constant almost everywhere. To do this, we first show that it is in $H^1$. Indeed, we have
+$(\phi - \lambda)|f|^2 = ((\phi - \lambda)\overline{f}) f$. Then by the previous part, $$(\phi - \lambda)\overline{f} = \overline{(\phi - \lambda)f} = \overline{\underline{1}}$$
+where $\overline{\underline{1}}$ maps $z$ to $\overline{k}$. Then it is still a constant function so is still in $H^2$, and so by Lemma \ref{thm:h1-properties}.\ref{item:h2-products-in-h1}, $((\phi - \lambda)\overline{f}) f$ is in $H^1$. Now we see that because $\phi$ and $\lambda$ are real-valued, $(\phi - \lambda)|f|^2 = \overline{(\phi - \lambda)|f|^2}$, so $\overline{(\phi - \lambda)|f|^2} \in H^1$. Then by Lemma \ref{thm:h1-properties}.\ref{item:f-h1-const}, $(\phi - \lambda)|f|^2$ is constant; let this constant be called $c$.
+\item Now we invoke a theorem of F. and M. Riesz\footnote{Which can be proven as a corollary of a famous theorem of Buerling; see \parencite{arveson2002short}, chapter 4.5.}, which states
+\begin{displayquote}
+\emph{Let $f$ be a non-zero function in $H^2$. Then the set $\{z \in \mathbb{T} : f(z) = 0\}$ has Lebesgue measure zero.}
+\end{displayquote}
+This means that $(\phi(z) - \lambda) = \frac{c}{|f(z)|^2}$ is well-defined; it is finite almost everywhere. Then because $|f|^2 > 0$ a.e., $(\phi - \lambda)$ is positive almost everywhere if $c > 0$, and negative almost everywhere if $c < 0$. Note that if $c = 0$, then $(\phi(z) - \lambda) = 0$, so $\phi$ is the 
+constant function with value $\lambda$ and the result holds by our remark at the beginning of this proof.
+\item Finally, we show $\Spec(T_\phi) = [m, M]$. As we have seen, if $T_\phi - \lambda$ is invertible, then either:
+\begin{itemize}
+\item $\phi(z) - \lambda < 0$ a.e., so $\phi(z) < \lambda$ a.e., so $\lambda > M$, or
+\item $\phi(z) - \lambda > 0$ a.e., so by the same argument $\lambda < m$.
+\end{itemize}
+Thus $T_\phi - \lambda$ is invertible only outside of the set $[m, M]$, as required.
+\end{enumerate}
+\end{proof}
+
+\printbibliography
+\end{document}
