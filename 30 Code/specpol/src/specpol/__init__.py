@@ -1,5 +1,6 @@
 """Python package for computation of spectra."""
 
 from specpol import common
-from specpol.ritz import multiplication_operator_ritz
-from specpol.objects import Operator
+from specpol import ritz
+from specpol.algebra.operators import Operator, create_m_op
+from specpol.plot import plot_ritz

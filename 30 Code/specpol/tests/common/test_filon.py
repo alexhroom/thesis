@@ -29,9 +29,9 @@ def pi_sin(val):
     return np.sin(np.pi * val)
 
 
-@pytest.mark.parametrize('points', [41, 81, 161, 321, 641])
+@pytest.mark.parametrize("points", [41, 81, 161, 321, 641])
 @pytest.mark.parametrize(
-    'function, exact',
+    "function, exact",
     [
         (identity, (-np.pi / 5)),
         (quadratic, ((-3 * np.pi - 2 * np.pi**2) / 5)),

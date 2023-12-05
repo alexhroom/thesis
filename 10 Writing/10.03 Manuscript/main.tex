@@ -1,30 +1,29 @@
 \documentclass{article}
 
 %% page formatting
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
 \usepackage[justification=centering]{caption}
+\usepackage{subcaption}
 \usepackage{blindtext}
-\usepackage{fix-cm}
+\usepackage{enumerate}
+\usepackage{csquotes}
 
-%\usepackage{utopia} %%% TODO: can we have utopia font for just headings?
-
+%% bibliography and index
+\usepackage[style=numeric, sorting=none]{biblatex}
 \usepackage{imakeidx}
+\addbibresource{bibliography.bib}
 \makeindex
 
-%% bibliography
-\usepackage[style=numeric, sorting=none]{biblatex}
-\addbibresource{bibliography.bib}
-
-%% extra colours
+%% prettification definitions
 \usepackage[x11names]{xcolor}
 \definecolor{IKB}{HTML}{002FA7}
 
 %% section header formatting
 \usepackage[explicit]{titlesec}
-\renewcommand{\thesection}{\Roman{section}}
-\titleformat{\section}[hang]{\newpage\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
+\titleformat{\section}[hang]{\newpage\fontfamily{put}\color{IKB}\Large\scshape\bfseries}{\Roman{section}}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
 
 %% hyperlink formatting
 \usepackage{hyperref}
@@ -38,22 +37,35 @@
 %% theorem definitions
 \usepackage{amsthm}
 \newtheorem*{definition}{Definition}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
 \newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
 
 %% symbol definitions
 \usepackage{amsmath}
 \usepackage{amssymb}
-\newcommand{\Spec}{\text{Spec}} % spectrum
-\newcommand{\Dom}{\text{Dom}} % domain
-\newcommand{\Ran}{\text{Ran}} % range
-\newcommand{\1}{\mathbf{1}} % characteristic fucntion
+\newcommand{\Spec}{\mathrm{Spec}} % spectrum
+\newcommand{\Dom}{\mathrm{Dom}} % domain
+\newcommand{\Ran}{\mathrm{Ran}} % range
+\newcommand{\rank}{\mathrm{rank}} % rank
+\newcommand{\Num}{\mathrm{W}} % numerical range
+\newcommand{\supp}{\mathrm{supp}} % support
+\newcommand{\conv}{\mathrm{conv}} % convex hull
+
+\newcommand{\1}{\mathbf{1}} % characteristic function
 \newcommand{\eqdef}{\mathrel{\mathop:}=} % 'defined by' symbol
+
+\usepackage{subfiles}
+\graphicspath{{images/}{../images/}}
 
 \begin{document}
   \begin{titlepage}
     \vspace*{\fill}
     \begin{center}
-      {\Huge Title}\\[0.5cm]
+      {\Huge Spectral Pollution}\\[0.5cm]
       {\Large Alex H. Room}\\[0.4cm]
       {\Large \today}
     \end{center}
@@ -63,70 +75,13 @@
   \end{titlepage}
 \tableofcontents
 
+\subfile{sections/introduction}
 
-\section{Introduction}
-The computation of spectra can boldly be considered the 'fundamental problem of operator theory' \parencite{arveson2002short}. The spectrum
-of an operator holds the same key to the entire structure as eigenvalues do for linear algebra, however (as often occurs when passing from 
-the finite- to infinite-dimensional case) we lose the ease of representation that allows the creation of such algorithms and formulae as those 
-used for matrices. 
+\subfile{sections/multiplication-operator}
 
-We must first define our quantity of interest: the spectrum of an operator.
-\begin{definition}{\textbf{(Resolvent and spectrum)}}\index{resolvent}\index{spectrum}
-(Adapted from \parencite{evans2010partial}) Let $T$ be a linear operator on a Banach space.
-\begin{itemize}
-\item The resolvent of $T$ is the set $\rho(T) := \{\eta \in \mathbb{C} : (T - \eta I)\text{ is bijective}\}$, where I is the identity operator. 
-\item The spectrum of $T$, denoted $\Spec(T)$, is $\mathbb{C} \setminus \rho(T)$, i.e. the set of all complex numbers $\lambda$ such 
-that the operator $(T - \lambda I)$ does not have a bounded inverse.
-\end{itemize}
-\end{definition}
+\subfile{sections/pollution-bounds}
 
-One can see that this concept generalises the eigenvalues of a matrix to any Banach space, and that for a finite-dimensional Banach space
-(of which $\mathbb{R}^n$ and $\mathbb{C}^n$ are major examples) we can recover the eigenvector equation. For an operator on an
-infinite-dimensional space, values which satisfy the eigenvector equation \emph{are} in the spectrum of the operator, but they do not
-comprise the entire spectrum - nor do we necessarily have a spectrum made up of a discrete set of values.
-
-\begin{example}
-Let $S$ be the 'right-shift' operator on the sequence space $\ell^2(\mathbb{N})$, which has the following action:
-$S(x_1, x_2, x_3, ...)$ = $(0, x_1, x_2, x_3, ...)$; that is, for a sequence $u$ we map $u_n$ to $u_{n+1}$, and pad the vector with a zero in $u_1$'s place.
-$S$ has no eigenvalues, and its spectrum is the open unit disc $D = \{z \in \mathbb{C} : |z| = 1\}$.
-%%% TODO: the proof
-\end{example}
-
-As we have alluded to, there is no universal algorithm for the calculation of operator spectra in the way that there is the QR algorithm (\parencite{francis1961qr}) for matrices. To devise a formula for the spectrum of even a specific class of operators is a mathematical
-feat, and varieties of operators important to fields such as %%% TODO: EXAMPLES WITH CITATIONS HERE
-still withhold the structure of their spectra from decades-long attempts at discovery. To this end, we must employ numerical methods.
-We shall find that even approximating spectra computationally is not so easy.
-
-\begin{definition}{\textbf{(Compressions, truncations, and Ritz matrices)}}\index{compression}\index{truncation}\index{matrix!Ritz}
-(Adapted from \parencite{davies2004spectral})
-Let $T$ be an operator on a Hilbert space $H$, $\mathcal{L} \subseteq Dom(T)$ a closed linear subspace, and $P_\mathcal{L}$ the orthogonal projection
-of $H$ onto $\mathcal{L}$.
-\begin{itemize}
-\item The \textbf{compression} of the operator $T$, which we will often denote $T_\mathcal{L}$, is defined
-$$T_\mathcal{L} \eqdef P_\mathcal{L} T\big|_{\mathcal{L}}$$
-where $\big|_{\mathcal{L}}$ denotes domain restriction to $\mathcal{L}$.
-\item If $\{\phi_n\}_{n \in \mathbb{N}}$ is an orthonormal basis for $H$, the n'th \textbf{truncation} of $T$ is the compression of $T$ to $\text{Span}\{\phi_1, \phi_2, ..., \phi_n\}$.
-\item We will call the matrix representation of $T$ truncated to $\text{Span}\{\phi_1, \phi_2, ..., \phi_n\}$ the \textbf{Ritz matrix} of $T$,
-and denote it $T_n$ when the context is obvious. $T_n$ is an $n \times n$ matrix with entries
-$$(T_n)_{i,j}  \eqdef (T\phi_i, \phi_j) \quad \forall i, j \leq n.$$
-\end{itemize}
-\end{definition}
-
-This definition raises a natural question; do the eigenvalues of the matrices $T_n$ converge to the spectrum of the operator $T$? This question was investigated by Walther H. W. Ritz for whom we name our matrices, as well as by Boris Galerkin; the method of approximating the spectrum of an operator by the eigenvalues of its truncations is often called the Ritz method, Galerkin method, or indeed the Ritz-Galerkin method. We will formulate answers
-to these questions in due course, but for our introduction it suffices to say that the answer is "not quite". What can go wrong?
-
-\begin{definition}{\textbf{(Spectral pollution)}}\index{spectrum!pollution of}
-(Adapted from \parencite{davies2004spectral})
-Let $(T_n)_{n \in \mathbb{N}}$ be an increasing sequence of truncations of an operator $T$. A value $\lambda \in \mathbb{C}$ is said to be a point of \textbf{spectral pollution} if there is a sequence $\lambda_n \in \Spec(T_n)$ such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \Spec(A)$.
-\end{definition}
-
-Points of spectral pollution are, intuitively, artefacts of the approximation which will never converge to a point in the actual spectrum. We will see that they exist, that they are relatively common, and that they \emph{get worse} as the approximation goes to higher iterations. Unless we already
-know what the spectrum of the operator is, it can be incredibly hard for us to decide whether a point is actually in the spectrum or whether it is
-spurious. In applications of spectral theory, this difference can be beyond a simple 'error bar' nuisance - rather, a confounding problem.
-
-\begin{example}
-%%% SCHRODINGER EXAMPLE?
-\end{example}
+\subfile{sections/detecting-pollution}
 
 \printbibliography
 \printindex
