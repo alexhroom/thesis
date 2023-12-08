@@ -1,16 +1,17 @@
 """Plotting of approximations."""
-from typing import Dict, TYPE_CHECKING
+from typing import Dict
 
 import matplotlib.pyplot as plt
-from matplotlib import colormaps
 import numpy as np
+from matplotlib import colormaps
 
 
 def plot_ritz(
-    ritz_results: Dict[int, np.array], dbm: int | None = None
+    ritz_results: Dict[int, np.array],
+    *,
+    dbm: int | None = None,
 ) -> (plt.Figure, plt.Axes, plt.Axes):
-    """
-    Plot a Ritz approximation.
+    """Plot a Ritz approximation.
 
     Parameters
     ----------
@@ -28,8 +29,7 @@ def plot_ritz(
     """
     if dbm is not None:
         specs = {
-            key: np.array([v for v in ritz_results[key] if v.imag > dbm])
-            for key in ritz_results
+            key: np.array([v for v in ritz_results[key] if v.imag > dbm]) for key in ritz_results
         }
     else:
         specs = ritz_results
@@ -52,14 +52,17 @@ def plot_ritz(
     ax2.set_xlabel("real part of eigenvalues of the Ritz matrix")
     ax2.set_ylabel("imaginary part of eigenvalues of the Ritz matrix")
 
-    plot = [ax2.scatter(specs[i].real, specs[i].imag, s=8) for i in specs]
+    for i in specs:
+        ax2.scatter(specs[i].real, specs[i].imag, s=8)
 
     norm = plt.Normalize(min(specs), max(specs))
     cmap = plt.get_cmap("viridis")
     sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
     cb = fig.colorbar(sm, ax=ax2, ticks=list(specs.keys()))
     cb.set_label(
-        "size of Ritz matrix (number of rows/columns)", rotation=270, labelpad=15
+        "size of Ritz matrix (number of rows/columns)",
+        rotation=270,
+        labelpad=15,
     )
 
     return fig, ax1, ax2

@@ -1,14 +1,16 @@
 """Utilities for generating and manipulating matrices."""
 from typing import Callable
-from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
 
+
 def generate_matrix(
-    entry_func: Callable, shape: int, start_index: int = 1, doubleinf: bool = False
+    entry_func: Callable,
+    shape: int,
+    start_index: int = 1,
+    doubleinf: bool = False,
 ) -> np.array:
-    """
-    Generate a square matrix from a function f(i, j), where
+    """Generate a square matrix from a function f(i, j), where
     f(i, j) is the value of the entry in row i, column j.
 
     Parameters
@@ -32,9 +34,7 @@ def generate_matrix(
     """
     if doubleinf:
         shape += 1 - shape % 2
-    index_matrix = (
-        np.indices((shape, shape), dtype=int) - (shape // 2 * doubleinf) + start_index
-    )
+    index_matrix = np.indices((shape, shape), dtype=int) - (shape // 2 * doubleinf) + start_index
     vectorised_func = np.vectorize(entry_func)
 
     return vectorised_func(*index_matrix)
