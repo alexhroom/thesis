@@ -52,7 +52,7 @@ with $\varphi$ chosen such that the operator has an eigenvalue at 0.7.\footnote{
 $(\log(3) - 3\log(2) + \log(5) + \log(7) - \log(10))^{-1}$; this satisfies the normalisation condition at $\lambda = 0.7$ but also at $\lambda \approx 4.4$;
 the eigenvalue at $\lambda \approx 4.4$ has been cropped out of the figure to improve illustration of the idea.} In Figure \ref{fig:dbm} we see the same approximation but with the dissipative barrier $iP$ where $P$ is the projection onto $\mathrm{span}\{\phi_n, |n| \leq 25\}$. Note that the spectrum on the line ${(x, y) : \mathrm{Imag}(x) = 1}$ converges to what we'd expect the spectrum to be!
 
-\begin{figure}[h!]
+\begin{figure}[p!]
 \includegraphics[width=0.9\linewidth, height=6cm]{ptb-mult-nodbm}
 \caption{The real part of the approximate spectrum for $\tilde{M}$; on the left, the real parts of the approximate spectrum as the size of the Ritz matrix increases;
 on the left, the complex approximate spectrum where colour is used to donate the size of the approximation. The green shaded regions correspond to
@@ -61,7 +61,7 @@ the essential spectrum of $\tilde{M}$, and the dotted lines are at $\mathrm{Re}(
 \label{fig:nodbm}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[p!]
 \includegraphics[width=0.9\linewidth, height=6cm]{ptb-mult-dbm} 
 \caption{The real part of the approximate spectrum for $\tilde{M}+iP$; compare with Figure \ref{fig:nodbm}. See that the line at 1.0 on the imaginary
 axis converges to the actual spectrum of the operator, while the pollution remains below.}
@@ -69,12 +69,18 @@ axis converges to the actual spectrum of the operator, while the pollution remai
 \end{figure}
 \clearpage
 
-One may also note that there are bands corresponding to the essential spectrum 
+\begin{remark}
+One may also note that there are bands corresponding to the essential spectrum with imaginary part 1. 
+The reason why dissipative barriers `replicate' the essential spectrum is an open problem; it has recently been investigated specifically for Schr\"odinger operators \cite{stepanenkoTODO} but in general remains unknown.
+\end{remark}
 
-\begin{example}
 As a second example, let us try to replicate some results from Aceto et al. (2006) \cite{aceto2006numerical}. In this paper, they use an algebraic method
-combined with a `shooting technique' to find high-accuracy estimates of eigenvalues for a Sturm-Liouville operator. 
-In particular, they use the following example problem on $L^2[0, \infty)$:
+combined with a `shooting technique' to find high-accuracy estimates of eigenvalues for a Sturm-Liouville operator; this highly-specialised algorithm
+is free from pollution but works only for a specific class of Sturm-Liouville operators.
+is a 
+
+\begin{example}\label{ex:aceto}
+In particular, take the following eigenvalue problem on $L^2[0, \infty)$:
 
 $$
 \begin{cases}
@@ -83,7 +89,9 @@ y(0) \cos(\pi/8) + y'(0) \cos(\pi/8) = 0.
 \end{cases}
 $$
 
-and in two of the spectral gaps $J_2 = (-0.34767, 0.59480)$ and $J_3 = (0.91806, 1.2932)$ (denoted in line with the paper and rounded to 5sf) their algorithm finds the following eigenvalues:
+This operator has a `band-gap' structure; it has intervals (bands) of essential spectrum, with eigenvalues dotted in the gaps between bands.
+In two of the spectral gaps $J_2 = (-0.34767, 0.59480)$ and $J_3 = (0.91806, 1.2932)$ (denoted in line with the paper and rounded to 5sf) the
+algebraic method finds the following eigenvalues:
 
 \begin{figure*}[h!]
 \centering
@@ -97,11 +105,21 @@ $J_2$ & $J_3$ \\
 \end{tabular}
 \end{figure*}
 
-We will see if we can reproduce these eigenvalues using a Ritz approximation on $[0, \infty)$, with the orthonormal basis $\{\phi_n\}_{n \in \mathbb{N}},
+Firstly, we will see whether we can reproduce this data. The algebraic method used first truncates the half-line to $[0, 70\pi]$. We will do the same and
+perform a Ritz approximation on the truncated interval, applying a dissipative barrier; this is a success, as one can see in Figure \ref{fig:aceto-dbm}.
+
+Now we will aim for better; whether we can reproduce these eigenvalues using a Ritz approximation on $[0, \infty)$, with the orthonormal basis $\{\phi_n\}_{n \in \mathbb{N}},
 \phi_n = \exp(-x/2)L_n$, where $L_n$ is the n'th Laguerre polynomial (see \cite{szego1975orthogonal} for a proof that this is indeed an orthonormal basis)
 \end{example}
 
-
+\begin{figure}[p!]
+\includegraphics[width=0.9\linewidth, height=6cm]{aceto-dbm}
+\caption{The results of truncating the domain and applying a dissipative barrier to the operator of Example \ref{ex:aceto}.
+The green bands represent the essential spectrum of the operator, and the dotted blue lines indicate where the algebraic method found
+eigenvalues in two spectral gaps. Note that for larger approximations, the points in the spectral gaps with imaginary part 1.0 are
+very close to the algebraic method's approximation.}
+\label{fig:aceto-dbm}
+\end{figure}
 
 
 \end{document}

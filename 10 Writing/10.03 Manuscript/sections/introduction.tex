@@ -1,24 +1,33 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
-\section{Introduction}
+\section{Introduction: the spectrum and its approximation}
 The computation of spectra can boldly be considered the 'fundamental problem of operator theory' \parencite{arveson2002short}. The spectrum
 of an operator holds the same key to the entire structure as eigenvalues do for linear algebra, however (as often occurs when passing from 
 the finite- to infinite-dimensional case) we lose the ease of representation that allows the creation of such algorithms and formulae as those 
 used for matrices. 
 
+\subsection{Spectra}
+
 We must first define our quantity of interest: the spectrum of an operator.
 \begin{definition}{\textbf{(Resolvent and spectrum)}}\index{resolvent}\index{spectrum}
-(Adapted from \parencite{evans2010partial}) Let $T$ be a linear operator on a Banach space.
+(Adapted from \parencite{edmunds2018spectral}) Let $T$ be a linear operator on a Banach space.
 \begin{itemize}
-\item The resolvent of $T$ is the set $\rho(T) := \{\eta \in \mathbb{C} : (T - \eta I)\text{ is bijective}\}$, where I is the identity operator. 
+\item The resolvent of $T$ is the set $\rho(T) := \{\eta \in \mathbb{C} : (T - \eta I)\text{ has a bounded inverse}\}$, where I is the identity operator. 
+If it exists, we call its inverse $(T - \eta I)^{-1}$ the `resolvent operator' for $\eta$ and $T$.
 \item The spectrum of $T$, denoted $\Spec(T)$, is $\mathbb{C} \setminus \rho(T)$, i.e. the set of all complex numbers $\lambda$ such 
 that the operator $(T - \lambda I)$ does not have a bounded inverse.
 \end{itemize}
 \end{definition}
 
+In the remainder of the text, the identity operator $I$ will be implicit in the operator - i.e. we will simply write $(T - \lambda I)$ as $(T - \lambda)$.
+
 One can see that this concept generalises the eigenvalues of a matrix to any Banach space, and that for a finite-dimensional Banach space
-(of which $\mathbb{R}^n$ and $\mathbb{C}^n$ are major examples) we can recover the eigenvector equation. For an operator on an
+(of which $\mathbb{R}^n$ and $\mathbb{C}^n$ are major examples) we can recover the eigenvector equation. Indeed, the term `resolvent'
+originates from its relation to the solution of certain types of differential equation; if for some differential operator $L$ we have the equation
+$Lu = \lambda u + g$, a solution $u$ would be related to $g$ as $(L - \lambda)^{-1}g = u$.
+
+For an operator on an
 infinite-dimensional space, values which satisfy the eigenvector equation \emph{are} in the spectrum of the operator, but they do not
 comprise the entire spectrum - nor do we necessarily have a spectrum made up of a discrete set of values.
 
@@ -30,7 +39,7 @@ $S$ has no eigenvalues, and its spectrum is the open unit disc $D = \{z \in \mat
 \begin{proof}{\emph{(sketch)}}
 For the lack of eigenvalues; we see that if $Su = \lambda u$, 
 $$(0, u_1, u_2, u_3 ...) = (\lambda u_1, \lambda u_2, \lambda u_3 ...)$$
-so in particular, we would require $\lambda u_1 = 0$. Then as $\lambda \neq 0$, $u_1 =0$. Then $\lambda u_2 = u_1 = 0$, and continuing this we
+so in particular, we would require $\lambda u_1 = 0$. Then either $\lambda = 0$ and thus $u_n$ = 0 for all $n$, or as $\lambda \neq 0$, $u_1 =0$. Then $\lambda u_2 = u_1 = 0$, and continuing this we
 can see that $u_n = 0$ for all $n$, i.e. $u$ must be the zero vector. Thus there is no non-zero vector satisfying the eigenvector equation.
 
 To calculate its spectrum, we make use of a natural relation between the spectrum of an operator T and the spectrum of its adjoint: 
@@ -46,10 +55,12 @@ which is in $\ell^2(\mathbb{N})$ and is thus an eigenvector iff $|\lambda| < 1$;
 complex conjugate (which is also the unit disc) is in $\Spec(S)$.
 \end{proof}
 
-As we have alluded to, there is no universal algorithm for the calculation of operator spectra in the way that there is the QR algorithm (\parencite{francis1961qr}) for matrices. To devise a formula for the spectrum of even a specific subset of a class of operators is a mathematical
+As we have alluded to, there is no universal algorithm for the calculation of operator spectra in the way that there is the QR algorithm \cite{suli2003introduction} for matrices. To devise a formula for the spectrum of even a specific subset of a class of operators is a mathematical
 feat, and varieties of operators important to fields such as quantum physics (\cite{lewin2010spectral}), hydrodynamics (\cite{manning2008descriptor}), and crystallography (\cite{cances2012periodic}) still withhold the structure of their spectra from decades-long attempts at discovery. 
 To this end, we must employ numerical methods.
 We shall find that even approximating spectra computationally is not so easy.
+
+\subsection{Approximating spectra; Ritz and Galerkin methods}
 
 \begin{definition}{\textbf{(Compressions, truncations, and Ritz matrices)}}\index{compression}\index{truncation}\index{matrix!Ritz}
 (Adapted from \parencite{davies1995spectral})
@@ -60,26 +71,48 @@ of $H$ onto $\mathcal{L}$.
 $$T_\mathcal{L} \eqdef P_\mathcal{L} T\big|_{\mathcal{L}}$$
 where $\big|_{\mathcal{L}}$ denotes domain restriction to $\mathcal{L}$.
 \item If $\{\phi_n\}_{n \in \mathbb{N}}$ is an orthonormal basis for $H$, the n'th \textbf{truncation} of $T$ is the compression of $T$ to $\text{Span}\{\phi_1, \phi_2, ..., \phi_n\}$.
-\item We will call the matrix representation of $T$ truncated to $\text{Span}\{\phi_1, \phi_2, ..., \phi_n\}$ the \textbf{Ritz matrix} of $T$,
+\item We will call the matrix representation of $T$ truncated to $\mathrm{Span}\{\phi_1, \phi_2, ..., \phi_n\}$ the \textbf{Ritz matrix} of $T$,
 and denote it $T_n$ when the context is obvious. $T_n$ is an $n \times n$ matrix with entries
 $$(T_n)_{i,j}  \eqdef (T\phi_i, \phi_j) \quad \forall i, j \leq n.$$
 \end{itemize}
 \end{definition}
 
-This definition raises a natural question; do the eigenvalues of the matrices $T_n$ converge to the spectrum of the operator $T$? This question was investigated by Walther H. W. Ritz for whom we name our matrices, as well as by Boris Galerkin; the method of approximating the spectrum of an operator by the eigenvalues of its truncations is often called the Ritz method, Galerkin method, or indeed the Ritz-Galerkin method. We will formulate answers
+We have a natural yet unanswered question; do the eigenvalues of the matrices $T_n$ converge to the spectrum of the operator $T$, as $n$ increases? This question was investigated by Walther H. W. Ritz for whom we name our matrices, as well as by Boris Galerkin; the method of approximating the spectrum of an operator by the eigenvalues of its truncations is often called a Ritz method, Galerkin method, or indeed Ritz-Galerkin method. We will formulate answers
 to this question in due course, but for our introduction it suffices to say that the answer is "not quite". What can go wrong?
+
+\subsection{Spectral pollution}
 
 \begin{definition}{\textbf{(Spectral pollution)}}\index{spectrum!pollution of}
 (Adapted from \parencite{davies1995spectral})
-Let $(T_n)_{n \in \mathbb{N}}$ be an increasing sequence of truncations of an operator $T$. A value $\lambda \in \mathbb{C}$ is said to be a point of \textbf{spectral pollution} if there is a sequence $\lambda_n \in \Spec(T_n)$ such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \Spec(A)$.
+Let $(T_n)_{n \in \mathbb{N}}$ be an increasing sequence of truncations of an operator $T$. A value $\lambda \in \mathbb{C}$ is said to be a point of \textbf{spectral pollution} if there is a sequence $\lambda_n \in \Spec(T_n)$ such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \Spec(T)$.
 \end{definition}
 
 Points of spectral pollution are, intuitively, artefacts of the approximation which will never converge to a point in the actual spectrum. We will see that they exist, that they are relatively common, and that they \emph{get worse} as the approximation goes to higher iterations. Unless we already
 know what the spectrum of the operator is, it can be incredibly hard for us to decide whether a point is actually in the spectrum or whether it is
-spurious. In applications of spectral theory, this difference can be beyond a simple 'error bar' nuisance - rather, a confounding problem.
+spurious. In applications of spectral theory, this difference can be beyond a simple 'noisy data' nuisance - rather, a confounding problem.
 
 \begin{example}
-%%% TODO: SCHRODINGER EXAMPLE?
+Consider a one-dimensional Sturm-Liouville operator\index{operator!Sturm-Liouville}
+
+$$Ly = \frac{d}{dx}(P(x)\frac{dy}{dx}) + Q(x)y$$
+
+where $P$ and $Q$ are scalar-valued functions. $Q$ is called the `potential' of the operator. These operators occur frequently in partial differential equations; for example, both the heat and wave equations are Sturm-Liouville problems.
+
+In particular, let us look at the following equation. This is the Schr\"odinger operator governing the movement of an electron in a hydrogen atom:\index{operator!Schr\"odinger}
+
+$$TODO$$
+
+The spectrum of this operator, fascinatingly, corresponds to the energy levels of certain `stable' states of the atom in quantum mechanics. 
+The mathematical analysis of this for larger atoms is an open problem; for example,
+the spectrum for the equivalent equation in the helium atom has only been calculated numerically \cite{davies1995spectral}. The hydrogen atom's
+spectrum can be found concretely, and is equal to %%TODO.
+
+Let us see how well a Galerkin method can approximate this known spectrum.
 \end{example}
 
+There are, of course, other methods for approximating operator spectra, such as the popular finite difference or `shooting' methods \cite{suli2003introduction}, or specialised algebraic methods \cite{aceto2006numerical}, which are not subject to pollution. So why do we
+care about truncation methods?
+The motivation for studying Ritz-Galerkin methods is that they make \emph{almost no} assumptions about the operator itself or the location of its spectrum. 
+If the spectral pollution for a sequence of truncations can be discarded, detected or otherwise dealt with, it would provide a unified and 
+powerful approach to numerical spectral theory for almost any operator.
 \end{document}

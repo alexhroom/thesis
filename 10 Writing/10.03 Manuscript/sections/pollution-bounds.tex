@@ -5,11 +5,13 @@
 \section{Bounding spectral pollution}
 
 \subsection{The essential spectrum of an operator}
-\begin{definition}{\textbf{(Essential spectrum)}}\index{spectrum!essential}
-The essential spectrum\footnote{The essential spectrum has several definitions, 
+The essential spectrum has several definitions, 
 the most popular usually denoted $\Spec_{e,i}$ for $i \in \{1,2,3,4,5\}$ in order of size. For 
 most well-behaved operators the definitions are equivalent. This particular definition 
-is Weyl's criterion, $\Spec_{e, 2}$.}\index{Weyl's criterion} of an operator $T$ on a Hilbert space $H$ 
+is known as Weyl's criterion, $\Spec_{e, 2}$. \cite{edmunds2018spectral}
+
+\begin{definition}{\textbf{(Essential spectrum)}}\index{spectrum!essential}\index{Weyl's criterion}
+The essential spectrum of an operator $T$ on a Hilbert space $H$ 
 is defined as the set of all $\lambda$ such that a \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and $\lambda$ , i.e. a sequence with the properties:
 \begin{itemize}
 \item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$;
@@ -22,9 +24,18 @@ is defined as the set of all $\lambda$ such that a \textbf{Weyl sequence}\index{
 If $\lambda$ is in the essential spectrum of $T$, then it is in the spectrum of $T$.
 \end{proposition}
 \begin{proof}
-Let $\lambda$ satisfy the criterion in the definition of essential spectrum. Now assume for contradiction that $(T - \lambda)$ is invertible.
-%% TODO: finish proof
+Let $\lambda$ satisfy the criterion in the definition of essential spectrum. Now assume for contradiction that the resolvent $(T - \lambda)^{-1}$ exists. Then:
+\begin{align*}
+0 \leq \lim_{n \rightarrow \infty} \|u_n\| & = \lim_{n \rightarrow \infty} \|(T - \lambda)^{-1}(T - \lambda)u_n\| & \\
+& \leq \|(T - \lambda)^{-1}\| \lim_{n \rightarrow \infty} \|(T - \lambda)u_n\| & \text{\emph{(as $(T - \lambda)^{-1}$ is bounded)}}\\
+& = 0
+\end{align*}
+and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot converge to zero! Thus this bounded inverse does not exist.
 \end{proof}
+\begin{corollary}
+Note that the previous proof did not require the weak convergence of $u_n$; indeed, if there is a sequence with $\|u_n\| = 1$ and $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$,
+then $\lambda$ is in the overall spectrum of $T$ (but not necessarily the essential spectrum!)
+\end{corollary}
 
 We can loosen the definition of weak convergence to just require convergence in a dense subspace of $H$:
 \begin{lemma}\label{thm:weak-conv-dense-subset}
@@ -116,8 +127,9 @@ Then we see $\|(M_f - \lambda)u_n\|_2$ converges to zero by similar reasoning:
 & = \sup_{x \in \supp \rho_n} \|(f(x) - f(x_0))^2\| \rightarrow 0 & \text{\emph{(note $\|\rho_n^2\|_{L^1} = \|\rho_n\|_2 = 1$)}} \\
 \end{align*}
 converging to zero as $\supp \rho_n$ shrinks around $x_0$ by the continuity of $f$.
-
 \end{proof}
+Compare this example to Theorem \ref{thm:mult-op-spec}, and see that the \emph{entire spectrum} of a multiplication operator is essential spectrum; the
+operator has no eigenvalues.
 
 \subsection{Essential spectrum and compact perturbation}
 One interesting property of the essential spectrum that is not easily visible from our earlier definition is that it is invariant under compact
@@ -190,10 +202,10 @@ the location of spectra.
 \begin{proposition}\label{thm:num-range-props}
 The numerical range $\Num(T)$ of an operator $T$ has the following properties:
 \begin{enumerate}
+\item\label{item:num-in-R} $\Num(T) \in \mathbb{R}$ if and only if $T$ is self-adjoint;
+\item\label{item:proj-num-range} $\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$;
 \item (Toeplitz-Hausdorff theorem)\label{item:toeplitz-hausdorff}\index{theorem!Toeplitz-Hausdorff} $\Num(T)$ is a convex set;
-\item\label{item:num-in-R} $\Num(T) \in \mathbb{R}$ iff $T$ is self-adjoint;
-\item\label{item:spec-in-num} $\Spec(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$;
-\item\label{item:proj-num-range} $\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$.
+\item\label{item:spec-in-num} $\Spec(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$.
 \end{enumerate}
 \end{proposition}
 
@@ -201,13 +213,19 @@ It is important to state the usefulness of these properties with regards to spec
 it bounds the spectrum of $T_\mathcal{L}$ - effectively, bounding the region in which spectral pollution can occur to a convex set around $\Spec(T)$.
 
 \begin{proof}
+(\ref{item:num-in-R}.) $T$ is self-adjoint if and only if $(Tu, u) = (u, Tu)$ for all $u$; by conjugate symmetry of scalar products, $(u, Tu) = \overline{(Tu, u)}$; we combine these to find $(Tu, u) = \overline{(Tu, u)}$ and the result follows. 
+
+(\ref{item:proj-num-range}.) $\Num(T_\mathcal{L}) = \{( PTPu, u ) : u \in \mathcal{L}, \|u\|=1\}$.
+We then use the self-adjointness of $P$ to see
+$$( PTPu, u ) = ( TPu, Pu )$$
+Then as $u \in \mathcal{L}, \|Pu\| = \|u\| = 1$,
+so $( T(Pu), (Pu) ) \in \Num(T)$, and the result follows.
+
 (\ref{item:toeplitz-hausdorff}. \cite{gustafson1997numerical}) Take $\lambda = (Tx, x), \mu = (Ty, y) \in \Num(T)$. Define the line segment between them as 
 $\nu = t\lambda + (1-t)\mu$ for $t \in [0, 1]$, and $T_\mathcal{L}$ the compression of $T$ to the subspace 
 $\mathcal{L} = \text{span}\{x, y\}$. Then we note that $(T_\mathcal{L} x, x) = (Tx, x)$ and $(T_\mathcal{L} y, y) = (Ty, y)$, so $\lambda, \mu$ are in
-$\Num(T_\mathcal{L})$. $T_\mathcal{L}$ is two-dimensional, so is a $2 \times 2$ matrix; it can be proven directly (see \cite{gustafson1997numerical}) that the numerical range of a $2 \times 2$ matrix is an ellipse (with foci at both eigenvalues of the matrix!) and so $\nu$ is in $\Num(T_\mathcal{L})$.
+$\Num(T_\mathcal{L})$. $T_\mathcal{L}$ is two-dimensional, so is a $2 \times 2$ matrix; it can be proven by direct calculation (see \cite{gustafson1997numerical}) that the numerical range of a $2 \times 2$ matrix is an ellipse (with foci at either eigenvalue of the matrix!) and so $\nu$ is in $\Num(T_\mathcal{L})$.
 Then by property \ref{item:proj-num-range}, $\Num(T_\mathcal{L}) \subseteq \Num(T)$, so $\nu$ is also in $\Num(T)$, as required.
-
-(\ref{item:num-in-R}.) If $T$ is self-adjoint, then $(Tu, u) = (u, Tu)$; by conjugate symmetry of scalar products, $(u, Tu) = \overline{(Tu, u)}$; therefore we combine these to find $(Tu, u) = \overline{(Tu, u)}$ and thus $(Tu, u)$ is real.
 
 (\ref{item:spec-in-num}.) $\overline{\Num(T)}$ is the set of all points $\lambda$ such that there is a sequence of unit vectors $u_n$ where
 $$\lim_{n\rightarrow \infty}( Tu_n, u_n ) = \lambda.$$
@@ -226,14 +244,7 @@ $|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0$, and so
 \end{equation*}
 
 Thus the boundary of the spectrum is in $\overline{\Num(T)}$; as the numerical range is convex,
-this means the whole spectrum must be.\\
-
-(\ref{item:proj-num-range}.) $\Num(T_\mathcal{L}) = \{( PTPu, u ) : u \in \mathcal{L}, \|u\|=1\}$.
-We then use the self-adjointness of $P$ to see
-$$( PTPu, u ) = ( TPu, Pu )$$
-Then as $u \in \mathcal{L}, \|Pu\| = \|u\| = 1$,
-so $( T(Pu), (Pu) ) \in \Num(T)$, and the result follows.
-
+this means the whole spectrum must be. 
 \end{proof}
 
 \subsection{Essential numerical range}\index{range!essential numerical}
@@ -297,8 +308,18 @@ operator. But the essential numerical range far outdoes the regular numerical ra
 set on which it is possible for pollution to occur! 
 
 \begin{theorem}
-All spectral pollution in the Ritz approximation of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can occur anywhere in $\Num_e(T) \setminus \Spec(T)$.
+Let $T$ be a bounded operator. All spectral pollution in the Ritz approximation of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can occur anywhere in $\Num_e(T) \setminus \Spec(T)$.
 \end{theorem}
+
+\begin{proof}
+For some sequence of truncations $T_i$, let $\lambda_i \in T_i$ converge to $\lambda$. Then we note that as $T_i$ is finite-dimensional, all of its
+spectral points are eigenvalues; for some eigenvector $w_i$, $T_iw_i = \lambda_i w_i$, and (with $w_i$ normalised to $\|w_i\| = 1$ we have
+$$(T_i w_i, w_i) = (\lambda_i w_i, w_i) = \lambda_i \|w_i\| = \lambda_i.$$
+This means $\lambda_i \in \Num(T_i) \subseteq \Num(T)$, so $\lambda_i = (T x_i, x_i)$ for some unit vector $x_i$, and
+$$\lambda = \lim_{i \rightarrow \infty} \lambda_i = \lim_{i \rightarrow \infty}(Tx_i, x_i).$$
+Then, for $\lambda$ to be spectral pollution outside of the essential numerical range, we must have that $x_i \rightharpoonup x \neq 0$ (as otherwise
+$\lambda \in \Num_e(T)$) and also $\|(T - \lambda)x_i\| \nrightarrow 0$ (as then $\lambda$ is in the spectrum of $T$ by the corollary to Proposition \ref{thm:ess-in-spec}).
+\end{proof}
 
 For a bounded operator, this is the main result of a paper by Pokrzywa \parencite{pokrzywa1979method}. The main theorem of the paper has the
 corollary that for $\lambda \notin \Num_e(T)$, we have $\lambda \in \Spec(T)$ iff $\text{dist}(\lambda, \Spec(T_n)) \rightarrow 0$; that is, outside of the

@@ -6,7 +6,7 @@
 \subsection{The spectrum of a multiplication operator}
 \begin{definition}{\textbf{(Multiplication operator)}}\index{operator!multiplication}
 Let $\Omega$ be a $\sigma$-finite measure space.
-For a given function $a \in L^\infty(\Omega)$, the multiplication operator $M_a$ on $L^2(\Omega)$ is defined by
+For a given function $a$, the multiplication operator $M_a$ on $L^2(\Omega)$ is defined by
 the action $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with $a$. We call $a$ the `symbol' of
 the multiplication operator.
 \end{definition}
@@ -18,11 +18,12 @@ the function on a set of measure zero - two functions which are equal
 almost everywhere will have the same essential range.
 
 \begin{definition}{\textbf{(Essential range and essential supremum)}}\label{defn:essential-range}\index{range!essential}
-  The essential range of a real-valued function $a$ is the set:
-  $$\{k \in \mathbb{R} : \forall \varepsilon > 0, \mu\{x : |a(x) - k| < \varepsilon\} > 0\}$$
+  The essential range of a real-valued function $f$ is the set:
+  $$\{k \in \mathbb{R} : \forall \varepsilon > 0, \mu\{x : |f(x) - k| < \varepsilon\} > 0\}$$
   where $\mu$ is the Lebesgue measure.
   
-  The essential supremum of $a$, denoted $\text{esssup}(a)$, is the supremum of the essential range of $a$.
+  The essential supremum of $f$, denoted $\mathrm{esssup}f$, is the supremum of the essential range of $f$. 
+  We define $\mathrm{essinf}f$ mutatis mutandis for the infimum.
 \end{definition}
 
 The normed vector space $L^\infty$ is the space of all bounded measurable functions, and its norm is $$\|f\|_\infty = \text{esssup}(|f|).$$
@@ -32,18 +33,18 @@ The normed vector space $L^\infty$ is the space of all bounded measurable functi
 A multiplication operator is bounded if and only if its symbol is in $L^\infty$.
 \end{lemma}
 \begin{proof}
-Let $M_f$ be a multiplication operator on a Hilbert space $H$ with symbol $f \in L^\infty$. We see that $|f(z)| \leq \|f\|_\infty$ for almost all $z$, so $|f g| \leq |f||g| \leq \|f\|_\infty |g$ pointwise almost everywhere; thus
+Let $M_a$ be a multiplication operator on a Hilbert space $H$ with symbol $a \in L^\infty$. We see that $|f(z)| \leq \|a\|_\infty$ for almost all $z$, so $|a g| = |a||g| \leq \|a\|_\infty |g|$ pointwise almost everywhere; thus
 \begin{equation*}
-\|f g\|_2 = \sqrt{\int |f g|^2} \leq \sqrt{\int \|f\|_\infty^2|g|^2} = \|f\|_\infty \sqrt{\int |g|^2} = \|f\|_\infty \|g\|_2. .\tag{$\star$}
+\|a g\|_2 = \sqrt{\int |a g|^2} \leq \sqrt{\int \|a\|_\infty^2|g|^2} = \|a\|_\infty \sqrt{\int |g|^2} = \|a\|_\infty \|g\|_2. .\tag{$\star$}
 \end{equation*}
-This implies $\|M_f\| = \sup_{g \in H} \|f g\|_2 \leq \|f\|_\infty$, so $M_f$ is bounded.
+This implies $\|M_a\| = \sup_{g \in H} \|a g\|_2 \leq \|a\|_\infty$, so $M_a$ is bounded.
 
-Conversely, assume $M_f$ is bounded, $f \neq 0$ and let $c < \|f\|_\infty$ (of course, we do not assume $\|f\|_\infty$ is finite). Then we know that the
-set $\{z : |f(x) > c|\}$ must have positive measure, and by $\sigma$-finiteness we have a subset $E \subseteq \{z : |f(x) > c|\}$, and its characteristic 
-function $\1_E$ is in $L^2$. Then $|f \1_E| \geq c \1_E$, and by a similar calculation to ($\star$) and taking the supremum, $\|M_f  \1_E\|_2 \geq c \|\1_E\|_2$, so $\|M_f\| \geq c$. Taking the supremum over all $c$ gives $\|M_f\| \geq \|f\|_\infty$, so $\|f\|_\infty$ is finite and so $f \in L^\infty$.
+Conversely, assume $M_a$ is bounded, $a \neq 0$ and let $c < \|a\|_\infty$ (of course, we do not assume $\|a\|_\infty$ is finite). Then we know that the
+set $\{z : |a(x) > c|\}$ must have positive measure, and by $\sigma$-finiteness we have a subset $E \subseteq \{z : |a(x) > c|\}$, and its characteristic 
+function $\1_E$ is in $L^2$. Then $|a \1_E| \geq c \1_E$, and by a similar calculation to ($\star$) and taking the supremum, $\|M_a  \1_E\|_2 \geq c \|\1_E\|_2$, so $\|M_a\| \geq c$. Taking the supremum over all $c$ gives $\|M_a\| \geq \|a\|_\infty$, so $\|a\|_\infty$ is finite and so $a \in L^\infty$.
 \end{proof}
 
-Note from this lemma we also get that $\|M_f\| = \|f\|_\infty$.
+Note from this lemma we also get that $\|M_a\| = \|a\|_\infty$.
 
 \begin{theorem}\label{thm:mult-op-spec}
   The spectrum of the multiplication operator $M_a$ is the essential range of its symbol $a$.
@@ -195,11 +196,14 @@ But if $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c
 the only coefficient remaining is $c_0$, and a function with a constant Fourier series is a constant function. (This proof is valid for any $H^p, p \in [1, \infty)$.)
 \end{proof}
 
-\begin{theorem}{\textbf{(Hartman-Wintner)}}\index{theorem!Hartman-Wintner}
-Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$ and $M$ are the infimum and supremum of the essential range of $\phi$ (defined in Definition \ref{defn:essential-range}) respectively.
+We are now in the position to calculate the form of the spectrum for any Toeplitz operator. This spectrum was first found by Toeplitz
+himself under a stronger set of regularity assumptions, and then weakened by Wiener via his Tauberian theorem \parencite{schmidt1960toeplitz}.
+Our proof will consist of a series of claims about the resolvent set of $T_\phi$, following a proof outlined in an exercise of Arveson (\parencite{arveson2002short}, Chapter 4.6, exercises 2-5) which is based on a proof by Hartman and Wintner.
+
+\begin{theorem}{\textbf{(Hartman-Wintner)}}\index{theorem!Hartman-Wintner}\label{thm:hartman-wintner}
+Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$ and $M$ are the infimum and supremum of the essential range of $\phi$ (Definition \ref{defn:essential-range}) respectively.
 \end{theorem}
 \begin{proof}
-Our proof will consist of a series of claims about the resolvent set of $T_\phi$, following a proof outlined in an exercise of Arveson \parencite{arveson2002short} (Chapter 4.6, exercises 2-5). 
 Note we already know that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. 
 Furthermore, we will assume that $\phi$ is non-constant, as if $\phi$ is constant then $T_\phi$ is some constant multiple of the identity operator
 and its spectrum is simply the set containing that constant, and the result holds.
@@ -210,7 +214,7 @@ $\kappa$ is the constant function in $H^2$; $\kappa : z \mapsto k$ for some $k \
 \item Now we claim that $(\phi - \lambda)|f|^2$ is constant almost everywhere. To do this, we first show that it is in $H^1$. Indeed, we have
 $(\phi - \lambda)|f|^2 = ((\phi - \lambda)\overline{f}) f$. Then by the previous part, $$(\phi - \lambda)\overline{f} = \overline{(\phi - \lambda)f} = \overline{\kappa}$$
 where $\overline{\kappa}$ maps $z$ to $\overline{k}$. Then it is still a constant function so is still in $H^2$, and by Lemma \ref{thm:h1-properties}.\ref{item:h2-products-in-h1}, $((\phi - \lambda)\overline{f}) f$ is in $H^1$ as a product of two $H^2$ functions. Now we use Lemma \ref{thm:h1-properties}.\ref{item:f-h1-const}: because $\phi$ and $\lambda$ are real-valued, $(\phi - \lambda)|f|^2$ is also real-valued, so must be constant. Let this constant be called $c$.
-\item Our next claim is that $\phi - \lambda$ crosses the $x$-axis almost nowhere. This is immediate once we invoke a theorem of F. and M. Riesz\footnote{Which can be proven as a corollary of a famous theorem of Buerling; see \parencite{arveson2002short}, chapter 4.5.}, which states
+\item Our next claim is that $\phi - \lambda$ crosses the $x$-axis almost nowhere. This is almost immediate once we invoke a theorem of F. and M. Riesz\footnote{Which can be proven as a corollary of a famous theorem of Buerling; see \parencite{arveson2002short}, chapter 4.5.}, which states
 \begin{displayquote}
 \emph{Let $f$ be a non-zero function in $H^2$. Then the set $\{z \in \mathbb{T} : f(z) = 0\}$ has Lebesgue measure zero.}
 \end{displayquote}
@@ -231,7 +235,7 @@ multiplication operator $M_f$ is \emph{identical} to the Ritz matrices correspon
 corresponding Toeplitz matrix), but these operators have different spectra. No wonder we are seeing extra eigenvalues in the gap; the approximation
 `cannot tell' the difference between an operator which has the essential range as its spectrum from one which has the same maximum and minimum but with
 all gaps filled in. Heuristically, one may even expect that with a large enough approximation, the \emph{entire gap} could fill up with spurious
-eigenvalues\footnote{We also have the inverse question; if we are approximating the Toeplitz operator $T_f$, why does it take \emph{so long} to 
+eigenvalues\footnote{We also have the inverse question; if we are approximating the Toeplitz operator $T_f$, why does it take so much longer to 
 approximate the spectrum in the interval $\Spec(T_f) \setminus \Spec(M_f)$?}.\\
 
 More rigorously, it is possible to show that for any point in a gap of the multiplication operator's spectrum, some subsequence of truncations will have 
@@ -241,7 +245,26 @@ an approximate eigenvalue converging to that point.
 Let $T_n$ be the $n \times n$ matrix created by taking the first $n$ rows and columns of a Toeplitz operator $T_f$. Consider the set
 $$B = \{\lambda \in \mathbb{C} : \lambda = \lim_{m \rightarrow \infty} \lambda_{i_m}, \lambda_{i_m} \in \Spec(T_{i_m}), i_m \rightarrow \infty \}.$$
 where $i_m$ is a subsequence of $\mathbb{N}$. Then if $f$ is real-valued, $B = \Spec(T_f)$.
-
 \end{theorem}
+\begin{proof}
+If $f$ is real-valued, then the corresponding Toeplitz matrix is Hermitian; its Fourier coefficients have the property $\overline{c_{-n}} = c_n$ (see 
+the proof of Lemma \ref{thm:h1-properties}.\ref{item:f-h1-const}), so if $A$ is the corresponding Toeplitz matrix,
+ $A_{i,j} = c_{i-j} = \overline{c_{j-i}} = \overline{A_{j,i}}$. Label the eigenvalues of $T_n$ as $\lambda_{n_1}, ... \lambda_{n_{n+1}}$. 
+ 
+ We now invoke a theorem of Szeg\"o \cite{grenander2001toeplitz} regarding the distribution of eigenvalues: on any real interval $[a, b]$,
+\begin{equation}\label{eqn:szego-eigvals}
+\lim_{n \rightarrow \infty} \frac{1}{n+1} \sum_{i=1}^{n+1} \1_{[a, b]}(\lambda_{n_i}) = \frac{1}{2 \pi} \mu\{\theta : a \leq f(e^{i \theta}) \leq b\}
+\end{equation}
+where $\mu$ is the Lebesgue measure, and $\1$ the characteristic function of $[a,b]$ 
+(i.e. $\1_{[a, b]}(\lambda_{n_i})$ is 1 if $\lambda_{n_i} \in [a, b]$ and zero otherwise). Note that this makes sense, as $T_n$ is Hermitian and
+therefore every eigenvalue is real-valued. Note also that by Theorem \ref{thm:hartman-wintner} and the definition of the unit circle $\mathbb{T}$,
+the spectrum of $T_f$ is $\{f(e^{i \theta}): \theta \in [0, 2\pi]\}$. The claim of equation (\ref{eqn:szego-eigvals}) is therefore 
+``as the size of the Toeplitz matrix increases, the proportion of eigenvalues of $T_n$ in $[a, b]$ converges to the proportion of the spectrum in $[a, b]$''. 
+Of course, this proportion will never be 0 for any interval $[a, b] \subseteq [\textrm{essinf}f, \textrm{esssup}f]$ of positive measure, so we can guarantee that a sequence of truncations has an eigenvalue which converges in $[a, b]$. The result follows.
+
+\end{proof}
+
+This is a striking result - for any point in the spectral gap $\Spec(T_f) \setminus \Spec(M_f)$ (or indeed in $\Spec(M_f)$, but they aren't really polluting anything), we can choose a sequence of truncations such that
+there is guaranteed to be spectral pollution at that point!
 
 \end{document}
