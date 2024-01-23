@@ -1,0 +1,15 @@
+
+
+
+\begin{proof}
+We know from Proposition \ref{thm:num-range-props} that $\Spec(T) \subseteq \overline{\Num(T)} \subseteq \mathbb{R}$ and so $\inf(\Spec(T)) \geq \inf(\Num(T))$. Let $\inf(\Num(T)) = w_0$; then $((T - w_0)u, u) = (Tu, u) - w_0 \geq 0$, and so $u, v \mapsto ((T - w_0)u, v)$ defines a positive-semidefinite Hermitian form, for which the Cauchy-Schwarz inequality holds\footnote{This can easily be verified by looking at a standard proof of the inequality!}. Denote this form $\tau [u, v]$. For $u, v$ with $\|u\| = \|v\| = 1$, we have
+\begin{align*}
+|\tau[u,v]|^2 \leq \tau[u, u] \tau[v, v] = ((T - w_0)u, u)((T - w_0)v, v) \leq \|T - w_0\|((T - w_0)u, u)
+\end{align*}
+Now let us take a minimising sequence $u_n$, $\|u_n\| = 1$ such that $(Tu_n, u_n) \rightarrow w_0$. Then we have
+\begin{align*}
+\|(T - w_0)u_n\|^2 = |\tau[u_n, (T - w_0)u_n]|^2  \leq \|T - w_0\|((T - w_0)u_n, u_n) \leq \|T - w_0\||(Tu_n, u_n) - w_0| \rightarrow 0,
+\end{align*}
+and therefore $w_0 \in \Spec(T)$ by Theorem \ref{thm:approx-eigenvalue-thm}.
+The proof for the supremum $w_1$ is analogous, using $((w_1 - T)u, u) = w_1 - (Tu, u) \geq 0$.
+\end{proof}

@@ -54,6 +54,8 @@
 \newcommand{\Num}{\mathrm{W}} % numerical range
 \newcommand{\supp}{\mathrm{supp}} % support
 \newcommand{\conv}{\mathrm{conv}} % convex hull
+\newcommand{\sobolev}{W^{1, 2}} % sobolev space H^1 (we avoid conflict with Hardy space notation)
+\newcommand{\hilbert}{\mathcal{H}} % Hilbert space generic symbol
 
 \newcommand{\1}{\mathbf{1}} % characteristic function
 \newcommand{\eqdef}{\mathrel{\mathop:}=} % 'defined by' symbol
@@ -82,6 +84,10 @@
 \subfile{sections/pollution-bounds}
 
 \subfile{sections/detecting-pollution}
+
+\appendix
+\titleformat{\section}[hang]{\newpage\fontfamily{put}\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
+
 
 \clearpage
 \printbibliography

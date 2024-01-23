@@ -5,8 +5,7 @@
 \section{Spectral pollution in a multiplication operator}
 \subsection{The spectrum of a multiplication operator}
 \begin{definition}{\textbf{(Multiplication operator)}}\index{operator!multiplication}
-Let $\Omega$ be a $\sigma$-finite measure space.
-For a given function $a$, the multiplication operator $M_a$ on $L^2(\Omega)$ is defined by
+Let $\hilbert$ be a function space. For a given $a \in \hilbert$, the multiplication operator $M_a$ on $\hilbert$ is defined by
 the action $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with $a$. We call $a$ the `symbol' of
 the multiplication operator.
 \end{definition}
@@ -30,14 +29,14 @@ The normed vector space $L^\infty$ is the space of all bounded measurable functi
 
 \begin{lemma}\label{thm:mult-symbol-char}
 (Adapted from \cite{arveson2002short})
-A multiplication operator is bounded if and only if its symbol is in $L^\infty$.
+A multiplication operator on $L^2$ is bounded if and only if its symbol is in $L^\infty$.
 \end{lemma}
 \begin{proof}
-Let $M_a$ be a multiplication operator on a Hilbert space $H$ with symbol $a \in L^\infty$. We see that $|f(z)| \leq \|a\|_\infty$ for almost all $z$, so $|a g| = |a||g| \leq \|a\|_\infty |g|$ pointwise almost everywhere; thus
+Let $M_a$ be a multiplication operator on a Hilbert space $\hilbert$ with symbol $a \in L^\infty$. We see that $|f(z)| \leq \|a\|_\infty$ for almost all $z$, so for any $g \in \hilbert$, $|a g| = |a||g| \leq \|a\|_\infty |g|$ pointwise almost everywhere; thus
 \begin{equation*}
 \|a g\|_2 = \sqrt{\int |a g|^2} \leq \sqrt{\int \|a\|_\infty^2|g|^2} = \|a\|_\infty \sqrt{\int |g|^2} = \|a\|_\infty \|g\|_2. .\tag{$\star$}
 \end{equation*}
-This implies $\|M_a\| = \sup_{g \in H} \|a g\|_2 \leq \|a\|_\infty$, so $M_a$ is bounded.
+This implies $\|M_a\| = \sup_{g \in \hilbert} \|a g\|_2 \leq \|a\|_\infty$, so $M_a$ is bounded.
 
 Conversely, assume $M_a$ is bounded, $a \neq 0$ and let $c < \|a\|_\infty$ (of course, we do not assume $\|a\|_\infty$ is finite). Then we know that the
 set $\{z : |a(x) > c|\}$ must have positive measure, and by $\sigma$-finiteness we have a subset $E \subseteq \{z : |a(x) > c|\}$, and its characteristic 
@@ -204,12 +203,12 @@ Our proof will consist of a series of claims about the resolvent set of $T_\phi$
 Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$ and $M$ are the infimum and supremum of the essential range of $\phi$ (Definition \ref{defn:essential-range}) respectively.
 \end{theorem}
 \begin{proof}
-Note we already know that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. 
+Note we already know that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. %TODO: Do we know this?
 Furthermore, we will assume that $\phi$ is non-constant, as if $\phi$ is constant then $T_\phi$ is some constant multiple of the identity operator
 and its spectrum is simply the set containing that constant, and the result holds.
 \begin{enumerate}[I.]
-\item Let $\lambda \in \mathbb{R}$ be such that $T_\phi - \lambda$ is invertible. Then there is a non-zero function $f \in H^2$ such that $(T_\phi - \lambda)f(z) = k$ for any $z$. By the definition of invertibility this is true for $f$ = $(T_\phi - \lambda)^{-1}\kappa$, where
-$\kappa$ is the constant function in $H^2$; $\kappa : z \mapsto k$ for some $k \in \mathbb{C}.$
+\item Let $\lambda \in \mathbb{R}$ be such that $T_\phi - \lambda$ is invertible. Then for some $k \in \mathbb{C}$ there is a non-zero function $f \in H^2$ such that $(T_\phi - \lambda)f(z) = k$ for any $z$. By the definition of invertibility this is true for $f$ = $(T_\phi - \lambda)^{-1}\kappa$, where
+$\kappa$ is the constant function in $H^2$; $\kappa : z \mapsto k$.
 
 \item Now we claim that $(\phi - \lambda)|f|^2$ is constant almost everywhere. To do this, we first show that it is in $H^1$. Indeed, we have
 $(\phi - \lambda)|f|^2 = ((\phi - \lambda)\overline{f}) f$. Then by the previous part, $$(\phi - \lambda)\overline{f} = \overline{(\phi - \lambda)f} = \overline{\kappa}$$

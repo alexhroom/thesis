@@ -11,52 +11,63 @@ most well-behaved operators the definitions are equivalent. This particular defi
 is known as Weyl's criterion, $\Spec_{e, 2}$. \cite{edmunds2018spectral}
 
 \begin{definition}{\textbf{(Essential spectrum)}}\index{spectrum!essential}\index{Weyl's criterion}
-The essential spectrum of an operator $T$ on a Hilbert space $H$ 
-is defined as the set of all $\lambda$ such that a \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and $\lambda$ , i.e. a sequence with the properties:
+The essential spectrum of an operator $T$ on a Hilbert space $\hilbert$ 
+is defined as the set of all $\lambda \in \mathbb{C}$ such that a \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and $\lambda$ , i.e. a sequence with the properties:
 \begin{itemize}
 \item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$;
-\item $u_n \rightharpoonup 0$ (where $\rightharpoonup$ denotes weak convergence: $u_n \rightharpoonup u \Leftrightarrow (u_n, g) \rightarrow (u, g) \quad \forall g \in H$);
+\item $u_n \rightharpoonup 0$ (where $\rightharpoonup$ denotes weak convergence: $u_n \rightharpoonup u \Leftrightarrow (u_n, g) \rightarrow (u, g) \quad \forall g \in \hilbert$);
 \item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
 \end{itemize}
 \end{definition}
 
-\begin{proposition}\label{thm:ess-in-spec}
-If $\lambda$ is in the essential spectrum of $T$, then it is in the spectrum of $T$.
-\end{proposition}
+It may not be immediately obvious from the definition that the essential spectrum is in the spectrum at all. In fact, we do not even require $u_n \rightharpoonup 0$ for this to be the case:
+
+\begin{theorem}{\textbf{(Approximate eigenvalue theorem)}}\label{thm:approx-eigenvalue-thm}
+Consider an operator $T$ on a normed vector space $\mathcal{B}$, and $\lambda \in \mathbb{C}$. $\lambda$ is in the spectrum of $T$ if there exists a sequence $u_n$ in $\mathcal{B}$ with the following properties:
+\begin{itemize}
+\item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$, and
+\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
+\end{itemize}
+\end{theorem}
 \begin{proof}
-Let $\lambda$ satisfy the criterion in the definition of essential spectrum. Now assume for contradiction that the resolvent $(T - \lambda)^{-1}$ exists. Then:
+Assume for contradiction that the resolvent $(T - \lambda)^{-1}$ exists. Then:
 \begin{align*}
 0 \leq \lim_{n \rightarrow \infty} \|u_n\| & = \lim_{n \rightarrow \infty} \|(T - \lambda)^{-1}(T - \lambda)u_n\| & \\
 & \leq \|(T - \lambda)^{-1}\| \lim_{n \rightarrow \infty} \|(T - \lambda)u_n\| & \text{\emph{(as $(T - \lambda)^{-1}$ is bounded)}}\\
 & = 0
 \end{align*}
 and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot converge to zero! Thus this bounded inverse does not exist.
+%TODO: ONLY IF?
 \end{proof}
+We will call the subset of the spectrum created by this theorem the \textbf{approximate point spectrum}\index{spectrum!approximate point}, denoted $\Spec_{ap}$:
+
+$$\Spec_{ap}(T) \eqdef \{ \lambda \in \mathbb{C} : \exists u_n \text{ s.t. } \|u_n\| = 1\quad \forall n \in \mathbb{N},\text{ and }\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0\}.$$
+
 \begin{corollary}
-Note that the previous proof did not require the weak convergence of $u_n$; indeed, if there is a sequence with $\|u_n\| = 1$ and $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$,
-then $\lambda$ is in the overall spectrum of $T$ (but not necessarily the essential spectrum!)
+Note that by Theorem $\ref{thm:approx-eigenvalue-thm}$, the essential spectrum is a subset of the approximate point spectrum, and therefore
+is in the spectrum of $T$.
 \end{corollary}
 
-We can loosen the definition of weak convergence to just require convergence in a dense subspace of $H$:
+We can loosen the definition of weak convergence to just require convergence in a dense subspace of $\hilbert$:
 \begin{lemma}\label{thm:weak-conv-dense-subset}
-A bounded sequence $u_n$, $\|u_n\| \leq C$, is weakly convergent to $u$ in $H$ if and only if it is weakly convergent to $u$ in $L$ where $L$ is a dense subspace of $H$.
+A bounded sequence $u_n$, $\|u_n\| \leq C$, is weakly convergent to $u$ in $\hilbert$ if and only if it is weakly convergent to $u$ in $L$ where $L$ is a dense subspace of $\hilbert$.
 \end{lemma}
 \begin{proof}
-Weak convergence in $H$ implying the same in $L$ is obvious by the definition. 
-Conversely, take $g \in H$. For any $\varepsilon > 0$, we have $\|g - \varphi\| < \varepsilon$ for $\varphi \in L$; furthermore by the weak convergence of $u_n$ in $L$ we have $N \in \mathbb{N}$ such that $(u_n - u, \varphi) < \varepsilon$ for $n \geq N$. Then:
+Weak convergence in $\hilbert$ implying the same in $L$ is obvious by the definition. 
+Conversely, take $g \in \hilbert$. For any $\varepsilon > 0$, we have $\|g - \varphi\| < \varepsilon$ for $\varphi \in L$; furthermore by the weak convergence of $u_n$ in $L$ we have $N \in \mathbb{N}$ such that $(u_n - u, \varphi) < \varepsilon$ for $n \geq N$. Then:
 $$( u_n - u, g ) = ( u_n - u, g - \varphi + \varphi ) = ( u_n - u, g - \varphi ) + ( u_n - u, \varphi ) < \|u_n - u\| \|g - \varphi\| + \varepsilon < \varepsilon(C + 1) \rightarrow 0.$$
 \end{proof}
 
 We will now construct a Weyl sequence for the essential spectrum of the 'Laplacian' or 'free Schr\"odinger' operator $T = -\Delta$ on $L^2(\mathbb{R})$,
 where on $\mathbb{R}^1$, $\Delta$ is the operator $\Delta f (x) = \frac{d^2}{dx^2} f(x)$
 
-\begin{proposition}
+\begin{example}
 The essential spectrum of the operator $T = -\Delta$ is the closed half-axis $[0, +\infty)$.
-\end{proposition}
+\end{example}
 \begin{proof}
 First, note that for the exponential function we have 
 \begin{equation}\label{eqn:laplace-eigenvector}
-T(\text{exp})(i\omega x) = \omega^2 \exp(i\omega x).
+T\exp(i\omega x) = \omega^2 \exp(i\omega x).
 \end{equation}
 This gives much of the intuition for this proof; the function $\exp_{i \omega}: x \mapsto \exp(i\omega x)$ is not an eigenvector 
 as it is not in $L^2(\mathbb{R})$, but it satisifes the eigenvalue equation for $T$ and so any number $\lambda = \omega^2$ -
@@ -95,9 +106,9 @@ Thus $u_n$ forms a Weyl sequence for $T$ and $\lambda \in [0, +\infty)$, as requ
 
 We can use a similar idea for another example to find the essential spectrum of the multiplication operator:
 
-\begin{proposition}
-The essential spectrum of the operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the range of $f$.
-\end{proposition}
+\begin{example}
+The essential spectrum of the operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the essential range of $f$.
+\end{example}
 \begin{proof}
 Similar to before, our initial idea comes from an 'almost-eigenvector'. In this case, if $\lambda$ is in the range
 of $f$ with $f(x_0) = \lambda$, we see that $M_f \delta_{x_0} = \lambda \delta_{x_0}$, where $\delta_{x_0}$ is the
@@ -131,7 +142,6 @@ converging to zero as $\supp \rho_n$ shrinks around $x_0$ by the continuity of $
 Compare this example to Theorem \ref{thm:mult-op-spec}, and see that the \emph{entire spectrum} of a multiplication operator is essential spectrum; the
 operator has no eigenvalues.
 
-\subsection{Essential spectrum and compact perturbation}
 One interesting property of the essential spectrum that is not easily visible from our earlier definition is that it is invariant under compact
 perturbations. This is not the case for eigenvalues!
 
@@ -144,17 +154,17 @@ The rank of an operator $T$, denoted $\rank T$, is the dimension of its range.
 Note in particular that if a bounded operator $T$ has finite rank, then $T$ is compact; as its image is finite-dimensional and bounded, 
 the Bolzano-Weierstrass theorem holds for $(Tx_n)_{n \in \mathbb{N}}$.
 
-Note also that any compact operator is necessarily bounded, as otherwise we could choose a bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $H$ such that $\|Tx_n\| \rightarrow \infty$, 
+Note also that any compact operator is necessarily bounded, as otherwise we could choose a bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $\hilbert$ such that $\|Tx_n\| \rightarrow \infty$, 
 and then it would not be possible for $(Tx_n)_{n \rightarrow \infty}$ to have a bounded subsequence. 
 
 \begin{theorem}
-Let $\lambda$ be in the essential spectrum of an operator $T$ on a Hilbert space $H$. Then
+Let $\lambda$ be in the essential spectrum of an operator $T$ on a Hilbert space $\hilbert$. Then
 
 \begin{equation}\label{eqn:weyl_spectrum}
-\lambda \in \bigcap_{K \in \mathcal{K}(H)} \Spec_e(T + K)
+\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)
 \end{equation}
 
-where $\mathcal{K}(H)$ is the space of all compact linear operators on $H$.
+where $\mathcal{K}(\hilbert)$ is the space of all compact linear operators on $\hilbert$.
 \end{theorem}
 \begin{proof}
 First, let $\lambda \in \Spec_e(T)$ have the Weyl sequence $x_n$ for the operator $T$. Then 
@@ -162,19 +172,19 @@ First, let $\lambda \in \Spec_e(T)$ have the Weyl sequence $x_n$ for the operato
 $$\|(T+K-\lambda)x_n\| = \|(T - \lambda)x_n+Kx_n\| \leq \|(T - \lambda)x_n\| + \|Kx_n\|$$. 
 
 And as $K$ is compact, $Kx_n$ has a convergent subsequence $Kx_{n_k}$, where $x_{n_k} \rightharpoonup 0$ because $x_n \rightharpoonup 0$.
-Then $Kx_{n_k}$ also weakly converges to 0 by two applications of the Riesz representation theorem and the boundedness of $K$: for any $\phi \in H$,
+Then $Kx_{n_k}$ also weakly converges to 0 by two applications of the Riesz representation theorem and the boundedness of $K$: for any $\phi \in \hilbert$,
 
 \begin{align*}
-(Kx_{n_k}, \phi) & = f(Kx_{n_k}) & \text{\emph{for some bounded linear functional $f \in H^*$}}\\
-& = (f \circ K) (x_{n_k}) & \text{\emph{which is also a bounded linear functional in $H^*$}}\\
-& = (x_{n_k}, \psi) & \text{\emph{for some $\psi \in H$}}&\\
+(Kx_{n_k}, \phi) & = f(Kx_{n_k}) & \text{\emph{for some bounded linear functional $f \in \hilbert^*$}}\\
+& = (f \circ K) (x_{n_k}) & \text{\emph{which is also a bounded linear functional in $\hilbert^*$}}\\
+& = (x_{n_k}, \psi) & \text{\emph{for some $\psi \in \hilbert$}}&\\
 & \rightarrow 0 & \text{\emph{by weak convergence of $x_{n_k}$ to 0}}
 \end{align*}
 
 and as it is (strongly) covergent to some value $K$, it must also be weakly convergent to the same value; thus $Kx_{n_k} \rightarrow 0$.
 
 Thus $\|(T+K-\lambda)x_{n_k}\| \leq \|(T - \lambda)x_{n_k}\| + \|Kx_{n_k}\| \rightarrow 0$, so $x_{n_k}$ is a Weyl sequence for $\lambda$ and $T+K$ 
-for any compact operator $K$, so $\lambda \in \bigcap_{K \in \mathcal{K}(H)} \Spec_e(T + K)$.
+for any compact operator $K$, so $\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)$.
 \end{proof}
 
 \begin{remark}
@@ -187,13 +197,22 @@ so $\lambda$ is not an eigenvalue of $(T+P)$. This will become a very useful pro
 \emph{dissipative barrier methods}, which we will explore in section \ref{sec:dissipative-barrier}.
 \end{remark}
 
-\subsection{Numerical range and essential numerical range}
-\begin{definition}{\textbf{(Numerical range of an operator)}}\index{range!numerical} Let $T$ be an operator on a Hilbert space $H$. The
-numerical range $\Num(T)$ is defined
+\subsection{Rayleigh quotients and numerical range}
+The gateway to bounding the spectrum (and its pollution) of an operator $T$ on a Hilbert space lies in a function known as the \textbf{Rayleigh quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$, defined:
 
-$$\Num(T) = \{( Tu, u ) : u \in \Dom(T), \|u\|=1\}$$
+ \begin{equation*}
+ R_T(u) \eqdef \frac{( Tu, u )}{(u, u)}
+ \end{equation*}
+ 
+ or equivalently
+ \begin{equation*}
+ R_T(u) \eqdef ( Tu, u )\text{ where } \|u\| = 1.
+ \end{equation*}
+ 
+ For operators where we want to weaken the domain (e.g. a differential operator) it is suitable to replace $(Tu, u)$ with the relevant bilinear form $\mathcal{A}[u, u].$
 
-where $\text{Dom}(T)$ is the domain of $T$.
+\begin{definition}{\textbf{(Numerical range of an operator)}}\index{range!numerical} Let $T$ be an operator on a Hilbert space. The
+numerical range $\Num(T)$ is defined $\Num(T) \eqdef \Ran(R_T)$.
 \end{definition}
 
 The numerical range has a variety of interesting properties which make them useful for roughly approximating
@@ -202,7 +221,7 @@ the location of spectra.
 \begin{proposition}\label{thm:num-range-props}
 The numerical range $\Num(T)$ of an operator $T$ has the following properties:
 \begin{enumerate}
-\item\label{item:num-in-R} $\Num(T) \in \mathbb{R}$ if and only if $T$ is self-adjoint;
+\item\label{item:num-in-R} $\Num(T) \in \mathbb{R}$ if $T$ is self-adjoint;
 \item\label{item:proj-num-range} $\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$;
 \item (Toeplitz-Hausdorff theorem)\label{item:toeplitz-hausdorff}\index{theorem!Toeplitz-Hausdorff} $\Num(T)$ is a convex set;
 \item\label{item:spec-in-num} $\Spec(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$.
@@ -211,9 +230,10 @@ The numerical range $\Num(T)$ of an operator $T$ has the following properties:
 
 It is important to state the usefulness of these properties with regards to spectral pollution. Not only does $\Num(T)$ bound the spectrum of $T$,
 it bounds the spectrum of $T_\mathcal{L}$ - effectively, bounding the region in which spectral pollution can occur to a convex set around $\Spec(T)$.
+We will also use this fourth property to derive a theorem on how well the Galerkin method approximates the spectrum outside of $\conv(\Spec_{ess})$.
 
 \begin{proof}
-(\ref{item:num-in-R}.) $T$ is self-adjoint if and only if $(Tu, u) = (u, Tu)$ for all $u$; by conjugate symmetry of scalar products, $(u, Tu) = \overline{(Tu, u)}$; we combine these to find $(Tu, u) = \overline{(Tu, u)}$ and the result follows. 
+(\ref{item:num-in-R}.) If $T$ is self-adjoint, $(Tu, u) = (u, Tu)$ for all $u$; by conjugate symmetry of scalar products, $(u, Tu) = \overline{(Tu, u)}$; we combine these to find $(Tu, u) = \overline{(Tu, u)}$ and the result follows. 
 
 (\ref{item:proj-num-range}.) $\Num(T_\mathcal{L}) = \{( PTPu, u ) : u \in \mathcal{L}, \|u\|=1\}$.
 We then use the self-adjointness of $P$ to see
@@ -230,21 +250,45 @@ Then by property \ref{item:proj-num-range}, $\Num(T_\mathcal{L}) \subseteq \Num(
 (\ref{item:spec-in-num}.) $\overline{\Num(T)}$ is the set of all points $\lambda$ such that there is a sequence of unit vectors $u_n$ where
 $$\lim_{n\rightarrow \infty}( Tu_n, u_n ) = \lambda.$$
 
-The approximate point spectrum
-$\sigma_{ap}(T) = \{\lambda \in \mathbb{C}: \text{lim}_{n \rightarrow \infty}\|(T - \lambda)u_n\| \text{ for some sequence } (u_n)_{n \in \mathbb{N}}, \|u_n\| = 1\}$
-can be shown to contain the boundary of the spectrum of $T$ (e.g. in Halmos \cite{halmos1982hilbert}, problem 78). Then by the Cauchy-Schwarz inequality,
+The approximate point spectrum (Theorem \ref{thm:approx-eigenvalue-thm}) can be shown to contain the boundary of the spectrum of $T$ (e.g. in Halmos \cite{halmos1982hilbert}, problem 78). Then by the Cauchy-Schwarz inequality,
 $|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0$, and so
 \begin{equation*}
 \begin{split}
 |( (T - \lambda)u_n, u_n )| &  = |( (Tu_n, u_n) ) - ( \lambda u_n, u_n )| \\
 & = |( (Tu_n, u_n) ) - \lambda \|u_n\|^2| \\
 & = |( (Tu_n, u_n) ) - \lambda| \rightarrow 0; \\
-& \implies ( Tu_n, u_n ) \rightarrow \lambda.
+& \Rightarrow ( Tu_n, u_n ) \rightarrow \lambda.
 \end{split}
 \end{equation*}
 
 Thus the boundary of the spectrum is in $\overline{\Num(T)}$; as the numerical range is convex,
 this means the whole spectrum must be. 
+\end{proof}
+
+\begin{corollary}\label{thm:self-adj-num-range}
+In particular, if $T$ is self-adjoint and bounded, then we have
+$$\inf(\Spec(T)) = \inf(\Num(T))\text{, and}$$
+$$\sup(\Spec(T)) = \sup(\Num(T)).$$
+\end{corollary}
+\begin{proof}
+We know from Proposition \ref{thm:num-range-props} that $\Spec(T) \subseteq \overline{\Num(T)} \subseteq \mathbb{R}$ and so $\inf(\Spec(T)) \geq \inf(\Num(T))$. Let $\inf(\Num(T)) = w_0$; then for any unit vector $u$, $((T - w_0)u, u)  = (Tu, u) - w_0 \geq 0$, and so $u, v \mapsto ((T - w_0)u, v)$ defines a positive-semidefinite Hermitian form, for which the Cauchy-Schwarz inequality holds\footnote{This can easily be verified by looking at a standard proof for the inequality.}. We then find the following bound for unit vectors $u, v$:
+\begin{align*}
+|\tau[u,v]|^2 \leq \tau[u, u] \tau[v, v] = ((T - w_0)u, u)((T - w_0)v, v) \leq \|T - w_0\|((T - w_0)u, u).
+\end{align*}
+Now let us take a minimising sequence $u_n$, $\|u_n\| = 1$ such that $(Tu_n, u_n) \rightarrow w_0$. Then we have
+\begin{align*}
+\|(T - w_0)u_n\|^2 = |\tau[u_n, (T - w_0)u_n]|^2  \leq \|T - w_0\|((T - w_0)u_n, u_n) \leq \|T - w_0\||(Tu_n, u_n) - w_0| \rightarrow 0,
+\end{align*}
+and therefore $w_0 \in \Spec(T)$ by Theorem \ref{thm:approx-eigenvalue-thm}.
+The proof for the supremum $w_1$ is analogous with some sign changes.
+\end{proof}
+This corollary extends to self-adjoint \textbf{semibounded}\index{operator!semibounded} operators, which are operators $T$ on a Hilbert space $\hilbert$ such that its Rayleigh quotient $R_T$ is bounded above or below by some constant $c$ - the result holds for the supremum or infimum for operators which are semibounded above or below respectively. We omit this more general proof as we would require a significant tangent to acquire the prerequisite results: see e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a bounded operator is semibounded both above and below.
+
+\begin{corollary}
+Let $T$ be a self-adjoint, semibounded operator. Then spectral pollution does not occur outside of $\conv\Spec(T)$.
+\end{corollary}
+\begin{proof}
+Combine the previous corollary with Proposition \ref{thm:num-range-props}.\ref{item:proj-num-range}.
 \end{proof}
 
 \subsection{Essential numerical range}\index{range!essential numerical}
@@ -274,7 +318,7 @@ and define a sequence $$\nu_n = t(Tx_n, x_n) + (1-t)(Ty_n, y_n) \quad t \in [0, 
 $n \rightarrow \infty$.
 We then create a sequence of compressions $T_n$, where each compression is to $\text{span}\{x_n, y_n\}$. By the Toeplitz-Hausdorff theorem,
 we know that $\nu_n$ is in $\Spec(T_n)$ and get a sequence $\nu_n = (Tz_n, z_n)$ converging to $\nu$; the elements $z_n$ are unit vectors in $\text{span}\{x_n, y_n\}$, and they weakly converge to 0 because $x_n$ and $y_n$ both do:
-$$(z_n, g) = (\alpha x_n + \beta y_n, g) = \alpha(x_n, g) + \beta(y_n, g) \rightarrow 0 \quad \forall g \in H.$$
+$$(z_n, g) = (\alpha x_n + \beta y_n, g) = \alpha(x_n, g) + \beta(y_n, g) \rightarrow 0 \quad \forall g \in \hilbert.$$
 This means that $\nu = \lim_{n \rightarrow \infty}(Tz_n, z_n)$ is in $\Spec_e(T)$ as required.
 
 (\ref{item:nume-in-clos-num}.) This can be seen directly from looking at the two definitions. By definition, we have
@@ -289,11 +333,11 @@ It remains to show that $\conv(\Spec_e(T)) = \Num_e(T)$ when $T$ is self-adjoint
 This will be proven after the following theorem, which describes another similarity with essential spectra; invariance under compact perturbation.
 
 \begin{theorem}
-A value $\lambda$ is in the essential numerical range of an operator $T$ on a Hilbert space $H$ if and only if
+A value $\lambda$ is in the essential numerical range of an operator $T$ on a Hilbert space $\hilbert$ if and only if
 
-$$\lambda \in \bigcap_{K \in \mathcal{K}(H)} \overline{\Num(T+K)}$$
+$$\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$$
 
-where $\mathcal{K}(H)$ is the set of all compact linear operators on $H$. 
+where $\mathcal{K}(\hilbert)$ is the set of all compact linear operators on $\hilbert$. 
 \end{theorem}
 \begin{proof}
 Let $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n)$ be in $\Num_e(T)$. Then $((T+K)x_n, x_n)$ = $(Tx_n, x_n) + (Kx_n, x_n)$ 
@@ -318,7 +362,7 @@ $$(T_i w_i, w_i) = (\lambda_i w_i, w_i) = \lambda_i \|w_i\| = \lambda_i.$$
 This means $\lambda_i \in \Num(T_i) \subseteq \Num(T)$, so $\lambda_i = (T x_i, x_i)$ for some unit vector $x_i$, and
 $$\lambda = \lim_{i \rightarrow \infty} \lambda_i = \lim_{i \rightarrow \infty}(Tx_i, x_i).$$
 Then, for $\lambda$ to be spectral pollution outside of the essential numerical range, we must have that $x_i \rightharpoonup x \neq 0$ (as otherwise
-$\lambda \in \Num_e(T)$) and also $\|(T - \lambda)x_i\| \nrightarrow 0$ (as then $\lambda$ is in the spectrum of $T$ by the corollary to Proposition \ref{thm:ess-in-spec}).
+$\lambda \in \Num_e(T)$) and also $\|(T - \lambda)x_i\| \nrightarrow 0$ (as then $\lambda$ is in the spectrum of $T$ by the corollary to Theorem \ref{thm:approx-eigenvalue-thm}).
 \end{proof}
 
 For a bounded operator, this is the main result of a paper by Pokrzywa \parencite{pokrzywa1979method}. The main theorem of the paper has the
