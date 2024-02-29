@@ -7,6 +7,8 @@ of an operator holds the same key to the entire structure as eigenvalues do for 
 the finite- to infinite-dimensional case) we lose the ease of representation that allows the creation of such algorithms and formulae as those 
 used for matrices. 
 
+Throughout, our examples will mainly focus on differential and multiplication operators. As a result, we will not generally assume that the operator is bounded (many texts use `operator' to mean `bounded operator'). However, we will focus mainly on
+Hilbert spaces, and assume that the operator has the properties required for the spectrum and adjoint to exist and make sense - these properties are subtle and will not be a hassle or an excessive restriction (merely allowing us to avoid fiddly arguments to deal with pathological examples).
 \subsection{Spectra}
 
 We must first define our quantity of interest: the spectrum of an operator.
@@ -22,38 +24,20 @@ that the operator $(T - \lambda I)$ does not have a bounded inverse.
 
 In the remainder of the text, the identity operator $I$ will be implicit in the operator - i.e. we will simply write $(T - \lambda I)$ as $(T - \lambda)$.
 
-One can see that this concept generalises the eigenvalues of a matrix to any Banach space, and that for a finite-dimensional Banach space
-(of which $\mathbb{R}^n$ and $\mathbb{C}^n$ are major examples) we can recover the eigenvector equation. Indeed, the term `resolvent'
-originates from its relation to the solution of certain types of differential equation; if for some differential operator $L$ we have the equation
-$Lu = \lambda u + g$, a solution $u$ would be related to $g$ as $(L - \lambda)^{-1}g = u$. 
+We must keep this generality (rather than just defining eigenvalues of a linear operator like we do for matrices) because in infinite dimensions, the failure of invertibility can come about in a variety of ways. In finite-dimensional spaces, the rank-nullity theorem asserts that if $(T - \lambda)$ is not invertible, then it is not injective. As a result, $(T - \lambda)u = (T - \lambda)v$ for some $u \neq v$; so $T(u - v) = \lambda(u-v)$, and thus any point in the spectrum is an eigenvalue. The variety of ways in which invertibility can generally fail will be explored in Section \ref{sec:ess-spec}.
 
-For an operator on an
-infinite-dimensional space, values which satisfy the eigenvector equation \emph{are} in the spectrum of the operator, but they do not
-comprise the entire spectrum - nor do we necessarily have a spectrum made up of a discrete set of values.
+We will find many of our physical examples to be self-adjoint. We will prove later that if an operator is self-adjoint, then its spectrum lies entirely on the real line; this makes it much more convenient to model, bound and calculate a wide range of results.
 
-\begin{example}
-Let $S$ be the 'right-shift' operator on the sequence space $\ell^2(\mathbb{N})$, which has the following action:
-$S(x_1, x_2, x_3, ...)$ = $(0, x_1, x_2, x_3, ...)$; that is, for a sequence $u$ we map $u_n$ to $u_{n+1}$, and pad the vector with a zero in $u_1$'s place.
-$S$ has no eigenvalues, and its spectrum is the open unit disc $D = \{z \in \mathbb{C} : |z| = 1\}$.
-\end{example}
-\begin{proof}{\emph{(sketch)}}
-For the lack of eigenvalues; we see that if $Su = \lambda u$, 
-$$(0, u_1, u_2, u_3 ...) = (\lambda u_1, \lambda u_2, \lambda u_3 ...)$$
-so in particular, we would require $\lambda u_1 = 0$. Then either $\lambda = 0$ and thus $u_n$ = 0 for all $n$, or as $\lambda \neq 0$, $u_1 =0$. Then $\lambda u_2 = u_1 = 0$, and continuing this we
-can see that $u_n = 0$ for all $n$, i.e. $u$ must be the zero vector. Thus there is no non-zero vector satisfying the eigenvector equation.
-
-To calculate its spectrum, we make use of a natural relation between the spectrum of an operator T and the spectrum of its adjoint: 
-\begin{align*}
-\lambda \in \Spec(T)  &\text{ iff } (T - \lambda)\text{ is not invertible }\\
-& \text{ iff } (T - \lambda)^*\text{ is not invertible (this is true for any operator)}\\
-& = (T^* - \overline{\lambda}) \text{ not invertible, i.e. } \overline{\lambda} \in \Spec(T^*).
-\end{align*}
-in this case, the adjoint is the left-shift operator $S^*u = (u_2, u_3, u_4, ...).$; we can see that for any value $\lambda$ we have for the vector
-$(\lambda, \lambda^2, \lambda^3...)$
-$$S^*(\lambda, \lambda^2, \lambda^3) = (\lambda^2, \lambda^3, \lambda^4, ...) = \lambda(\lambda, \lambda^2, \lambda^3...)$$
-which is in $\ell^2(\mathbb{N})$ and is thus an eigenvector iff $|\lambda| < 1$; hence the unit disc is in $\Spec(S^*)$ and hence its
-complex conjugate (which is also the unit disc) is in $\Spec(S)$.
-\end{proof}
+\begin{definition}{\textbf{(Adjoint, symmetric, and self-adjoint operators)}} (Adapted from \cite{hall2013quantum})\index{operator!adjoint}\index{operator!symmetric}\index{operator!self-adjoint}
+\begin{itemize}
+\item Let $T$ be an operator on a Hilbert space $\hilbert$. Let $\Dom(T^*)$ be the set of all $v \in \hilbert$ such that the functional
+$$u \mapsto (Tu, v) \quad \text{on $u \in \Dom(T)$}$$
+is bounded. We then define an \textbf{adjoint} operator $T^*$ to be the operator such that $(Tu, v) = (u, T^*v)$ for all $u \in \Dom(T), v \in \Dom(T^*)$
+\item An operator $T$ is symmetric if for all $u, v \in \Dom(T)$, (Tu, v) = (u, Tv).
+\item An operator $T$ is self-adjoint if it is symmetric and $Dom(T^*) = Dom(T)$, i.e. it is equal to its adjoint operator.
+\end{itemize}
+\end{definition}
+Note that a bounded operator is symmetric if and only if it is self-adjoint; bounded operators are defined on the whole of $\hilbert$, so these issues with the domain do not occur. 
 
 As we have alluded to, there is no universal algorithm for the calculation of operator spectra in the way that there is the QR algorithm \cite{suli2003introduction} for matrices. To devise a formula for the spectrum of even a specific subset of a class of operators is a mathematical
 feat, and varieties of operators important to fields such as quantum physics (\cite{lewin2010spectral}), hydrodynamics (\cite{manning2008descriptor}), and crystallography (\cite{cances2012periodic}) still withhold the structure of their spectra from decades-long attempts at discovery. 
@@ -135,7 +119,20 @@ the spectrum for the equivalent equation in the helium atom (let alone any large
 spectrum can be found concretely, and in the space $L^2(0, \infty)$ it has eigenvalues $\lambda_k = -\frac{1}{(2k + 4)^2}$ for $k \in \mathbb{N}_0$.
 
 Let us see how well a Ritz-Galerkin method can approximate this known spectrum. We can see the results of an approximation in Figure \ref{fig:schrodinger-ritz} done via the \texttt{specpol} software. We choose the weighted Laguerre polynomial basis $\phi_n = \exp(-x/2)L_n$, where $L_n$ is the n'th Laguerre polynomial; this is a complete orthonormal set on the half-line \cite{szego1975orthogonal}.
- In this case, it is a very accurate approximation; even at the lowest matrix size of 50, the 6 smallest eigenvalues are accurate to 5 significant figures (and despite possible error induced via other numerical parts of the computation, e.g. inaccuracy in the calculation of basis functions or in the quadrature used)
+ In this case, it is a very accurate approximation; even at the lowest matrix size of 50, the 6 smallest eigenvalues are accurate to 3 significant figures (and despite possible error induced via other numerical parts of the computation, e.g. inaccuracy in the calculation of basis functions or in the quadrature used)
+ 
+\begin{center}
+ \begin{tabular}{c|c c}
+ Eigenvalue & Exact & Approximated \\
+ \hline\hline
+ $\lambda_0$ & -0.0625 & \\
+ $\lambda_1$ & -0.02\.7 &  \\
+ $\lambda_2$ & -0.015625 & \\
+ $\lambda_3$ & -0.01 & \\
+ $\lambda_4$ & -0.0069\.4 & \\
+ $\lambda_5$ & -0.00510204... & \\
+ \end{tabular}
+\end{center}
 
 \begin{figure}[p!]
 \includegraphics{hydrogen}
@@ -147,7 +144,8 @@ Note how as the size of the Ritz matrix increases, the higher eigenvalues (close
 
 Indeed, comparing this derivation to the earlier definitions of truncations, we can see that we are calculating the eigenvalues of truncations $T_n$ of the
 operator $T$. The natural question which follows is to ask about the convergence of these methods as $n$ becomes large. The answer is that this
-convergence is not perfect. The spectrum of the operator will be approximated, but in many cases there will also be a lot of other spurious values in the spectrum.
+convergence is not perfect - in fact,  for Schr\"odinger operators in particular it has been shown that a `perfect' truncation algorithm is impossible \cite{colbrook2019how}.
+In our case, the spectrum of the operator will be approximated, but in many cases there will also be a lot of other spurious values in the spectrum.
 This brings us to our main subject; the study of these spurious eigenvalues, known as spectral pollution.
 
 \subsection{Spectral pollution}
@@ -166,11 +164,11 @@ spurious. In applications of spectral theory, this difference can be beyond a si
 \end{example}
 
 We see in Figure \ref{fig:TODO} that this approximation does not work so well. It looks like it successfully covers the relevant parts of the spectrum,
-but there are a lot of additional eigenvalues which do not exist!
+but there are a lot of additional eigenvalues which do not exist!\\
 
-There are, of course, other methods for approximating operator spectra, such as the popular finite difference or `shooting' methods \cite{suli2003introduction}, or specialised algebraic methods \cite{aceto2006numerical}, which are not subject to pollution. So why do we
+There are, of course, other methods for approximating operator spectra, such as the popular finite difference or `shooting' methods \cite{suli2003introduction}, or specialised methods such as Pr\"ufer and Pruess methods for Sturm-Liouville problems \cite{pryce1993numerical}, which are not subject to pollution. So why do we
 care about truncation methods?
-The motivation for studying Ritz-Galerkin methods is that they make \emph{almost no} assumptions about the operator itself or the location of its spectrum. 
+The central motivation for these methods is that they make \emph{almost no} assumptions about the operator itself or the location of its spectrum. Even for the operators covered by these specialised methods, eigenvalues in certain parts of the spectrum cannot be accessed without significant tweaking \cite{aceto2006numerical}, not to mention that many methods only apply to problems in one dimension.
 If the spectral pollution for a sequence of truncations can be discarded, detected or otherwise dealt with, it would provide a unified and 
 powerful approach to numerical spectral theory for almost any operator.
 \end{document}

@@ -37,25 +37,29 @@
 %% theorem definitions
 \usepackage{amsthm}
 \newtheorem*{definition}{Definition}
-\newtheorem*{corollary}{Corollary}
 \newtheorem*{remark}{Remark}
 \newtheorem{example}{Example}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{lemma*}{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 
 %% symbol definitions
+\usepackage{mathtools}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \newcommand{\Spec}{\mathrm{Spec}} % spectrum
 \newcommand{\Dom}{\mathrm{Dom}} % domain
 \newcommand{\Ran}{\mathrm{Ran}} % range
+\newcommand{\Ker}{\mathrm{Ker}} % kernel
 \newcommand{\rank}{\mathrm{rank}} % rank
 \newcommand{\Num}{\mathrm{W}} % numerical range
 \newcommand{\supp}{\mathrm{supp}} % support
 \newcommand{\conv}{\mathrm{conv}} % convex hull
 \newcommand{\sobolev}{W^{1, 2}} % sobolev space H^1 (we avoid conflict with Hardy space notation)
 \newcommand{\hilbert}{\mathcal{H}} % Hilbert space generic symbol
+\newcommand{\diag}{\mathrm{diag}} % Diagonal infinite matrix
 
 \newcommand{\1}{\mathbf{1}} % characteristic function
 \newcommand{\eqdef}{\mathrel{\mathop:}=} % 'defined by' symbol
@@ -76,7 +80,6 @@
      \vspace*{\fill}
   \end{titlepage}
 \tableofcontents
-
 \subfile{sections/introduction}
 
 \subfile{sections/multiplication-operator}

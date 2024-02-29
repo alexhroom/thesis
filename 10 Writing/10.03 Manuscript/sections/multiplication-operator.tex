@@ -10,6 +10,8 @@ the action $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication wi
 the multiplication operator.
 \end{definition}
 
+We can see immediately that the adjoint of $M_a$ is $M_{\overline{a}}$, and thus that $M_a$ is self-adjoint iff $a$ is real-valued.
+
 The spectrum of a multiplcation operator is easy to calculate. We first
 need to define the 'essential range' of a function. Intuitively, this is
 similar to the standard range of a function, but ignoring values taken by
@@ -118,7 +120,7 @@ j,k \in \mathbb{N}_0$ by its truncations $(T_{f,n})_{j,k} = c_{j-k}$ for $j, k \
 properties of $f$; we can repeat this reasoning with any function capable of being represented by a Fourier series. Let us systematise
 what we have seen.
 
-\subsection{Toeplitz operators}
+\subsection{Toeplitz operators}\label{sec:toeplitz}
 \subsubsection{Toeplitz operators, Toeplitz matrices, and their equivalence}
 
 The approximation of spectra provides a natural gateway to the study of Toeplitz operators, a type of operator with an elegant cluster
@@ -193,6 +195,19 @@ this means that the Fourier series of $fg$ satisfies the Hardy space property, b
 $$ \overline{c_{-n}} = \overline{\int f(x) e^{-inx} dx} = \int \overline{f(x)} e^{inx} dx = \int f(x) e^{inx} dx = c_n.$$
 But if $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c_n = \overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$. Thus
 the only coefficient remaining is $c_0$, and a function with a constant Fourier series is a constant function. (This proof is valid for any $H^p, p \in [1, \infty)$.)
+\end{proof}
+
+\begin{lemma}
+Let $\phi \in L^\infty$ be real-valued; then the Toeplitz operator $T_\phi$ is self-adjoint. 
+\end{lemma}
+\begin{proof}
+Let $u, v \in H^2$. Then 
+\begin{align*}
+(T_\phi u, v) & = ( P_{H^2}M_\phi u, v) & \\
+& = (M_\phi u, v) & \text{\emph{as $P_{H^2}$ is self-adjoint and $P_{H^2}v = v$}}\\
+& = (u, M_\phi v) = (P_{H^2}u, M_\phi v) = (u, T_\phi v),
+\end{align*}
+using that $M_\phi$ is self-adjoint if $\phi$ is real-valued.
 \end{proof}
 
 We are now in the position to calculate the form of the spectrum for any Toeplitz operator. This spectrum was first found by Toeplitz

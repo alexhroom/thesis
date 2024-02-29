@@ -2,9 +2,67 @@
 
 \begin{document}
 
-\section{Bounding spectral pollution}
+\section{Bounding spectral pollution}\label{chapter:bounds}
 
-\subsection{The essential spectrum of an operator}
+\subsection{The essential spectrum of an operator}\label{sec:ess-spec}
+
+We begin by producing a result which allows us to constructively classify points in the spectrum of an operator.
+\begin{theorem}{\textbf{(Approximate eigenvalue theorem)}}\label{thm:approx-eigenvalue-thm}
+Consider an operator $T$ on a Hilbert space $\hilbert$, and $\lambda \in \mathbb{C}$. $\lambda$ is in the spectrum of $T$ if there exists a sequence $u_n$ in $\hilbert$ with the following properties:
+\begin{itemize}
+\item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$, and
+\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Assume for contradiction that the resolvent $(T - \lambda)^{-1}$ exists. Then:
+\begin{align*}
+0 \leq \lim_{n \rightarrow \infty} \|u_n\| & = \lim_{n \rightarrow \infty} \|(T - \lambda)^{-1}(T - \lambda)u_n\| & \\
+& \leq \|(T - \lambda)^{-1}\| \lim_{n \rightarrow \infty} \|(T - \lambda)u_n\| & \text{\emph{(as $(T - \lambda)^{-1}$ is bounded)}}\\
+& = 0
+\end{align*}
+and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot converge to zero! Thus this bounded inverse does not exist.
+\end{proof}
+We will call the subset of the spectrum created by this theorem the \textbf{approximate point spectrum}\index{spectrum!approximate point}, denoted $\Spec_{ap}$:
+
+$$\Spec_{ap}(T) \eqdef \{ \lambda \in \mathbb{C} : \exists u_n \text{ s.t. } \|u_n\| = 1\quad \forall n \in \mathbb{N},\text{ and }\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0\}.$$
+
+Note that any eigenvalue is in the approximate point spectrum - if $\varphi$ is a normalised eigenvector corresponding to $\lambda$, then the constant
+sequence $u_n = \varphi$ satisfies this property. Indeed, for a specific (and very common) type of operator, we can see that this criterion covers the
+entire spectrum.
+
+\begin{lemma}
+For any operator $T$, $\Spec(T) = \overline{\Spec_{ap} (T^*)} \cup \Spec_{ap} (T)$.
+\end{lemma}
+To prove this, consider what makes a point $\lambda$ capable of being in $\Spec(T) \setminus \Spec_{ap}(T)$. $(T - \lambda)$ must be injective (else $(T - \lambda)u = (T - \lambda)v$ for some $u \neq v$ and so $u-v$ is an eigenfunction) and $\Ran(T - \lambda)$ must not be dense in $\hilbert$ (else it is surjective and thus bijective, or can be extended to an operator which is surjective and thus bijective).
+
+We can prove that for any operator $T$, $\Ran(T)^\perp = \Ker(T^*)$:
+\begin{align*}
+\text{ for } u \in \Ran(T), v \in \Ker(T^*), (u, v) & = (Tw, v) \text{ for some $w \in \hilbert$} \\
+& = (w, T^*v) = (w, 0) = 0 \\
+& \Rightarrow \Ker(T^*) \subseteq \Ran(T)^\perp ;\\
+x \in \Ran(T)^\perp & \Rightarrow (Aw, x) = 0, \\
+& \Rightarrow (w, A^*x) = 0\ \forall w \in \hilbert \\
+&  \Rightarrow A^*x = 0 \\
+& \Rightarrow \Ran(T)^\perp \subseteq \Ker(T^*).
+\end{align*}
+
+Then as there is some element $\eta$ not in the closure of  $\Ran(T - \lambda)$, by the Projection Theorem $\eta \in \Ker(T^* - \overline{\lambda})$; hence $(T^* - \overline{\lambda})\eta = 0$ and so $\eta$ is an eigenvector for $T^*$ with eigenvalue $\overline{\lambda}.$
+
+\begin{theorem}\label{thm:normal-spec} \cite{halmos1982hilbert}
+Let $T$ be a normal operator (i.e. it commutes with its adjoint; $TT^* = T^*T$). Then $$\Spec(T) = \Spec_{ap}(T).$$
+\end{theorem}
+\begin{proof}
+With this lemma proven, the result follows almost immediately: for a normal operator we have
+
+$$\|Tu\|^2 = (Tu, Tu) = (T^*Tu, u) = (TT^*u, u) = (T^*u, T^*u) = \|T^*u\|^2$$
+and so $\|(T - \lambda)u_n\| = \|(T^* - \overline{\lambda})u_n\|$,
+which means that $\Spec_{ap}(T) = \overline{\Spec_{ap} (T^*)}$. 
+\end{proof}
+
+This is fortunate, as most operators relevant to physical examples are normal (if not self-adjoint); we can give a constructive definition for the entire spectrum of a normal operator!
+
+We now specialise to a subset of the approximate point spectrum, known as the essential spectrum.
 The essential spectrum has several definitions, 
 the most popular usually denoted $\Spec_{e,i}$ for $i \in \{1,2,3,4,5\}$ in order of size. For 
 most well-behaved operators the definitions are equivalent. This particular definition 
@@ -22,31 +80,7 @@ is defined as the set of all $\lambda \in \mathbb{C}$ such that a \textbf{Weyl s
 
 It may not be immediately obvious from the definition that the essential spectrum is in the spectrum at all. In fact, we do not even require $u_n \rightharpoonup 0$ for this to be the case:
 
-\begin{theorem}{\textbf{(Approximate eigenvalue theorem)}}\label{thm:approx-eigenvalue-thm}
-Consider an operator $T$ on a normed vector space $\mathcal{B}$, and $\lambda \in \mathbb{C}$. $\lambda$ is in the spectrum of $T$ if there exists a sequence $u_n$ in $\mathcal{B}$ with the following properties:
-\begin{itemize}
-\item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$, and
-\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
-\end{itemize}
-\end{theorem}
-\begin{proof}
-Assume for contradiction that the resolvent $(T - \lambda)^{-1}$ exists. Then:
-\begin{align*}
-0 \leq \lim_{n \rightarrow \infty} \|u_n\| & = \lim_{n \rightarrow \infty} \|(T - \lambda)^{-1}(T - \lambda)u_n\| & \\
-& \leq \|(T - \lambda)^{-1}\| \lim_{n \rightarrow \infty} \|(T - \lambda)u_n\| & \text{\emph{(as $(T - \lambda)^{-1}$ is bounded)}}\\
-& = 0
-\end{align*}
-and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot converge to zero! Thus this bounded inverse does not exist.
-%TODO: ONLY IF?
-\end{proof}
-We will call the subset of the spectrum created by this theorem the \textbf{approximate point spectrum}\index{spectrum!approximate point}, denoted $\Spec_{ap}$:
 
-$$\Spec_{ap}(T) \eqdef \{ \lambda \in \mathbb{C} : \exists u_n \text{ s.t. } \|u_n\| = 1\quad \forall n \in \mathbb{N},\text{ and }\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0\}.$$
-
-\begin{corollary}
-Note that by Theorem $\ref{thm:approx-eigenvalue-thm}$, the essential spectrum is a subset of the approximate point spectrum, and therefore
-is in the spectrum of $T$.
-\end{corollary}
 
 We can loosen the definition of weak convergence to just require convergence in a dense subspace of $\hilbert$:
 \begin{lemma}\label{thm:weak-conv-dense-subset}
@@ -107,7 +141,7 @@ Thus $u_n$ forms a Weyl sequence for $T$ and $\lambda \in [0, +\infty)$, as requ
 We can use a similar idea for another example to find the essential spectrum of the multiplication operator:
 
 \begin{example}
-The essential spectrum of the operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the essential range of $f$.
+Consider $f \in C(0, 1) \cap L^\infty (0, 1)$. The essential spectrum of the operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the range of $f$.
 \end{example}
 \begin{proof}
 Similar to before, our initial idea comes from an 'almost-eigenvector'. In this case, if $\lambda$ is in the range
@@ -198,16 +232,13 @@ so $\lambda$ is not an eigenvalue of $(T+P)$. This will become a very useful pro
 \end{remark}
 
 \subsection{Rayleigh quotients and numerical range}
-The gateway to bounding the spectrum (and its pollution) of an operator $T$ on a Hilbert space lies in a function known as the \textbf{Rayleigh quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$, defined:
+The gateway to bounding the spectrum (and pollution) of an operator $T$ on a Hilbert space lies in a functional known as the \textbf{Rayleigh quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$, defined:
 
  \begin{equation*}
- R_T(u) \eqdef \frac{( Tu, u )}{(u, u)}
+ R_T: u \mapsto \frac{( Tu, u )}{(u, u)}
  \end{equation*}
  
- or equivalently
- \begin{equation*}
- R_T(u) \eqdef ( Tu, u )\text{ where } \|u\| = 1.
- \end{equation*}
+ or equivalently (by linearityc) $R_T: u \mapsto (Tu, u)$ on the domain $\{u \in \Dom(T) : \|u\| = 1\}$.
  
  For operators where we want to weaken the domain (e.g. a differential operator) it is suitable to replace $(Tu, u)$ with the relevant bilinear form $\mathcal{A}[u, u].$
 
@@ -224,7 +255,7 @@ The numerical range $\Num(T)$ of an operator $T$ has the following properties:
 \item\label{item:num-in-R} $\Num(T) \in \mathbb{R}$ if $T$ is self-adjoint;
 \item\label{item:proj-num-range} $\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$;
 \item (Toeplitz-Hausdorff theorem)\label{item:toeplitz-hausdorff}\index{theorem!Toeplitz-Hausdorff} $\Num(T)$ is a convex set;
-\item\label{item:spec-in-num} $\Spec(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$.
+\item\label{item:spec-in-num} $\Spec_{ap}(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$.
 \end{enumerate}
 \end{proposition}
 
@@ -247,11 +278,11 @@ $\mathcal{L} = \text{span}\{x, y\}$. Then we note that $(T_\mathcal{L} x, x) = (
 $\Num(T_\mathcal{L})$. $T_\mathcal{L}$ is two-dimensional, so is a $2 \times 2$ matrix; it can be proven by direct calculation (see \cite{gustafson1997numerical}) that the numerical range of a $2 \times 2$ matrix is an ellipse (with foci at either eigenvalue of the matrix!) and so $\nu$ is in $\Num(T_\mathcal{L})$.
 Then by property \ref{item:proj-num-range}, $\Num(T_\mathcal{L}) \subseteq \Num(T)$, so $\nu$ is also in $\Num(T)$, as required.
 
-(\ref{item:spec-in-num}.) $\overline{\Num(T)}$ is the set of all points $\lambda$ such that there is a sequence of unit vectors $u_n$ where
-$$\lim_{n\rightarrow \infty}( Tu_n, u_n ) = \lambda.$$
+(\ref{item:spec-in-num}.) $\overline{\Num(T)}$ is the set of all points $\eta$ such that there is a sequence of unit vectors $u_n$ where
+$$\lim_{n\rightarrow \infty}( Tu_n, u_n ) = \eta.$$
 
-The approximate point spectrum (Theorem \ref{thm:approx-eigenvalue-thm}) can be shown to contain the boundary of the spectrum of $T$ (e.g. in Halmos \cite{halmos1982hilbert}, problem 78). Then by the Cauchy-Schwarz inequality,
-$|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0$, and so
+Now let $\lambda \in \Spec_{ap}(T)$. We can combine the approximate eigenvalue theorem (Theorem \ref{thm:approx-eigenvalue-thm}) with the Cauchy-Schwarz inequality:
+$$|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0,\text{ and so}$$
 \begin{equation*}
 \begin{split}
 |( (T - \lambda)u_n, u_n )| &  = |( (Tu_n, u_n) ) - ( \lambda u_n, u_n )| \\
@@ -260,18 +291,28 @@ $|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0$, and so
 & \Rightarrow ( Tu_n, u_n ) \rightarrow \lambda.
 \end{split}
 \end{equation*}
+So $\lambda \in \overline{\Num(T)}$.
+\end{proof}
 
-Thus the boundary of the spectrum is in $\overline{\Num(T)}$; as the numerical range is convex,
-this means the whole spectrum must be. 
+\begin{corollary}\label{thm:normal-spec-in-num}
+If $T$ is a normal operator (i.e. $TT^* = T^*T$), then its entire spectrum is in the numerical range.
+\end{corollary}
+\begin{proof}
+Combine Theorem \ref{thm:normal-spec} with Theorem \ref{thm:num-range-props}.\ref{item:spec-in-num}.
 \end{proof}
 
 \begin{corollary}\label{thm:self-adj-num-range}
-In particular, if $T$ is self-adjoint and bounded, then we have
-$$\inf(\Spec(T)) = \inf(\Num(T))\text{, and}$$
-$$\sup(\Spec(T)) = \sup(\Num(T)).$$
+In particular, if $T$ is self-adjoint, $\Spec(T) \subseteq \mathbb{R}$. Furthermore, if $T$ is bounded, then we have
+\begin{align*}
+\inf(\Spec(T)) & = \inf(\Num(T))\text{, and}\\
+\sup(\Spec(T)) & = \sup(\Num(T)).
+\end{align*}
 \end{corollary}
 \begin{proof}
-We know from Proposition \ref{thm:num-range-props} that $\Spec(T) \subseteq \overline{\Num(T)} \subseteq \mathbb{R}$ and so $\inf(\Spec(T)) \geq \inf(\Num(T))$. Let $\inf(\Num(T)) = w_0$; then for any unit vector $u$, $((T - w_0)u, u)  = (Tu, u) - w_0 \geq 0$, and so $u, v \mapsto ((T - w_0)u, v)$ defines a positive-semidefinite Hermitian form, for which the Cauchy-Schwarz inequality holds\footnote{This can easily be verified by looking at a standard proof for the inequality.}. We then find the following bound for unit vectors $u, v$:
+We can see immediately that any self-adjoint operator is normal ($T = T^* \Rightarrow T^*T = TT = TT^*$); thus the entire spectrum of the self-adjoint
+operator is in the numerical range, and by Proposition \ref{thm:num-range-props}.\ref{item:num-in-R} we have $\Spec(T) \subseteq \overline{\Num(T)} \subseteq \mathbb{R}$.
+
+Now, $\inf(\Spec(T)) \geq \inf(\Num(T))$. Let $\inf(\Num(T)) = w_0$; then for any unit vector $u$, $((T - w_0)u, u)  = (Tu, u) - w_0 \geq 0$, and so $u, v \mapsto ((T - w_0)u, v)$ defines a positive-semidefinite Hermitian form, for which the Cauchy-Schwarz inequality holds\footnote{This can easily be verified by looking at a standard proof for the inequality.}. We then find the following bound for unit vectors $u, v$:
 \begin{align*}
 |\tau[u,v]|^2 \leq \tau[u, u] \tau[v, v] = ((T - w_0)u, u)((T - w_0)v, v) \leq \|T - w_0\|((T - w_0)u, u).
 \end{align*}
@@ -282,14 +323,18 @@ Now let us take a minimising sequence $u_n$, $\|u_n\| = 1$ such that $(Tu_n, u_n
 and therefore $w_0 \in \Spec(T)$ by Theorem \ref{thm:approx-eigenvalue-thm}.
 The proof for the supremum $w_1$ is analogous with some sign changes.
 \end{proof}
-This corollary extends to self-adjoint \textbf{semibounded}\index{operator!semibounded} operators, which are operators $T$ on a Hilbert space $\hilbert$ such that its Rayleigh quotient $R_T$ is bounded above or below by some constant $c$ - the result holds for the supremum or infimum for operators which are semibounded above or below respectively. We omit this more general proof as we would require a significant tangent to acquire the prerequisite results: see e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a bounded operator is semibounded both above and below.
+This corollary extends to self-adjoint \textbf{semibounded}\index{operator!semibounded} operators, which are operators such that their Rayleigh quotient is bounded above or below by some constant $c$ - the result holds for the supremum or infimum for operators which are semibounded above or below respectively. We omit this more general proof as we would require a significant tangent to acquire the prerequisite results: see e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a bounded operator is semibounded both above and below.
 
 \begin{corollary}
 Let $T$ be a self-adjoint, semibounded operator. Then spectral pollution does not occur outside of $\conv\Spec(T)$.
 \end{corollary}
 \begin{proof}
-Combine the previous corollary with Proposition \ref{thm:num-range-props}.\ref{item:proj-num-range}.
+Combine Corollary \ref{thm:self-adj-num-range} with Proposition \ref{thm:num-range-props}.\ref{item:proj-num-range}.
 \end{proof}
+
+Is there a better bound? From heuristic evidence we may expect one - if we look at Example \ref{ex:schrodinger-ritz}, we can see that there is no pollution
+even within the negative semiaxis, even though the region plotted is well within $\conv\Spec(T)$. The numerical range has been refined in a variety
+of ways, one of which is particularly profitable when it comes to bounding spectral pollution. This shall be our next topic.
 
 \subsection{Essential numerical range}\index{range!essential numerical}
 A similar notion to that of the numerical range is the essential numerical range, $\Num_e (T)$. This set lowers its aim to simply estimating the essential spectrum,

@@ -1,4 +1,35 @@
+One can see that this concept generalises the eigenvalues of a matrix to any Banach space, and that for a finite-dimensional Banach space
+(of which $\mathbb{R}^n$ and $\mathbb{C}^n$ are major examples) we can recover the eigenvector equation. Indeed, the term `resolvent'
+originates from its relation to the solution of certain types of differential equation; if for some differential operator $L$ we have the equation
+$Lu = \lambda u + g$, a solution $u$ would be related to $g$ as $(L - \lambda)^{-1}g = u$. 
 
+For an operator on an
+infinite-dimensional space, values which satisfy the eigenvector equation \emph{are} in the spectrum of the operator, but they do not
+comprise the entire spectrum - nor do we necessarily have a spectrum made up of a discrete set of values.
+
+\begin{example}
+Let $S$ be the 'right-shift' operator on the sequence space $\ell^2(\mathbb{N})$, which has the following action:
+$S(x_1, x_2, x_3, ...)$ = $(0, x_1, x_2, x_3, ...)$; that is, for a sequence $u$ we map $u_n$ to $u_{n+1}$, and pad the vector with a zero in $u_1$'s place.
+$S$ has no eigenvalues, and its spectrum is the open unit disc $D = \{z \in \mathbb{C} : |z| = 1\}$.
+\end{example}
+\begin{proof}{\emph{(sketch)}}
+For the lack of eigenvalues; we see that if $Su = \lambda u$, 
+$$(0, u_1, u_2, u_3 ...) = (\lambda u_1, \lambda u_2, \lambda u_3 ...)$$
+so in particular, we would require $\lambda u_1 = 0$. Then either $\lambda = 0$ and thus $u_n$ = 0 for all $n$, or as $\lambda \neq 0$, $u_1 =0$. Then $\lambda u_2 = u_1 = 0$, and continuing this we
+can see that $u_n = 0$ for all $n$, i.e. $u$ must be the zero vector. Thus there is no non-zero vector satisfying the eigenvector equation.
+
+To calculate its spectrum, we make use of a natural relation between the spectrum of an operator T and the spectrum of its adjoint: 
+\begin{align*}
+\lambda \in \Spec(T)  &\text{ iff } (T - \lambda)\text{ is not invertible }\\
+& \text{ iff } (T - \lambda)^*\text{ is not invertible (this is true for any operator)}\\
+& = (T^* - \overline{\lambda}) \text{ not invertible, i.e. } \overline{\lambda} \in \Spec(T^*).
+\end{align*}
+in this case, the adjoint is the left-shift operator $S^*u = (u_2, u_3, u_4, ...).$; we can see that for any value $\lambda$ we have for the vector
+$(\lambda, \lambda^2, \lambda^3...)$
+$$S^*(\lambda, \lambda^2, \lambda^3) = (\lambda^2, \lambda^3, \lambda^4, ...) = \lambda(\lambda, \lambda^2, \lambda^3...)$$
+which is in $\ell^2(\mathbb{N})$ and is thus an eigenvector iff $|\lambda| < 1$; hence the unit disc is in $\Spec(S^*)$ and hence its
+complex conjugate (which is also the unit disc) is in $\Spec(S)$.
+\end{proof}
 
 
 \begin{proof}
