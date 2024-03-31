@@ -28,13 +28,13 @@ We will call the subset of the spectrum created by this theorem the \textbf{appr
 $$\Spec_{ap}(T) \eqdef \{ \lambda \in \mathbb{C} : \exists u_n \text{ s.t. } \|u_n\| = 1\quad \forall n \in \mathbb{N},\text{ and }\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0\}.$$
 
 Note that any eigenvalue is in the approximate point spectrum - if $\varphi$ is a normalised eigenvector corresponding to $\lambda$, then the constant
-sequence $u_n = \varphi$ satisfies this property. Indeed, for a specific (and very common) type of operator, we can see that this criterion covers the
-entire spectrum.
+sequence $u_n = \varphi$ satisfies this property. Indeed, for certain types of operator, the entire spectrum consists of approximate eigenvalues.
 
 \begin{lemma}
 For any operator $T$, $\Spec(T) = \overline{\Spec_{ap} (T^*)} \cup \Spec_{ap} (T)$.
 \end{lemma}
-To prove this, consider what makes a point $\lambda$ capable of being in $\Spec(T) \setminus \Spec_{ap}(T)$. $(T - \lambda)$ must be injective (else $(T - \lambda)u = (T - \lambda)v$ for some $u \neq v$ and so $u-v$ is an eigenfunction) and $\Ran(T - \lambda)$ must not be dense in $\hilbert$ (else it is surjective and thus bijective, or can be extended to an operator which is surjective and thus bijective).
+\begin{proof}
+Consider what makes a point $\lambda$ capable of being in $\Spec(T) \setminus \Spec_{ap}(T)$. $(T - \lambda)$ must be injective (else $(T - \lambda)u = (T - \lambda)v$ for some $u \neq v$ and so $u-v$ is an eigenfunction) and $\Ran(T - \lambda)$ must not be dense in $\hilbert$ (else it is surjective and thus bijective, or can be extended to an operator which is surjective and thus bijective).
 
 We can prove that for any operator $T$, $\Ran(T)^\perp = \Ker(T^*)$:
 \begin{align*}
@@ -48,6 +48,7 @@ x \in \Ran(T)^\perp & \Rightarrow (Aw, x) = 0, \\
 \end{align*}
 
 Then as there is some element $\eta$ not in the closure of  $\Ran(T - \lambda)$, by the Projection Theorem $\eta \in \Ker(T^* - \overline{\lambda})$; hence $(T^* - \overline{\lambda})\eta = 0$ and so $\eta$ is an eigenvector for $T^*$ with eigenvalue $\overline{\lambda}.$
+\end{proof}
 
 \begin{theorem}\label{thm:normal-spec} \cite{halmos1982hilbert}
 Let $T$ be a normal operator (i.e. it commutes with its adjoint; $TT^* = T^*T$). Then $$\Spec(T) = \Spec_{ap}(T).$$
@@ -60,7 +61,7 @@ and so $\|(T - \lambda)u_n\| = \|(T^* - \overline{\lambda})u_n\|$,
 which means that $\Spec_{ap}(T) = \overline{\Spec_{ap} (T^*)}$. 
 \end{proof}
 
-This is fortunate, as most operators relevant to physical examples are normal (if not self-adjoint); we can give a constructive definition for the entire spectrum of a normal operator!
+This is fortunate, as many operators relevant to physical applications are normal (if not self-adjoint); we can give a constructive definition for the entire spectrum of a normal operator! 
 
 We now specialise to a subset of the approximate point spectrum, known as the essential spectrum.
 The essential spectrum has several definitions, 
@@ -74,7 +75,7 @@ is defined as the set of all $\lambda \in \mathbb{C}$ such that a \textbf{Weyl s
 \begin{itemize}
 \item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$;
 \item $u_n \rightharpoonup 0$ (where $\rightharpoonup$ denotes weak convergence: $u_n \rightharpoonup u \Leftrightarrow (u_n, g) \rightarrow (u, g) \quad \forall g \in \hilbert$);
-\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
+\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  = 0$.
 \end{itemize}
 \end{definition}
 
@@ -206,16 +207,12 @@ First, let $\lambda \in \Spec_e(T)$ have the Weyl sequence $x_n$ for the operato
 $$\|(T+K-\lambda)x_n\| = \|(T - \lambda)x_n+Kx_n\| \leq \|(T - \lambda)x_n\| + \|Kx_n\|$$. 
 
 And as $K$ is compact, $Kx_n$ has a convergent subsequence $Kx_{n_k}$, where $x_{n_k} \rightharpoonup 0$ because $x_n \rightharpoonup 0$.
-Then $Kx_{n_k}$ also weakly converges to 0 by two applications of the Riesz representation theorem and the boundedness of $K$: for any $\phi \in \hilbert$,
-
+Then $Kx_{n_k}$ also weakly converges to 0: for any $\phi \in \hilbert$,
 \begin{align*}
-(Kx_{n_k}, \phi) & = f(Kx_{n_k}) & \text{\emph{for some bounded linear functional $f \in \hilbert^*$}}\\
-& = (f \circ K) (x_{n_k}) & \text{\emph{which is also a bounded linear functional in $\hilbert^*$}}\\
-& = (x_{n_k}, \psi) & \text{\emph{for some $\psi \in \hilbert$}}&\\
-& \rightarrow 0 & \text{\emph{by weak convergence of $x_{n_k}$ to 0}}
+(Kx_{n_k}, \phi) = (x_{n_k}, K^* \phi) \rightarrow 0
 \end{align*}
 
-and as it is (strongly) covergent to some value $K$, it must also be weakly convergent to the same value; thus $Kx_{n_k} \rightarrow 0$.
+by weak convergence of $x_{n_k}$ to 0. The result then follows by the uniqueness of weak limits (i.e. if a sequence strongly converges to \emph{something}, it must be the same value that it weakly converges to!)
 
 Thus $\|(T+K-\lambda)x_{n_k}\| \leq \|(T - \lambda)x_{n_k}\| + \|Kx_{n_k}\| \rightarrow 0$, so $x_{n_k}$ is a Weyl sequence for $\lambda$ and $T+K$ 
 for any compact operator $K$, so $\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)$.
@@ -227,7 +224,7 @@ projection onto the space $\mathrm{span}\{u\}$ (so $\rank P = 1$). Then:
 
 $$(T+P) u = Tu + u = \lambda u + u = (\lambda + 1)u$$
 
-so $\lambda$ is not an eigenvalue of $(T+P)$. This will become a very useful property in discussing a method of detecting spectral pollution known as 
+so $\lambda$ is not an eigenvalue of $(T+P)$. This will become critical in discussing a method of detecting spectral pollution known as 
 \emph{dissipative barrier methods}, which we will explore in section \ref{sec:dissipative-barrier}.
 \end{remark}
 
@@ -238,7 +235,7 @@ The gateway to bounding the spectrum (and pollution) of an operator $T$ on a Hil
  R_T: u \mapsto \frac{( Tu, u )}{(u, u)}
  \end{equation*}
  
- or equivalently (by linearityc) $R_T: u \mapsto (Tu, u)$ on the domain $\{u \in \Dom(T) : \|u\| = 1\}$.
+ or equivalently (by linearity) $R_T: u \mapsto (Tu, u)$ on the domain $\{u \in \Dom(T) : \|u\| = 1\}$.
  
  For operators where we want to weaken the domain (e.g. a differential operator) it is suitable to replace $(Tu, u)$ with the relevant bilinear form $\mathcal{A}[u, u].$
 
@@ -259,7 +256,7 @@ The numerical range $\Num(T)$ of an operator $T$ has the following properties:
 \end{enumerate}
 \end{proposition}
 
-It is important to state the usefulness of these properties with regards to spectral pollution. Not only does $\Num(T)$ bound the spectrum of $T$,
+It is important to state the usefulness of these properties for spectral pollution. Not only does $\Num(T)$ bound the spectrum of $T$,
 it bounds the spectrum of $T_\mathcal{L}$ - effectively, bounding the region in which spectral pollution can occur to a convex set around $\Spec(T)$.
 We will also use this fourth property to derive a theorem on how well the Galerkin method approximates the spectrum outside of $\conv(\Spec_{ess})$.
 
@@ -393,21 +390,61 @@ Conversely, %% TODO: finish
 \end{proof}
 
 We have seen that the essential numerical range estimates the bounds of the essential spectrum with quite astounding accuracy for some types of
-operator. But the essential numerical range far outdoes the regular numerical range on bounding spectral pollution; in fact, it provides an \emph{exact}
-set on which it is possible for pollution to occur! 
+operator. But the essential numerical range far outdoes the regular numerical range on bounding spectral pollution; in fact, it provides an \emph{exact} set on which it is possible for pollution to occur! 
 
-\begin{theorem}
+We will require the following prerequisite lemmata:
+\begin{lemma}\label{thm:adjoint-spec-props}
+Let $T$ be a bounded operator on a Hilbert space $\hilbert$. Then:
+\begin{enumerate}
+\item\label{part:spec-of-adj} $\lambda$ is in $\Spec(T)$ if and only if $\overline{\lambda}$ is in $\Spec(T^*)$, and
+\item\label{part:adj-convergence} if $T_n$ is a sequence of operators converging strongly to $T$, i.e. $T_n f \rightarrow Tf$ for any fixed $f \in \hilbert$, then $T_n^*$ converges strongly to $T^*$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+(\ref{part:spec-of-adj}.) Let $\mu$ be in the resolvent $\rho(T)$, i.e. $(T - \rho)$ is invertible. Then we have
+\begin{align*}
+(T - \mu)(T - \mu)^{-1} & = I \\
+((T - \mu)(T - \mu)^{-1})^* & = I^* = I \\
+((T - \mu)^{-1})^*(T - \mu)^* & = I
+\end{align*}
+and similarly for $(T - \mu)^{-1}(T - \mu)$. Thus we have that $((T - \mu)^{-1})^*$ is the inverse of $(T - \mu)^* = (T^* - \overline{\mu})$, so $\overline{\mu} \in \rho(T^*)$. 
+We can repeat this argument for $(T^* - \overline{\mu})$, using that $T^{**} = T$. Thus $\mu \in \rho(T) \Leftrightarrow \overline{\mu} \in \rho(T^*)$, and the result follows.
+
+(\ref{part:adj-convergence}.) %TODO
+\end{proof}
+
+\begin{theorem}{\textbf{(Pokrzywa \cite{pokrzywa1979method})}}
 Let $T$ be a bounded operator. All spectral pollution in the Ritz approximation of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can occur anywhere in $\Num_e(T) \setminus \Spec(T)$.
 \end{theorem}
 
 \begin{proof}
-For some sequence of truncations $T_i$, let $\lambda_i \in T_i$ converge to $\lambda$. Then we note that as $T_i$ is finite-dimensional, all of its
-spectral points are eigenvalues; for some eigenvector $w_i$, $T_iw_i = \lambda_i w_i$, and (with $w_i$ normalised to $\|w_i\| = 1$ we have
-$$(T_i w_i, w_i) = (\lambda_i w_i, w_i) = \lambda_i \|w_i\| = \lambda_i.$$
-This means $\lambda_i \in \Num(T_i) \subseteq \Num(T)$, so $\lambda_i = (T x_i, x_i)$ for some unit vector $x_i$, and
-$$\lambda = \lim_{i \rightarrow \infty} \lambda_i = \lim_{i \rightarrow \infty}(Tx_i, x_i).$$
-Then, for $\lambda$ to be spectral pollution outside of the essential numerical range, we must have that $x_i \rightharpoonup x \neq 0$ (as otherwise
-$\lambda \in \Num_e(T)$) and also $\|(T - \lambda)x_i\| \nrightarrow 0$ (as then $\lambda$ is in the spectrum of $T$ by the corollary to Theorem \ref{thm:approx-eigenvalue-thm}).
+Let the sequence of approximating operators be denoted $T_n = P_n T\big|_{Ran(P_n)}$ for some projections $P_n$ (note that $P_n$ does not necessarily have to be a projection onto the first $n$ orthonormal basis functions, as the notation might suggest; it merely needs to be subspaces of increasing dimension!). If $\lambda \in \mathbb{C}$ is a point of spectral pollution, then there is some sequence of eigenpairs $(\lambda_n, f_n)$, with $f_n$ normalised so $\|f_n\| = 1$, such that:
+\begin{itemize}
+\item $(T_n - \lambda_n)f_n =0 \quad \forall n \in \mathbb{N}$;
+\item $\lambda_n \rightarrow \lambda$;
+\item $(T - \lambda)$ has a bounded inverse.
+\end{itemize}
+We then have that $(T_n - \lambda)f_n \rightarrow 0$:
+
+\begin{equation}\label{eqn:trunc-conv}
+(T_n - \lambda)f_n = (T_n - \lambda_n + \lambda_n - \lambda)f_n = (T_n - \lambda_n)f_n + (\lambda_n - \lambda)f_n \rightarrow 0.
+\end{equation}
+
+Furthermore, as $(T - \lambda)$ has a bounded inverse, so does $(T^* - \overline{\lambda})$ by Lemma \ref{thm:adjoint-spec-props}.\ref{part:spec-of-adj}. Then for any $h \in \hilbert$, there is some $g \in hilbert$ such that $(T^* - \overline{\lambda})g = h$. As a result, we have
+\begin{align*}
+(f_n, h) & = (f_n, (T^* - \overline{\lambda})g) \\
+& = (f_n, (T^* - \overline{\lambda})g - (T_n^* - \overline{\lambda})g) + (f_n, (T_n^* - \overline{\lambda})g) \\
+& = (f_n, T^*g - T_n^*g) + ((T_n - \lambda)f_n, g) \\
+& \rightarrow 0
+\end{align*}
+by Equation \ref{eqn:trunc-conv} and Lemma \ref{thm:adjoint-spec-props}.\ref{part:adj-convergence}. Thus $f_n \rightharpoonup 0$.
+
+Finally, we need that $(T f_n, f_n) \rightarrow \lambda$:
+\begin{align*}
+\lambda_n = (T_n f_n, f_n) & = (P_n T\big|_{\Ran(P_n)} f_n, f_n)  \\
+& = (P_n T f_n, f_n) = (T f_n, f_n)
+\end{align*}
+as $P_n$ is self-adjoint, and $P_n f_n = f_n$. Thus $(T f_n, f_n) = \lambda_n \rightarrow \lambda$, and so $\lambda$ is in the essential range of $T$ as required.
 \end{proof}
 
 For a bounded operator, this is the main result of a paper by Pokrzywa \parencite{pokrzywa1979method}. The main theorem of the paper has the

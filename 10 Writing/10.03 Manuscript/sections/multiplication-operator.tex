@@ -24,7 +24,7 @@ almost everywhere will have the same essential range.
   where $\mu$ is the Lebesgue measure.
   
   The essential supremum of $f$, denoted $\mathrm{esssup}f$, is the supremum of the essential range of $f$. 
-  We define $\mathrm{essinf}f$ mutatis mutandis for the infimum.
+  We define $\mathrm{essinf}f$ \emph{mutatis mutandis} for the infimum.
 \end{definition}
 
 The normed vector space $L^\infty$ is the space of all bounded measurable functions, and its norm is $$\|f\|_\infty = \text{esssup}(|f|).$$
@@ -58,10 +58,9 @@ This is the case exactly when $(a - \lambda) \geq \epsilon$ almost everywhere - 
 only if $\lambda$ is not in the essential range of $a$.
 \end{proof}
 
-We will now take advantage of the ability to create simply-defined operators with easy-to-calculate
+We will now take advantage of the ability to create simple operators with easy-to-calculate
 spectra to observe the existence of spectral pollution.
 
-\subsubsection{Estimating spectra computationally}
 \begin{example}
 Let $M_f$ be the multiplication operator on $L^2(0, 1)$ with symbol
 
@@ -76,7 +75,7 @@ see the approximation create two dense clusters of eigenvalues which approach th
 \end{example}
 
 Figure \ref{fig:mult-op-spec} shows a plot of the approximate spectrum for various Ritz matrix sizes. This approximation was done for the sequence of
-truncations $T_{25n}$ for $n \in \{2, 3, ..., 20\}$ over the orthonormal basis $\phi_n(x) = \exp(2 i \pi n x)$ for $n \in \mathbb{Z}$; each truncation was
+truncations $T_{25n}$ for $n \in \{2, 3, \hdots, 20\}$ over the orthonormal basis $\phi_n(x) = \exp(2 i \pi n x)$ for $n \in \mathbb{Z}$; each truncation was
 over the space $\mathrm{span}\{\exp(2 i \pi k x), k \in \mathbb{Z}, |k| < n/2\}$.
 
 We do successfully and rather quickly get eigenvalues corresponding to our actual spectrum, but we also get a lot of other eigenvalues; some of them are 
@@ -99,7 +98,6 @@ We will first discuss the nature of spectral pollution for a multiplication oper
 make it possible to concretely identify the existence and location of spectral pollution. Following chapters will then devise technology that allows us to 
 answer these questions in greater generality.
 
-\subsubsection{The structure of approximations}
 If we take a closer look at the structure of our approximating Ritz matrices we uncover deeper structure, which will lead
 to our next topic.
 \begin{example}\label{exp:mult-op-toeplitz}
@@ -121,7 +119,6 @@ properties of $f$; we can repeat this reasoning with any function capable of bei
 what we have seen.
 
 \subsection{Toeplitz operators}\label{sec:toeplitz}
-\subsubsection{Toeplitz operators, Toeplitz matrices, and their equivalence}
 
 The approximation of spectra provides a natural gateway to the study of Toeplitz operators, a type of operator with an elegant cluster
 of representations that will provide intuitive and concrete insight into spectral pollution. A full account of Toeplitz theory is the subject
@@ -142,7 +139,7 @@ example was that $M_f \exp(2 \pi i j x)$ was well-defined. The following definit
 
 \begin{definition}{\textbf{(Hardy space)}}\index{Hardy space}
 Let $\zeta$ be the monomial function on $L^2(\mathbb{T})$, $\zeta(z) = z$, where $\mathbb{T}$ is the unit circle. Then the
-Hardy space $H^2$ is the span of all non-negative exponents of $\zeta$; $\text{span}\{1, \zeta, \zeta^2...\}$.
+Hardy space $H^2$ is the span of all non-negative exponents of $\zeta$; $\text{span}\{1, \zeta, \zeta^2 \hdots\}$.
 \end{definition}
 
 As we are on the unit circle, $z$ is more familiarly $e^{i \theta}$ for some $\theta$; then the basis of Hardy space becomes $\{e^{i n \theta}\}_{n \in \mathbb{Z}_+}$. Then we can identify any element $f \in H^2$ as any square-integrable function defined on the unit circle with the Fourier series 
@@ -168,11 +165,9 @@ some function $\phi \in L^\infty$ such that $A = T_\phi$ and $a_n$ are the Fouri
 %%%%%TODO: DO WE PROVE THIS?
 \end{proof}
 
-Many properties of Toeplitz operators are hard to see via infinite matrices. Being able to represent them as both Fourier series and equally as the  
+Many properties of Toeplitz operators are hard to see via infinite matrices. Being able to represent them as both Fourier series and as the  
 compressions of multiplication operators puts us on the firmer ground of functional analysis, rather than asymptotic linear algebra. From this, we
 are now in the position to exactly calculate the spectrum of a Toeplitz operator with real-valued symbol.
-
-\subsubsection{The spectrum of a Toeplitz operator with real symbol}
 
 To begin, we require a pair of properties regarding functions in $L^1(\mathbb{T})$'s Hardy space, $H^1$. 
 
@@ -193,11 +188,11 @@ this means that the Fourier series of $fg$ satisfies the Hardy space property, b
 
 (\ref{item:f-h1-const}.) For any real-valued function, we have the relation $\overline{c_{-n}} = c_n$ for the Fourier coefficients of $f$:
 $$ \overline{c_{-n}} = \overline{\int f(x) e^{-inx} dx} = \int \overline{f(x)} e^{inx} dx = \int f(x) e^{inx} dx = c_n.$$
-But if $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c_n = \overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$. Thus
+As $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c_n = \overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$. Thus
 the only coefficient remaining is $c_0$, and a function with a constant Fourier series is a constant function. (This proof is valid for any $H^p, p \in [1, \infty)$.)
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{thm:toeplitz-self-adjoint}
 Let $\phi \in L^\infty$ be real-valued; then the Toeplitz operator $T_\phi$ is self-adjoint. 
 \end{lemma}
 \begin{proof}
@@ -212,13 +207,13 @@ using that $M_\phi$ is self-adjoint if $\phi$ is real-valued.
 
 We are now in the position to calculate the form of the spectrum for any Toeplitz operator. This spectrum was first found by Toeplitz
 himself under a stronger set of regularity assumptions, and then weakened by Wiener via his Tauberian theorem \parencite{schmidt1960toeplitz}.
-Our proof will consist of a series of claims about the resolvent set of $T_\phi$, following a proof outlined in an exercise of Arveson (\parencite{arveson2002short}, Chapter 4.6, exercises 2-5) which is based on a proof by Hartman and Wintner.
+Our proof will consist of a series of claims about the resolvent set of $T_\phi$, following a proof outlined in an exercise of Arveson (\parencite{arveson2002short}, Chapter 4.6, exercises 2-5) which is itself based on a proof by Hartman and Wintner.
 
 \begin{theorem}{\textbf{(Hartman-Wintner)}}\index{theorem!Hartman-Wintner}\label{thm:hartman-wintner}
 Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$ and $M$ are the infimum and supremum of the essential range of $\phi$ (Definition \ref{defn:essential-range}) respectively.
 \end{theorem}
 \begin{proof}
-Note we already know that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. %TODO: Do we know this?
+Note we already know by Lemma \ref{thm:toeplitz-self-adjoint} that as $\phi$ is real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the real line. 
 Furthermore, we will assume that $\phi$ is non-constant, as if $\phi$ is constant then $T_\phi$ is some constant multiple of the identity operator
 and its spectrum is simply the set containing that constant, and the result holds.
 \begin{enumerate}[I.]
@@ -243,7 +238,7 @@ Thus $T_\phi - \lambda$ is invertible only outside of the set $[m, M]$, as requi
 \end{enumerate}
 \end{proof}
 
-\subsubsection{Multiplication operators, Toeplitz operators, and spectral pollution}
+\subsection{Multiplication operators, Toeplitz operators, and spectral pollution}
 Let us now bring the discussion back to spectral pollution, and to our discovery in Example \ref{exp:mult-op-toeplitz}. The Ritz matrices corresponding to the
 multiplication operator $M_f$ is \emph{identical} to the Ritz matrices corresponding to the Toeplitz operator $T_f$ (which are just truncations of the 
 corresponding Toeplitz matrix), but these operators have different spectra. No wonder we are seeing extra eigenvalues in the gap; the approximation
@@ -256,29 +251,29 @@ More rigorously, it is possible to show that for any point in a gap of the multi
 an approximate eigenvalue converging to that point. 
 
 \begin{theorem}{\textbf{(Schmidt-Spitzer \parencite{schmidt1960toeplitz})}}\index{theorem!Schmidt-Spitzer}
-Let $T_n$ be the $n \times n$ matrix created by taking the first $n$ rows and columns of a Toeplitz operator $T_f$. Consider the set
+Let $T_n$ be the $n \times n$ matrix created by taking the first $n$ rows and columns of a Toeplitz operator $T_\phi$. Consider the set
 $$B = \{\lambda \in \mathbb{C} : \lambda = \lim_{m \rightarrow \infty} \lambda_{i_m}, \lambda_{i_m} \in \Spec(T_{i_m}), i_m \rightarrow \infty \}.$$
-where $i_m$ is a subsequence of $\mathbb{N}$. Then if $f$ is real-valued, $B = \Spec(T_f)$.
+where $i_m$ is a subsequence of $\mathbb{N}$. Then if $\phi$ is real-valued, $B = \Spec(T_\phi)$.
 \end{theorem}
 \begin{proof}
-If $f$ is real-valued, then the corresponding Toeplitz matrix is Hermitian; its Fourier coefficients have the property $\overline{c_{-n}} = c_n$ (see 
-the proof of Lemma \ref{thm:h1-properties}.\ref{item:f-h1-const}), so if $A$ is the corresponding Toeplitz matrix,
- $A_{i,j} = c_{i-j} = \overline{c_{j-i}} = \overline{A_{j,i}}$. Label the eigenvalues of $T_n$ as $\lambda_{n_1}, ... \lambda_{n_{n+1}}$. 
+If $\phi$ is real-valued, then by Lemma \ref{thm:toeplitz-self-adjoint} we can restrict our attention to the real line. Label the eigenvalues of $T_n$ as $\lambda_{n_1}, \hdots \lambda_{n_{n+1}}$. 
  
- We now invoke a theorem of Szeg\"o \cite{grenander2001toeplitz} regarding the distribution of eigenvalues: on any real interval $[a, b]$,
+ We now invoke a theorem of Szeg\H{o} \cite{grenander2001toeplitz} regarding the distribution of eigenvalues: on any real interval $[a, b]$,
 \begin{equation}\label{eqn:szego-eigvals}
-\lim_{n \rightarrow \infty} \frac{1}{n+1} \sum_{i=1}^{n+1} \1_{[a, b]}(\lambda_{n_i}) = \frac{1}{2 \pi} \mu\{\theta : a \leq f(e^{i \theta}) \leq b\}
+\lim_{n \rightarrow \infty} \frac{1}{n+1} \sum_{i=1}^{n+1} \1_{[a, b]}(\lambda_{n_i}) = \frac{1}{2 \pi} \mu\{\theta : a \leq \phi(e^{i \theta}) \leq b\}
 \end{equation}
 where $\mu$ is the Lebesgue measure, and $\1$ the characteristic function of $[a,b]$ 
 (i.e. $\1_{[a, b]}(\lambda_{n_i})$ is 1 if $\lambda_{n_i} \in [a, b]$ and zero otherwise). Note that this makes sense, as $T_n$ is Hermitian and
 therefore every eigenvalue is real-valued. Note also that by Theorem \ref{thm:hartman-wintner} and the definition of the unit circle $\mathbb{T}$,
-the spectrum of $T_f$ is $\{f(e^{i \theta}): \theta \in [0, 2\pi]\}$. The claim of equation (\ref{eqn:szego-eigvals}) is therefore 
+the spectrum of $T_\phi$ is $\{\phi(e^{i \theta}): \theta \in [0, 2\pi]\}$. The claim of equation (\ref{eqn:szego-eigvals}) is therefore 
 ``as the size of the Toeplitz matrix increases, the proportion of eigenvalues of $T_n$ in $[a, b]$ converges to the proportion of the spectrum in $[a, b]$''. 
-Of course, this proportion will never be 0 for any interval $[a, b] \subseteq [\textrm{essinf}f, \textrm{esssup}f]$ of positive measure, so we can guarantee that a sequence of truncations has an eigenvalue which converges in $[a, b]$. The result follows.
+Of course, this proportion will never be 0 for any interval $[a, b] \subseteq [\textrm{essinf}\phi, \textrm{esssup}\phi]$ of positive measure, so we can guarantee that a sequence of truncations has an eigenvalue which converges in $[a, b]$. 
 
+Now consider a point $\xi \in \Spec(T_\phi)$. For each $m \in \mathbb{N}$, we know by the above that we can choose $i_m \in \mathbb{N}$ such that there is an eigenvalue $\lambda_{i_m}$ in the interval $[\xi - \frac{1}{m}, \xi + \frac{1}{m}]$, and therefore $|\xi - \lambda_{i_m}| < \frac{1}{m}$. Then as $m \rightarrow \infty$, $i_m \rightarrow \infty$, and thus $\xi \in B$, giving $\Spec(T_\phi) \subseteq B$.
+
+Conversely, suppose we have some value $\xi \notin \Spec(T_\phi)$. If $\xi < \mathrm{essinf}\phi$, then $\xi$ is contained in some interval $[a, \mathrm{essinf}(\phi) - \varepsilon]$ for $\varepsilon > 0$ and $a < \xi$. But then by equation \ref{eqn:szego-eigvals}, the number of eigenvalues $\lambda_{n_i}$ in $[a, \mathrm{essinf}(\phi) - \varepsilon]$ must converge to zero, so there is no sequence of eigenvalues of truncations which converge to $\xi$. Thus $\xi \notin B$. The same argument can be made \emph{mutatis mutandis} for $\xi > \mathrm{esssup}\phi$, giving $B \subseteq \Spec(T_\phi)$ as required.
 \end{proof}
 
-This is a striking result - for any point in the spectral gap $\Spec(T_f) \setminus \Spec(M_f)$ (or indeed in $\Spec(M_f)$, but they aren't really polluting anything), we can choose a sequence of truncations such that
-there is guaranteed to be spectral pollution at that point!
+This is a striking result - for any point in the spectral gap $\Spec(T_\phi) \setminus \Spec(M_\phi)$ (or indeed in $\Spec(M_\phi)$, but they aren't really polluting anything), we can choose a sequence of truncations such that there is guaranteed to be spectral pollution at that point! It also shows us that the Toeplitz operator itself does not have any pollution for real symbol.
 
 \end{document}

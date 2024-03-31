@@ -2,13 +2,15 @@
 
 \begin{document}
 \section{Introduction: the spectrum and its approximation}
-The computation of spectra can boldly be considered the 'fundamental problem of operator theory' \parencite{arveson2002short}. The spectrum
+The computation of spectra can be considered the 'fundamental problem of operator theory' \parencite{arveson2002short}. The spectrum
 of an operator holds the same key to the entire structure as eigenvalues do for linear algebra, however (as often occurs when passing from 
-the finite- to infinite-dimensional case) we lose the ease of representation that allows the creation of such algorithms and formulae as those 
-used for matrices. 
+the finite- to infinite-dimensional case) the problem is less tractable for general operators. For practical applications, it is often necessary to rely
+on numerical techniques and approximate methods to locate the spectrum, but we will see that these have their own problems.
 
-Throughout, our examples will mainly focus on differential and multiplication operators. As a result, we will not generally assume that the operator is bounded (many texts use `operator' to mean `bounded operator'). However, we will focus mainly on
-Hilbert spaces, and assume that the operator has the properties required for the spectrum and adjoint to exist and make sense - these properties are subtle and will not be a hassle or an excessive restriction (merely allowing us to avoid fiddly arguments to deal with pathological examples).
+Our focus will be on differential, discrete difference, and multiplication operators. As a result, we will not generally assume that the operator is bounded (many texts use `operator' to mean `bounded operator'). However, we will focus mainly on
+Hilbert spaces, and assume that the operator has the properties required for the spectrum and adjoint to exist and make sense - these properties are subtle and will not be an excessive restriction (merely allowing us to avoid fiddly arguments to deal with pathological examples).
+
+All numerical examples shown below were calculated using \texttt{specpol}, a Python package written by the author. Please see Appendix \ref{sec:numerical-note} for more details on the technical implementation.
 \subsection{Spectra}
 
 We must first define our quantity of interest: the spectrum of an operator.
@@ -57,7 +59,7 @@ of $\hilbert$ onto $\mathcal{L}$.
 \item The \textbf{compression} of the operator $T$, which we will often denote $T_\mathcal{L}$, is defined
 $$T_\mathcal{L} \eqdef P_\mathcal{L} T\big|_{\mathcal{L}}$$
 where $\big|_{\mathcal{L}}$ denotes domain restriction to $\mathcal{L}$.
-\item If $\{\phi_n\}_{n \in \mathbb{N}}$ is an orthonormal basis for $\hilbert$, the k'th \textbf{truncation} of $T$ is the compression of $T$ to $\text{Span}\{\phi_1, \phi_2, ..., \phi_k\}$. If there is no confusion, we will denote the k'th truncation $T_k$.
+\item If $\{\phi_n\}_{n \in \mathbb{N}}$ is an orthonormal basis for $\hilbert$, the k'th \textbf{truncation} of $T$ is the compression of $T$ to $\text{Span}\{\phi_1, \phi_2, \hdots, \phi_k\}$. If there is no confusion, we will denote the k'th truncation $T_k$.
 \end{itemize}
 \end{definition}
 
@@ -89,11 +91,11 @@ into the equation.\footnote{For most boundary conditions, one can substitute $u'
 We call a function $u$ such that $\mathcal{A}[u, v] = \lambda (u, v)$ for all test functions $v$ a `weak solution' of problem (\ref{eqn:sturm-liouville}).
 Note that to create this weak form, we do not even need $u$ to be differentiable once; it just needs to
 be integrable by parts with a test function. This provides our suitable subspace of $L^2[a, b]$ (a Sobolev space) which is of course much larger than the space of twice-differentiable functions. We will not discuss the theory of Sobolev spaces in detail, but it is easy to see by direct calculation that if $u$ is a weak solution and also twice-differentiable, then it
-is a strong solution (as we can reverse the operation done in (\ref{eqn:weak-pde}) to recover the initial problem) \cite{brezis2011functional}.\\
+is a strong solution (as we can reverse the operation done in (\ref{eqn:weak-pde}) to recover the initial problem) \cite{brezis2011functional}.
 
-The Ritz-Galerkin method\index{Ritz-Galerkin method} then involves approximating this weak formulation over some finite-dimensional subspace. Take the subspace $S = \text{Span}\{\phi_1, \phi_2, ..., \phi_k\}$ and consider the weak problem (\ref{eqn:weak-pde}) restricted to $S$, that is, we want a function $\tilde{u} \in S$ such that 
+The Ritz-Galerkin method\index{Ritz-Galerkin method} then involves approximating this weak formulation over some finite-dimensional subspace. Take the subspace $S = \text{Span}\{\phi_1, \phi_2, \hdots, \phi_k\}$ and consider the weak problem (\ref{eqn:weak-pde}) restricted to $S$, that is, we want a function $\tilde{u} \in S$ such that 
 $\mathcal{A}[\tilde{u}, \tilde{v}] = \lambda (\tilde{u}, \tilde{v})$ for all $\tilde{v}$ in $S$. As any $\tilde{v}$ is a combination
-of basis functions, $\tilde{u}$ is a solution if and only if $\mathcal{A}[\tilde{u}, \phi_j] = \lambda (\tilde{u}, \phi_j)$ for all $j \in \{1, ..., k\}$. Then as $\tilde{u} \in S,$
+of basis functions, $\tilde{u}$ is a solution if and only if $\mathcal{A}[\tilde{u}, \phi_j] = \lambda (\tilde{u}, \phi_j)$ for all $j \in \{1, \hdots, k\}$. Then as $\tilde{u} \in S,$
 $$\tilde{u} = \sum_{i=1}^k u_i \phi_i$$
 for some values $u_i$; if we substitute this into the problem we obtain a system of linear equations:
 \begin{align*}
@@ -102,7 +104,7 @@ for some values $u_i$; if we substitute this into the problem we obtain a system
 \Rightarrow \sum_{i=1}^k \mathcal{A}[\phi_i, \phi_j] u_i & = \lambda u_j
 \end{align*}
 
-making use of the orthonormality of $\phi_i$ and $\phi_j$. This is equivalently a matrix eigenvalue problem $M u = \lambda u$ where $M_{i,j} = \mathcal{A}[\phi_i, \phi_j]$.\\
+making use of the orthonormality of $\phi_i$ and $\phi_j$. This is equivalently a matrix eigenvalue problem $M u = \lambda u$ where $M_{i,j} = \mathcal{A}[\phi_i, \phi_j]$.
 
 Notice that if $u$ is in the domain of $L$, we have $\mathcal{A}[u, v] = (Lu, v)$. For an operator $T$ defined on the whole space (e.g. a bounded operator), we can approximate the spectrum by the eigenvalues of a matrix $M_{i, j} = (T \phi_i, \phi_j)$ \cite{davies2003spectral}. We will call these matrices Ritz matrices; \index{matrix!Ritz} in general, a wide variety of boundary value problems can be weakened and discretised to be represented
 by these methods. The following example shows that this method can be effective:
@@ -119,19 +121,22 @@ the spectrum for the equivalent equation in the helium atom (let alone any large
 spectrum can be found concretely, and in the space $L^2(0, \infty)$ it has eigenvalues $\lambda_k = -\frac{1}{(2k + 4)^2}$ for $k \in \mathbb{N}_0$.
 
 Let us see how well a Ritz-Galerkin method can approximate this known spectrum. We can see the results of an approximation in Figure \ref{fig:schrodinger-ritz} done via the \texttt{specpol} software. We choose the weighted Laguerre polynomial basis $\phi_n = \exp(-x/2)L_n$, where $L_n$ is the n'th Laguerre polynomial; this is a complete orthonormal set on the half-line \cite{szego1975orthogonal}.
- In this case, it is a very accurate approximation; even at the lowest matrix size of 50, the 6 smallest eigenvalues are accurate to 3 significant figures (and despite possible error induced via other numerical parts of the computation, e.g. inaccuracy in the calculation of basis functions or in the quadrature used)
+ In this case, at a matrix size of 100, the 4 smallest eigenvalues are accurate to 3 significant figures (and despite possible error induced via other numerical parts of the computation, e.g. inaccuracy in the calculation of basis functions or in the quadrature used).
  
 \begin{center}
  \begin{tabular}{c|c c}
- Eigenvalue & Exact & Approximated \\
+ Eigenvalue & Exact & Approximated, rounded to 5sf \\
  \hline\hline
- $\lambda_0$ & -0.0625 & \\
- $\lambda_1$ & -0.02\.7 &  \\
- $\lambda_2$ & -0.015625 & \\
- $\lambda_3$ & -0.01 & \\
- $\lambda_4$ & -0.0069\.4 & \\
- $\lambda_5$ & -0.00510204... & \\
- \end{tabular}
+ $\lambda_0$ & -0.0625 & -0.062500$^\dag$\\
+ $\lambda_1$ & -0.02\.7 &  -0.027777$^\ddag$\\
+ $\lambda_2$ & -0.015625 & -0.15625(03)\\
+ $\lambda_3$ & -0.01 & -0.010015 \\
+ $\lambda_4$ & -0.0069\.4 & -0.0069974 \\
+ $\lambda_5$ & $-0.00510204\hdots$ & -0.0052774\\
+ \end{tabular}\\
+ \quad\\
+ $\dag$: value to more significant figures is -0.06249999999978248, which was rounded to -0.0625 \\
+ $\ddag$: value to more significant figures is -0.027777777778024638
 \end{center}
 
 \begin{figure}[p!]
@@ -164,7 +169,7 @@ spurious. In applications of spectral theory, this difference can be beyond a si
 \end{example}
 
 We see in Figure \ref{fig:TODO} that this approximation does not work so well. It looks like it successfully covers the relevant parts of the spectrum,
-but there are a lot of additional eigenvalues which do not exist!\\
+but there are a lot of additional eigenvalues which do not exist!
 
 There are, of course, other methods for approximating operator spectra, such as the popular finite difference or `shooting' methods \cite{suli2003introduction}, or specialised methods such as Pr\"ufer and Pruess methods for Sturm-Liouville problems \cite{pryce1993numerical}, which are not subject to pollution. So why do we
 care about truncation methods?
