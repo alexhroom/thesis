@@ -6,35 +6,49 @@
 
 \subsection{The essential spectrum of an operator}\label{sec:ess-spec}
 
-We begin by producing a result which allows us to constructively classify points in the spectrum of an operator.
-\begin{theorem}{\textbf{(Approximate eigenvalue theorem)}}\label{thm:approx-eigenvalue-thm}
-Consider an operator $T$ on a Hilbert space $\hilbert$, and $\lambda \in \mathbb{C}$. $\lambda$ is in the spectrum of $T$ if there exists a sequence $u_n$ in $\hilbert$ with the following properties:
-\begin{itemize}
-\item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$, and
-\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
-\end{itemize}
+We begin by producing a result which allows us to constructively classify points
+in the spectrum of an operator.
+\begin{theorem}{\textbf{(Approximate eigenvalue theorem)}}
+\label{thm:approx-eigenvalue-thm}
+  Consider an operator $T$ on a Hilbert space $\hilbert$, and $\lambda \in
+  \mathbb{C}$. $\lambda$ is in the spectrum of $T$ if there exists a
+  sequence $u_n$ in $\hilbert$ with the following properties:
+  \begin{itemize}
+  \item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$, and
+  \item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0$.
+  \end{itemize}
 \end{theorem}
 \begin{proof}
 Assume for contradiction that the resolvent $(T - \lambda)^{-1}$ exists. Then:
 \begin{align*}
-0 \leq \lim_{n \rightarrow \infty} \|u_n\| & = \lim_{n \rightarrow \infty} \|(T - \lambda)^{-1}(T - \lambda)u_n\| & \\
-& \leq \|(T - \lambda)^{-1}\| \lim_{n \rightarrow \infty} \|(T - \lambda)u_n\| & \text{\emph{(as $(T - \lambda)^{-1}$ is bounded)}}\\
+0 \leq \lim_{n \rightarrow \infty} \|u_n\| & 
+	= \lim_{n \rightarrow \infty} \|(T - \lambda)^{-1}(T - \lambda)u_n\| & \\
+& \leq \|(T - \lambda)^{-1}\| \lim_{n \rightarrow \infty} \|(T - \lambda)u_n\| & 
+	\text{\emph{(as $(T - \lambda)^{-1}$ is bounded)}}\\
 & = 0
 \end{align*}
-and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot converge to zero! Thus this bounded inverse does not exist.
+and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot
+converge to zero! Thus this bounded inverse does not exist.
 \end{proof}
-We will call the subset of the spectrum created by this theorem the \textbf{approximate point spectrum}\index{spectrum!approximate point}, denoted $\Spec_{ap}$:
-
+We will call the subset of the spectrum created by this theorem the
+\textbf{approximate point spectrum}\index{spectrum!approximate point}, denoted
+$\Spec_{ap}$:
 $$\Spec_{ap}(T) \eqdef \{ \lambda \in \mathbb{C} : \exists u_n \text{ s.t. } \|u_n\| = 1\quad \forall n \in \mathbb{N},\text{ and }\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0\}.$$
-
-Note that any eigenvalue is in the approximate point spectrum - if $\varphi$ is a normalised eigenvector corresponding to $\lambda$, then the constant
-sequence $u_n = \varphi$ satisfies this property. Indeed, for certain types of operator, the entire spectrum consists of approximate eigenvalues.
+Note that any eigenvalue is in the approximate point spectrum - if $\varphi$ is
+a normalised eigenvector corresponding to $\lambda$, then the constant sequence
+$u_n = \varphi$ satisfies this property. Indeed, for certain types of operator,
+the entire spectrum consists of approximate eigenvalues.
 
 \begin{lemma}
-For any operator $T$, $\Spec(T) = \overline{\Spec_{ap} (T^*)} \cup \Spec_{ap} (T)$.
+  For any operator $T$, $\Spec(T) = \overline{\Spec_{ap} (T^*)} \cup \Spec_{ap} (T)$.
 \end{lemma}
 \begin{proof}
-Consider what makes a point $\lambda$ capable of being in $\Spec(T) \setminus \Spec_{ap}(T)$. $(T - \lambda)$ must be injective (else $(T - \lambda)u = (T - \lambda)v$ for some $u \neq v$ and so $u-v$ is an eigenfunction) and $\Ran(T - \lambda)$ must not be dense in $\hilbert$ (else it is surjective and thus bijective, or can be extended to an operator which is surjective and thus bijective).
+Consider what makes a point $\lambda$ capable of being in $\Spec(T) \setminus
+\Spec_{ap}(T)$. $(T - \lambda)$ must be injective (else $(T - \lambda)u
+= (T - \lambda)v$ for some $u \neq v$ and so $u-v$ is an eigenfunction)
+and $\Ran(T - \lambda)$ must not be dense in $\hilbert$ (else it is
+surjective and thus bijective, or can be extended to an operator which
+is surjective and thus bijective).
 
 We can prove that for any operator $T$, $\Ran(T)^\perp = \Ker(T^*)$:
 \begin{align*}
@@ -47,238 +61,348 @@ x \in \Ran(T)^\perp & \Rightarrow (Aw, x) = 0, \\
 & \Rightarrow \Ran(T)^\perp \subseteq \Ker(T^*).
 \end{align*}
 
-Then as there is some element $\eta$ not in the closure of  $\Ran(T - \lambda)$, by the Projection Theorem $\eta \in \Ker(T^* - \overline{\lambda})$; hence $(T^* - \overline{\lambda})\eta = 0$ and so $\eta$ is an eigenvector for $T^*$ with eigenvalue $\overline{\lambda}.$
-\end{proof}
+Then as there is some element $\eta$ not in the closure of  $\Ran(T - \lambda)$,
+by the Projection Theorem $\eta \in \Ker(T^* - \overline{\lambda})$; hence $(T^*
+- \overline{\lambda})\eta = 0$ and so $\eta$ is an eigenvector for $T^*$ with
+eigenvalue $\overline{\lambda}.$ \end{proof}
 
-\begin{theorem}\label{thm:normal-spec} \cite{halmos1982hilbert}
-Let $T$ be a normal operator (i.e. it commutes with its adjoint; $TT^* = T^*T$). Then $$\Spec(T) = \Spec_{ap}(T).$$
+\begin{theorem}\label{thm:normal-spec}
+\cite{halmos1982hilbert}
+  Let $T$ be a normal operator (i.e. it commutes with its adjoint; $TT^* = T^*T$).
+  Then $$\Spec(T) = \Spec_{ap}(T).$$
 \end{theorem}
 \begin{proof}
-With this lemma proven, the result follows almost immediately: for a normal operator we have
+With the previous lemma proven, the result follows almost immediately: for a normal operator we have
 
 $$\|Tu\|^2 = (Tu, Tu) = (T^*Tu, u) = (TT^*u, u) = (T^*u, T^*u) = \|T^*u\|^2$$
 and so $\|(T - \lambda)u_n\| = \|(T^* - \overline{\lambda})u_n\|$,
 which means that $\Spec_{ap}(T) = \overline{\Spec_{ap} (T^*)}$. 
 \end{proof}
 
-This is fortunate, as many operators relevant to physical applications are normal (if not self-adjoint); we can give a constructive definition for the entire spectrum of a normal operator! 
+This is fortunate, as many operators relevant to physical applications are
+normal (if not self-adjoint); we can give a constructive definition for the
+entire spectrum of a normal operator! 
 
-We now specialise to a subset of the approximate point spectrum, known as the essential spectrum.
-The essential spectrum has several definitions, 
+We now specialise to a subset of the approximate point spectrum, known as the
+essential spectrum. The essential spectrum has several definitions, 
 the most popular usually denoted $\Spec_{e,i}$ for $i \in \{1,2,3,4,5\}$ in order of size. For 
 most well-behaved operators the definitions are equivalent. This particular definition 
 is known as Weyl's criterion, $\Spec_{e, 2}$. \cite{edmunds2018spectral}
 
 \begin{definition}{\textbf{(Essential spectrum)}}\index{spectrum!essential}\index{Weyl's criterion}
-The essential spectrum of an operator $T$ on a Hilbert space $\hilbert$ 
-is defined as the set of all $\lambda \in \mathbb{C}$ such that a \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and $\lambda$ , i.e. a sequence with the properties:
-\begin{itemize}
-\item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$;
-\item $u_n \rightharpoonup 0$ (where $\rightharpoonup$ denotes weak convergence: $u_n \rightharpoonup u \Leftrightarrow (u_n, g) \rightarrow (u, g) \quad \forall g \in \hilbert$);
-\item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  = 0$.
-\end{itemize}
+  The essential spectrum of an operator $T$ on a Hilbert space $\hilbert$ is
+  defined as the set of all $\lambda \in \mathbb{C}$ such that a
+  \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and
+  $\lambda$ , i.e. a sequence with the properties:
+  \begin{itemize}
+    \item $\|u_n\| = 1\quad \forall n \in \mathbb{N}$;
+    \item $u_n \rightharpoonup 0$ (where $\rightharpoonup$ denotes weak convergence:
+	  $u_n \rightharpoonup u \Leftrightarrow (u_n, g) \rightarrow (u, g) \quad \forall g \in \hilbert$);
+    \item $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  = 0$.
+  \end{itemize}
 \end{definition}
 
-It may not be immediately obvious from the definition that the essential spectrum is in the spectrum at all. In fact, we do not even require $u_n \rightharpoonup 0$ for this to be the case:
-
-
-
-We can loosen the definition of weak convergence to just require convergence in a dense subspace of $\hilbert$:
-\begin{lemma}\label{thm:weak-conv-dense-subset}
-A bounded sequence $u_n$, $\|u_n\| \leq C$, is weakly convergent to $u$ in $\hilbert$ if and only if it is weakly convergent to $u$ in $L$ where $L$ is a dense subspace of $\hilbert$.
-\end{lemma}
+We can loosen the definition of weak convergence to just require convergence in
+a dense subspace of $\hilbert$:
+\begin{lemma}
+\label{thm:weak-conv-dense-subset}
+  A bounded sequence $u_n$, $\|u_n\| \leq C$, is weakly convergent to $u$ in
+  $\hilbert$ if and only if it is weakly convergent to $u$ in $L$ where $L$ is a
+  dense subspace of $\hilbert$. \end{lemma}
 \begin{proof}
-Weak convergence in $\hilbert$ implying the same in $L$ is obvious by the definition. 
-Conversely, take $g \in \hilbert$. For any $\varepsilon > 0$, we have $\|g - \varphi\| < \varepsilon$ for $\varphi \in L$; furthermore by the weak convergence of $u_n$ in $L$ we have $N \in \mathbb{N}$ such that $(u_n - u, \varphi) < \varepsilon$ for $n \geq N$. Then:
-$$( u_n - u, g ) = ( u_n - u, g - \varphi + \varphi ) = ( u_n - u, g - \varphi ) + ( u_n - u, \varphi ) < \|u_n - u\| \|g - \varphi\| + \varepsilon < \varepsilon(C + 1) \rightarrow 0.$$
+Weak convergence in $\hilbert$ implying the same in $L$ is obvious by the
+definition.
+Conversely, take $g \in \hilbert$. For any $\varepsilon > 0$, we have 
+$\|g - \varphi\| < \varepsilon$ for $\varphi \in L$;
+furthermore by the weak convergence of $u_n$ in $L$ we have $N \in
+\mathbb{N}$ such that $(u_n - u, \varphi) < \varepsilon$ for $n \geq N$.
+Then:
+$$( u_n - u, g ) = ( u_n - u, g - \varphi + \varphi ) 
+		 = ( u_n - u, g - \varphi ) + ( u_n - u, \varphi ) 
+		 < \|u_n - u\| \|g - \varphi\| + \varepsilon < \varepsilon(C + 1) 
+		 \rightarrow 0.$$
 \end{proof}
 
-We will now construct a Weyl sequence for the essential spectrum of the 'Laplacian' or 'free Schr\"odinger' operator $T = -\Delta$ on $L^2(\mathbb{R})$,
-where on $\mathbb{R}^1$, $\Delta$ is the operator $\Delta f (x) = \frac{d^2}{dx^2} f(x)$
+We will now construct a Weyl sequence for the essential spectrum of the
+'Laplacian' or 'free Schr\"odinger' operator $T = -\Delta$ on $L^2(\mathbb{R})$,
+where on $\mathbb{R}^1$, $\Delta$ is the operator $\Delta f (x) =
+\frac{d^2}{dx^2} f(x)$
 
 \begin{example}
-The essential spectrum of the operator $T = -\Delta$ is the closed half-axis $[0, +\infty)$.
+  The essential spectrum of the operator $T = -\Delta$ is the closed half-axis
+  $[0, +\infty)$. 
 \end{example}
 \begin{proof}
 First, note that for the exponential function we have 
 \begin{equation}\label{eqn:laplace-eigenvector}
 T\exp(i\omega x) = \omega^2 \exp(i\omega x).
 \end{equation}
-This gives much of the intuition for this proof; the function $\exp_{i \omega}: x \mapsto \exp(i\omega x)$ is not an eigenvector 
-as it is not in $L^2(\mathbb{R})$, but it satisifes the eigenvalue equation for $T$ and so any number $\lambda = \omega^2$ -
+This gives much of the intuition for this proof; the function $\exp_{i \omega}:
+x \mapsto \exp(i\omega x)$ is not an eigenvector as it is not in
+$L^2(\mathbb{R})$, but it satisifes the eigenvalue equation for $T$ and
+so any number $\lambda = \omega^2$ -
 and thus any $\lambda \in [0, +\infty)$ - is 'almost' an eigenvalue for $T$.
 
-We take advantage of this by choosing some smooth bump function $\rho \in C^\infty_c(\mathbb{R})$ with $\|\rho\|_2 = 1$. We
-then define $\rho_n = \frac{1}{\sqrt{n}}\rho(x/n)$. $\rho_n$ has some nice properties: by a substitution of variables and direct calculation we have $\|\rho_n\|_2 = \|\rho\|_2$, and furthermore any k'th derivative $\rho_n^{(k)}$ of $\rho_n$ 
+We take advantage of this by choosing some smooth bump function $\rho \in
+C^\infty_c(\mathbb{R})$ with $\|\rho\|_2 = 1$. We then define $\rho_n =
+\frac{1}{\sqrt{n}}\rho(x/n)$. $\rho_n$ has some nice properties: by a
+substitution of variables and direct calculation we have $\|\rho_n\|_2 =
+\|\rho\|_2$, and furthermore any k'th derivative $\rho_n^{(k)}$ of
+$\rho_n$ 
 converges to 0 in $L^2$. Indeed:
-\begin{equation}\label{eqn:rhokn-vanishes}
-\|\rho_n^{(k)}\|_2 = \frac{1}{n^k}\|\frac{1}{\sqrt{n}}\rho^{(k)}(x/n)\|_2 = \frac{\|\rho^{(k)}\|_2}{n^k} \rightarrow 0
+\begin{equation}
+\label{eqn:rhokn-vanishes}
+\|\rho_n^{(k)}\|_2 = \frac{1}{n^k}\|\frac{1}{\sqrt{n}}\rho^{(k)}(x/n)\|_2 
+		   = \frac{\|\rho^{(k)}\|_2}{n^k} 
+		   \rightarrow 0
 \end{equation}
-where one can see $\|\frac{1}{\sqrt{n}}\rho^{(k)}(x/n)\|_2 = \|\rho^{(k)}\|_2$ by the same calculation as  $\|\rho_n\|_2 = \|\rho\|_2$.
+where one can see $\|\frac{1}{\sqrt{n}}\rho^{(k)}(x/n)\|_2 = \|\rho^{(k)}\|_2$
+by the same calculation as  $\|\rho_n\|_2 = \|\rho\|_2$.
 
 Now, let our candidate Weyl sequence be $u_n: x \mapsto \rho_n(x)\exp(i\omega x)$,
-which truncates $\exp(i\omega x)$ to $\supp \rho_n$; this means $u_n$ is in $L^2(\mathbb{R})$.
-$\|u_n\| = \|\rho_n\|_2 = \|\rho\|_2 = 1$ by direct calculation, and $u_n \rightharpoonup 0$: we can bound $u_n$ by $\frac{1}{\sqrt{n}} M \1_{(\supp u_n)}$, where $\1_A$ is the characteristic function of the set $A$ and $M$ is the maximum value of $\rho$. Then by Lemma \ref{thm:weak-conv-dense-subset}, we can simply show weak convergence for any $\varphi \in C_0^\infty$, which is dense in $L^2$:
+which truncates $\exp(i\omega x)$ to $\supp \rho_n$; this means $u_n$ is in
+$L^2(\mathbb{R})$. $\|u_n\| = \|\rho_n\|_2 = \|\rho\|_2 = 1$ by direct
+calculation, and $u_n \rightharpoonup 0$: we can bound $u_n$ by
+$\frac{1}{\sqrt{n}} M \1_{(\supp u_n)}$, where $\1_A$ is the
+characteristic function of the set $A$ and $M$ is the maximum value of
+$\rho$. Then by Lemma \ref{thm:weak-conv-dense-subset}, we can simply
+show weak convergence for any $\varphi \in C_0^\infty$, which is dense
+in $L^2$:
 \begin{align*}
 ( u_n, \varphi ) & = \int_{\mathbb{R}}u_n \varphi & \\
 & \leq \int_{\mathbb{R}} \frac{1}{\sqrt{n}} M \1_{(\supp u_n)} \varphi & \\
 & \leq \int_{\supp \varphi} \frac{1}{\sqrt{n}} M  \varphi & \\
-& = \frac{M}{\sqrt{n}} \int_{\supp \varphi} \varphi \rightarrow 0, & \text{as the integral of $\varphi$ is finite and independent of $n$.}
+& = \frac{M}{\sqrt{n}} \int_{\supp \varphi} \varphi \rightarrow 0, 
+  & \text{as the integral of $\varphi$ is finite and independent of $n$.}
 \end{align*}
-Finally, we show that $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|_2  \rightarrow 0$ for $\lambda = \omega^2$:
+Finally, we show that $\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|_2 \rightarrow 0$
+for $\lambda = \omega^2$:
 
 \begin{align*}
 \|(T - \lambda)u_n\|_2 & = \|(T(\exp_{i \omega} \rho_n) - \omega^2(\exp_{i \omega} \rho_n)\|_2 & \\
-& = \|(T(\exp_{i \omega} \rho_n) - T(\exp_{i \omega}) \rho_n\|_2 & \text{\emph{(by equation (\ref{eqn:laplace-eigenvector}))}} \\
-& =\|\exp_{i \omega} T\rho_n - 2 \omega \exp_{i \omega} \frac{d}{dx}\rho_n\|_2 & \text{\emph{(by the product rule)}} \\
-& = \|T\rho_n - 2 \omega \frac{d}{dx}\rho_n\|_2 & \text{\emph{(see $\|\exp_{i \omega} \phi\|_2 = \|\phi\|_2$ for any $\phi \in L^2$)}} \\
+& = \|(T(\exp_{i \omega} \rho_n) - T(\exp_{i \omega}) \rho_n\|_2 
+  & \text{\emph{(by equation (\ref{eqn:laplace-eigenvector}))}} \\
+& =\|\exp_{i \omega} T\rho_n - 2 \omega \exp_{i \omega} \frac{d}{dx}\rho_n\|_u 
+  & \text{\emph{(by the product rule)}} \\
+& = \|T\rho_n - 2 \omega \frac{d}{dx}\rho_n\|_2 
+  & \text{\emph{(see $\|\exp_{i \omega} \phi\|_2 = \|\phi\|_2$ for any $\phi \in L^2$)}} \\
 & \leq  \|-\frac{d^2}{dx^2}\rho_n\|_2 + 2\omega\|\frac{d}{dx}\rho_n\|_2 \rightarrow 0, & 
 \end{align*}
 
 converging by equation (\ref{eqn:rhokn-vanishes}).
-Thus $u_n$ forms a Weyl sequence for $T$ and $\lambda \in [0, +\infty)$, as required.
+Thus $u_n$ forms a Weyl sequence for $T$ and $\lambda \in [0, +\infty)$, as
+required. 
 \end{proof}
 
-We can use a similar idea for another example to find the essential spectrum of the multiplication operator:
+We can use a similar idea for another example to find the essential spectrum of
+the multiplication operator:
 
 \begin{example}
-Consider $f \in C(0, 1) \cap L^\infty (0, 1)$. The essential spectrum of the operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the range of $f$.
+  Consider $f \in C(0, 1) \cap L^\infty (0, 1)$. The essential spectrum of the
+  operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the range of $f$.
 \end{example}
 \begin{proof}
-Similar to before, our initial idea comes from an 'almost-eigenvector'. In this case, if $\lambda$ is in the range
-of $f$ with $f(x_0) = \lambda$, we see that $M_f \delta_{x_0} = \lambda \delta_{x_0}$, where $\delta_{x_0}$ is the
-Dirac delta centred at $x_0$. Again, $\delta_{x_0}$ is not an eigenfunction of $M_f$ as it is not in the correct domain - this time, 
-it isn't even strictly a function (it is a distribution).
+Similar to before, our initial idea comes from an 'almost-eigenvector'. In this
+case, if $\lambda$ is in the range of $f$ with $f(x_0) = \lambda$, we
+see that $M_f \delta_{x_0} = \lambda \delta_{x_0}$, where $\delta_{x_0}$
+is the Dirac delta centred at $x_0$. Again, $\delta_{x_0}$ is not an eigenfunction of
+$M_f$ as it is not in the correct domain - this time, it isn't even
+strictly a function (it is a distribution).
 
-Now consider a Friedrichs mollifier $\rho$. This is a function in $C^\infty_0(\mathbb{R})$ with the property that $\sqrt{n}\rho(ny) \rightarrow \delta_0$ as $n \rightarrow \infty$; we renormalise it such that $\|\rho\|_2 = 1$, and take the sequence 
-
+Now consider a Friedrichs mollifier $\rho$. This is a function in
+$C^\infty_0(\mathbb{R})$ with the property that $\sqrt{n}\rho(ny)
+\rightarrow \delta_0$ as $n \rightarrow \infty$; we renormalise it such
+that $\|\rho\|_2 = 1$, and take the sequence 
 $$u_n: x \mapsto 
 \begin{cases}
   \sqrt{n}\rho(n(x-x_0)) & x \in (0, 1) \\
   0 & \text{otherwise}
 \end{cases}
 $$
-
-thus $u_n$ "converges to $\delta_{x_0}$" in the sense of distributions. Note that $\|u_n\|_2 = \|\rho\|_2 = 1$ for all $n$, and this sequence converges weakly to 0:
+thus $u_n$ "converges to $\delta_{x_0}$" in the sense of distributions. Note
+that $\|u_n\|_2 = \|\rho\|_2 = 1$ for all $n$, and this sequence
+converges weakly to 0: 
 \begin{align*}
-|( u_n, g )| & = \int_{\supp{u_n}}\sqrt{n}\rho(n(x-x_0))g(x) & \text{\emph{(for any $g \in L^2(0, 1)$)}} \\
-& \leq \|u_n\|_2 \sqrt{\int_{\supp{u_n}} |g(x)|^2} & \text{\emph{(by H\"older's inequality)}} \\
-& = \sqrt{\int_{\supp{u_n}} |g(x)|^2} \rightarrow 0, \quad \text{as $\supp(u_n)$ decreases to 0.} &
+|( u_n, g )| & = \int_{\supp{u_n}}\sqrt{n}\rho(n(x-x_0))g(x) 
+	       & \text{\emph{(for any $g \in L^2(0, 1)$)}} \\
+& \leq \|u_n\|_2 \sqrt{\int_{\supp{u_n}} |g(x)|^2} 
+  & \text{\emph{(by H\"older's inequality)}} \\
+& = \sqrt{\int_{\supp{u_n}} |g(x)|^2} \rightarrow 0, 
+  \quad \text{as $\supp(u_n)$ decreases to 0.} &
 \end{align*}
 
 Then we see $\|(M_f - \lambda)u_n\|_2$ converges to zero by similar reasoning:
 \begin{align*}
-\|(M_f - \lambda)u_n\|^2_2 & = \int_{\supp \rho_n} |(f(x) - f(x_0) \sqrt{n} \rho(n(x-x_0))|^2 & \text{\emph{(using that $\lambda = f(x_0)$)}} \\
-& = \|(f(x) - f(x_0))^2\|_{L^\infty (\supp \rho_n)} \|\rho_n^2\|_1 & \text{\emph{(by H\"older's inequality)}} \\
-& = \sup_{x \in \supp \rho_n} \|(f(x) - f(x_0))^2\| \rightarrow 0 & \text{\emph{(note $\|\rho_n^2\|_{L^1} = \|\rho_n\|_2 = 1$)}} \\
+\|(M_f - \lambda)u_n\|^2_2 & = \int_{\supp \rho_n} |(f(x) - f(x_0) \sqrt{n} \rho(n(x-x_0))|^2 
+			     & \text{\emph{(using that $\lambda = f(x_0)$)}} \\
+& = \|(f(x) - f(x_0))^2\|_{L^\infty (\supp \rho_n)} \|\rho_n^2\|_1 
+  & \text{\emph{(by H\"older's inequality)}} \\
+& = \sup_{x \in \supp \rho_n} \|(f(x) - f(x_0))^2\| \rightarrow 0 
+  & \text{\emph{(note $\|\rho_n^2\|_{L^1} = \|\rho_n\|_2 = 1$)}} \\
 \end{align*}
 converging to zero as $\supp \rho_n$ shrinks around $x_0$ by the continuity of $f$.
 \end{proof}
-Compare this example to Theorem \ref{thm:mult-op-spec}, and see that the \emph{entire spectrum} of a multiplication operator is essential spectrum; the
+Compare this example to Theorem \ref{thm:mult-op-spec}, and see that the
+\emph{entire spectrum} of a multiplication operator is essential spectrum; the
 operator has no eigenvalues.
 
-One interesting property of the essential spectrum that is not easily visible from our earlier definition is that it is invariant under compact
-perturbations. This is not the case for eigenvalues!
+One interesting property of the essential spectrum that is not easily visible
+from our earlier definition is that it is invariant under compact perturbations.
+This is not the case for eigenvalues!
 
 \begin{definition}{\textbf{(Compact operators and rank)}}\index{operator!compact}\index{rank of an operator}
-An operator $T$ on a normed vector space $X$ is \emph{compact} if for every bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $X$, the sequence $(Tx_n)_{n \in \mathbb{N}}$ has a convergent subsequence.
+  An operator $T$ on a normed vector space $X$ is \emph{compact} if for every
+  bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $X$, the sequence
+  $(Tx_n)_{n \in \mathbb{N}}$ has a convergent subsequence.
 
-The rank of an operator $T$, denoted $\rank T$, is the dimension of its range.
+  The rank of an operator $T$, denoted $\rank T$, is the dimension of its range.
 \end{definition}
 
-Note in particular that if a bounded operator $T$ has finite rank, then $T$ is compact; as its image is finite-dimensional and bounded, 
-the Bolzano-Weierstrass theorem holds for $(Tx_n)_{n \in \mathbb{N}}$.
+Note in particular that if a bounded operator $T$ has finite rank, then $T$ is
+compact; as its image is finite-dimensional and bounded, the Bolzano-Weierstrass
+theorem holds for $(Tx_n)_{n \in \mathbb{N}}$.
 
-Note also that any compact operator is necessarily bounded, as otherwise we could choose a bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $\hilbert$ such that $\|Tx_n\| \rightarrow \infty$, 
-and then it would not be possible for $(Tx_n)_{n \rightarrow \infty}$ to have a bounded subsequence. 
+Note also that any compact operator is necessarily bounded, as otherwise we
+could choose a bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $\hilbert$ such
+that $\|Tx_n\| \rightarrow \infty$, and then it would not be possible for
+$(Tx_n)_{n \rightarrow \infty}$ to have a bounded subsequence. 
 
 \begin{theorem}
-Let $\lambda$ be in the essential spectrum of an operator $T$ on a Hilbert space $\hilbert$. Then
+  Let $\lambda$ be in the essential spectrum of an operator $T$ on a Hilbert space
+  $\hilbert$. Then
 
-\begin{equation}\label{eqn:weyl_spectrum}
-\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)
-\end{equation}
+  \begin{equation}
+  \label{eqn:weyl_spectrum}
+    \lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)
+  \end{equation}
 
-where $\mathcal{K}(\hilbert)$ is the space of all compact linear operators on $\hilbert$.
+  where $\mathcal{K}(\hilbert)$ is the space of all compact linear operators on $\hilbert$.
 \end{theorem}
 \begin{proof}
 First, let $\lambda \in \Spec_e(T)$ have the Weyl sequence $x_n$ for the operator $T$. Then 
 
 $$\|(T+K-\lambda)x_n\| = \|(T - \lambda)x_n+Kx_n\| \leq \|(T - \lambda)x_n\| + \|Kx_n\|$$. 
 
-And as $K$ is compact, $Kx_n$ has a convergent subsequence $Kx_{n_k}$, where $x_{n_k} \rightharpoonup 0$ because $x_n \rightharpoonup 0$.
-Then $Kx_{n_k}$ also weakly converges to 0: for any $\phi \in \hilbert$,
+And as $K$ is compact, $Kx_n$ has a convergent subsequence $Kx_{n_k}$, where
+$x_{n_k} \rightharpoonup 0$ because $x_n \rightharpoonup 0$. Then
+$Kx_{n_k}$ also weakly converges to 0: for any $\phi \in \hilbert$,
 \begin{align*}
 (Kx_{n_k}, \phi) = (x_{n_k}, K^* \phi) \rightarrow 0
 \end{align*}
+by weak convergence of $x_{n_k}$ to 0. The result then follows by the uniqueness
+of weak limits (i.e. if a sequence strongly converges to
+\emph{something}, it must be the same value that it weakly converges to!)
 
-by weak convergence of $x_{n_k}$ to 0. The result then follows by the uniqueness of weak limits (i.e. if a sequence strongly converges to \emph{something}, it must be the same value that it weakly converges to!)
-
-Thus $\|(T+K-\lambda)x_{n_k}\| \leq \|(T - \lambda)x_{n_k}\| + \|Kx_{n_k}\| \rightarrow 0$, so $x_{n_k}$ is a Weyl sequence for $\lambda$ and $T+K$ 
-for any compact operator $K$, so $\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)$.
+Thus $\|(T+K-\lambda)x_{n_k}\| \leq \|(T - \lambda)x_{n_k}\| + \|Kx_{n_k}\|
+\rightarrow 0$, so $x_{n_k}$ is a Weyl sequence for $\lambda$ and $T+K$
+for any compact operator $K$, so $\lambda \in \bigcap_{K \in
+\mathcal{K}(\hilbert)} \Spec_e(T + K)$.
 \end{proof}
 
 \begin{remark}
-As mentioned before, eigenvalues do not have this property: let $\lambda$ be an eigenvalue of $T$ with eigenvector $u$, and $P$ the orthogonal 
+As mentioned before, eigenvalues do not have this property: let $\lambda$ be an
+eigenvalue of $T$ with eigenvector $u$, and $P$ the orthogonal
 projection onto the space $\mathrm{span}\{u\}$ (so $\rank P = 1$). Then:
 
 $$(T+P) u = Tu + u = \lambda u + u = (\lambda + 1)u$$
 
-so $\lambda$ is not an eigenvalue of $(T+P)$. This will become critical in discussing a method of detecting spectral pollution known as 
-\emph{dissipative barrier methods}, which we will explore in section \ref{sec:dissipative-barrier}.
+so $\lambda$ is not an eigenvalue of $(T+P)$. This will become critical in
+discussing a method of detecting spectral pollution known as
+\emph{dissipative barrier methods}, which we will explore in section
+\ref{sec:dissipative-barrier}.
 \end{remark}
 
 \subsection{Rayleigh quotients and numerical range}
-The gateway to bounding the spectrum (and pollution) of an operator $T$ on a Hilbert space lies in a functional known as the \textbf{Rayleigh quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$, defined:
-
- \begin{equation*}
- R_T: u \mapsto \frac{( Tu, u )}{(u, u)}
- \end{equation*}
+The gateway to bounding the spectrum (and pollution) of an operator $T$ on a
+Hilbert space lies in a functional known as the \textbf{Rayleigh
+quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$,
+defined:
+\begin{equation*}
+  R_T: u \mapsto \frac{( Tu, u )}{(u, u)}
+\end{equation*} 
+or equivalently (by linearity) $R_T: u \mapsto (Tu, u)$ on the domain $\{u \in
+\Dom(T) : \|u\| = 1\}$.
  
- or equivalently (by linearity) $R_T: u \mapsto (Tu, u)$ on the domain $\{u \in \Dom(T) : \|u\| = 1\}$.
- 
- For operators where we want to weaken the domain (e.g. a differential operator) it is suitable to replace $(Tu, u)$ with the relevant bilinear form $\mathcal{A}[u, u].$
+For operators where we want to weaken the domain (e.g. a differential operator)
+it is suitable to replace $(Tu, u)$ with the relevant bilinear form
+$\mathcal{A}[u, u].$
 
-\begin{definition}{\textbf{(Numerical range of an operator)}}\index{range!numerical} Let $T$ be an operator on a Hilbert space. The
-numerical range $\Num(T)$ is defined $\Num(T) \eqdef \Ran(R_T)$.
+\begin{definition}{\textbf{(Numerical range of an operator)}}
+\index{range!numerical}
+  Let $T$ be an operator on a Hilbert space. The
+  numerical range $\Num(T)$ is defined $\Num(T) \eqdef \Ran(R_T)$.
 \end{definition}
 
-The numerical range has a variety of interesting properties which make them useful for roughly approximating
-the location of spectra.
+The numerical range has a variety of interesting properties which make them
+useful for roughly approximating the location of spectra.
 
-\begin{proposition}\label{thm:num-range-props}
-The numerical range $\Num(T)$ of an operator $T$ has the following properties:
-\begin{enumerate}
-\item\label{item:num-in-R} $\Num(T) \in \mathbb{R}$ if $T$ is self-adjoint;
-\item\label{item:proj-num-range} $\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$;
-\item (Toeplitz-Hausdorff theorem)\label{item:toeplitz-hausdorff}\index{theorem!Toeplitz-Hausdorff} $\Num(T)$ is a convex set;
-\item\label{item:spec-in-num} $\Spec_{ap}(T) \subseteq \overline{\Num(T)}$, where $\overline{\Num(T)}$ is the closure of the numerical range of $T$.
-\end{enumerate}
+\begin{proposition}
+\label{thm:num-range-props}
+  The numerical range $\Num(T)$ of an operator $T$ has the following properties:
+  \begin{enumerate}
+    \item
+    \label{item:num-in-R}
+	$\Num(T) \in \mathbb{R}$ if $T$ is self-adjoint;
+    \item
+    \label{item:proj-num-range} 
+	$\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$;
+    \item (Toeplitz-Hausdorff theorem)
+    \label{item:toeplitz-hausdorff}
+    \index{theorem!Toeplitz-Hausdorff}
+      $\Num(T)$ is a convex set;
+    \item
+    \label{item:spec-in-num} 
+      $\Spec_{ap}(T) \subseteq \overline{\Num(T)}$,
+     where $\overline{\Num(T)}$ is the closure of the numerical range of $T$.
+  \end{enumerate}
 \end{proposition}
 
-It is important to state the usefulness of these properties for spectral pollution. Not only does $\Num(T)$ bound the spectrum of $T$,
-it bounds the spectrum of $T_\mathcal{L}$ - effectively, bounding the region in which spectral pollution can occur to a convex set around $\Spec(T)$.
-We will also use this fourth property to derive a theorem on how well the Galerkin method approximates the spectrum outside of $\conv(\Spec_{ess})$.
+It is important to state the usefulness of these properties for spectral
+pollution. Not only does $\Num(T)$ bound the spectrum of $T$, it bounds the
+spectrum of $T_\mathcal{L}$ - effectively, bounding the region in which spectral
+pollution can occur to a convex set around $\Spec(T)$.
+We will also use this fourth property to derive a theorem on how well the
+Galerkin method approximates the spectrum outside of $\conv(\Spec_{ess})$.
 
 \begin{proof}
-(\ref{item:num-in-R}.) If $T$ is self-adjoint, $(Tu, u) = (u, Tu)$ for all $u$; by conjugate symmetry of scalar products, $(u, Tu) = \overline{(Tu, u)}$; we combine these to find $(Tu, u) = \overline{(Tu, u)}$ and the result follows. 
+(\ref{item:num-in-R}.) If $T$ is self-adjoint, 
+$(Tu, u) = (u, Tu)$ for all $u$;
+by conjugate symmetry of scalar products, 
+$(u, Tu) = \overline{(Tu, u)}$;
+we combine these to find 
+$(Tu, u) = \overline{(Tu, u)}$
+and the result follows. 
 
-(\ref{item:proj-num-range}.) $\Num(T_\mathcal{L}) = \{( PTPu, u ) : u \in \mathcal{L}, \|u\|=1\}$.
+(\ref{item:proj-num-range}.) 
+$\Num(T_\mathcal{L}) = \{( PTPu, u ) : u \in \mathcal{L}, \|u\|=1\}$.
 We then use the self-adjointness of $P$ to see
-$$( PTPu, u ) = ( TPu, Pu )$$
+$$( PTPu, u ) = ( TPu, Pu ).$$
 Then as $u \in \mathcal{L}, \|Pu\| = \|u\| = 1$,
 so $( T(Pu), (Pu) ) \in \Num(T)$, and the result follows.
 
-(\ref{item:toeplitz-hausdorff}. \cite{gustafson1997numerical}) Take $\lambda = (Tx, x), \mu = (Ty, y) \in \Num(T)$. Define the line segment between them as 
-$\nu = t\lambda + (1-t)\mu$ for $t \in [0, 1]$, and $T_\mathcal{L}$ the compression of $T$ to the subspace 
-$\mathcal{L} = \text{span}\{x, y\}$. Then we note that $(T_\mathcal{L} x, x) = (Tx, x)$ and $(T_\mathcal{L} y, y) = (Ty, y)$, so $\lambda, \mu$ are in
-$\Num(T_\mathcal{L})$. $T_\mathcal{L}$ is two-dimensional, so is a $2 \times 2$ matrix; it can be proven by direct calculation (see \cite{gustafson1997numerical}) that the numerical range of a $2 \times 2$ matrix is an ellipse (with foci at either eigenvalue of the matrix!) and so $\nu$ is in $\Num(T_\mathcal{L})$.
-Then by property \ref{item:proj-num-range}, $\Num(T_\mathcal{L}) \subseteq \Num(T)$, so $\nu$ is also in $\Num(T)$, as required.
+(\ref{item:toeplitz-hausdorff}. 
+\cite{gustafson1997numerical})
+Take $\lambda = (Tx, x), \mu = (Ty, y) \in \Num(T)$. Define the line segment
+between them as $\nu = t\lambda + (1-t)\mu$ for $t \in [0, 1]$, and
+$T_\mathcal{L}$ the compression of $T$ to the subspace 
+$\mathcal{L} = \text{span}\{x, y\}$.
+Then we note that $(T_\mathcal{L} x, x) = (Tx, x)$ and $(T_\mathcal{L} y, y) =
+(Ty, y)$, so $\lambda, \mu$ are in $\Num(T_\mathcal{L})$.
+$T_\mathcal{L}$ is two-dimensional, so is a $2 \times 2$ matrix; it can
+be proven by direct calculation (see \cite{gustafson1997numerical}) that
+the numerical range of a $2 \times 2$ matrix is an ellipse (with foci at
+either eigenvalue of the matrix!) and so $\nu$ is in
+$\Num(T_\mathcal{L})$.
+Then by property \ref{item:proj-num-range}, $\Num(T_\mathcal{L}) \subseteq
+\Num(T)$, so $\nu$ is also in $\Num(T)$, as required.
 
-(\ref{item:spec-in-num}.) $\overline{\Num(T)}$ is the set of all points $\eta$ such that there is a sequence of unit vectors $u_n$ where
+(\ref{item:spec-in-num}.) $\overline{\Num(T)}$ is the set of all points $\eta$
+such that there is a sequence of unit vectors $u_n$ where
 $$\lim_{n\rightarrow \infty}( Tu_n, u_n ) = \eta.$$
 
-Now let $\lambda \in \Spec_{ap}(T)$. We can combine the approximate eigenvalue theorem (Theorem \ref{thm:approx-eigenvalue-thm}) with the Cauchy-Schwarz inequality:
+Now let $\lambda \in \Spec_{ap}(T)$. We can combine the approximate eigenvalue
+theorem (Theorem \ref{thm:approx-eigenvalue-thm}) with the
+Cauchy-Schwarz inequality: 
 $$|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0,\text{ and so}$$
 \begin{equation*}
 \begin{split}
@@ -292,165 +416,267 @@ So $\lambda \in \overline{\Num(T)}$.
 \end{proof}
 
 \begin{corollary}\label{thm:normal-spec-in-num}
-If $T$ is a normal operator (i.e. $TT^* = T^*T$), then its entire spectrum is in the numerical range.
+  If $T$ is a normal operator (i.e. $TT^* = T^*T$),
+  then its entire spectrum is in the numerical range.
 \end{corollary}
 \begin{proof}
 Combine Theorem \ref{thm:normal-spec} with Theorem \ref{thm:num-range-props}.\ref{item:spec-in-num}.
 \end{proof}
 
 \begin{corollary}\label{thm:self-adj-num-range}
-In particular, if $T$ is self-adjoint, $\Spec(T) \subseteq \mathbb{R}$. Furthermore, if $T$ is bounded, then we have
-\begin{align*}
-\inf(\Spec(T)) & = \inf(\Num(T))\text{, and}\\
-\sup(\Spec(T)) & = \sup(\Num(T)).
-\end{align*}
+  In particular, if $T$ is self-adjoint, $\Spec(T) \subseteq \mathbb{R}$.
+  Furthermore, if $T$ is bounded, then we have 
+  \begin{align*}
+    \inf(\Spec(T)) & = \inf(\Num(T))\text{, and}\\
+    \sup(\Spec(T)) & = \sup(\Num(T)).
+  \end{align*}
 \end{corollary}
 \begin{proof}
-We can see immediately that any self-adjoint operator is normal ($T = T^* \Rightarrow T^*T = TT = TT^*$); thus the entire spectrum of the self-adjoint
-operator is in the numerical range, and by Proposition \ref{thm:num-range-props}.\ref{item:num-in-R} we have $\Spec(T) \subseteq \overline{\Num(T)} \subseteq \mathbb{R}$.
+We can see immediately that any self-adjoint operator is normal ($T = T^*
+\Rightarrow T^*T = TT = TT^*$); thus the entire spectrum of the
+self-adjoint operator is in the numerical range, and by Proposition
+\ref{thm:num-range-props}.\ref{item:num-in-R} we have $\Spec(T)
+\subseteq \overline{\Num(T)} \subseteq \mathbb{R}$.
 
-Now, $\inf(\Spec(T)) \geq \inf(\Num(T))$. Let $\inf(\Num(T)) = w_0$; then for any unit vector $u$, $((T - w_0)u, u)  = (Tu, u) - w_0 \geq 0$, and so $u, v \mapsto ((T - w_0)u, v)$ defines a positive-semidefinite Hermitian form, for which the Cauchy-Schwarz inequality holds\footnote{This can easily be verified by looking at a standard proof for the inequality.}. We then find the following bound for unit vectors $u, v$:
+Now, $\inf(\Spec(T)) \geq \inf(\Num(T))$. Let $\inf(\Num(T)) = w_0$; then for
+any unit vector $u$, $((T - w_0)u, u)  = (Tu, u) - w_0 \geq 0$, and so
+$u, v \mapsto ((T - w_0)u, v)$ defines a positive-semidefinite Hermitian
+form, for which the Cauchy-Schwarz inequality holds\footnote{This can
+easily be verified by looking at a standard proof for the inequality.}.
+We then find the following bound for unit vectors $u, v$:
 \begin{align*}
-|\tau[u,v]|^2 \leq \tau[u, u] \tau[v, v] = ((T - w_0)u, u)((T - w_0)v, v) \leq \|T - w_0\|((T - w_0)u, u).
+|\tau[u,v]|^2 \leq \tau[u, u] \tau[v, v] = ((T - w_0)u, u)((T - w_0)v, v) 
+					 \leq \|T - w_0\|((T - w_0)u, u).
 \end{align*}
-Now let us take a minimising sequence $u_n$, $\|u_n\| = 1$ such that $(Tu_n, u_n) \rightarrow w_0$. Then we have
-\begin{align*}
-\|(T - w_0)u_n\|^2 = |\tau[u_n, (T - w_0)u_n]|^2  \leq \|T - w_0\|((T - w_0)u_n, u_n) \leq \|T - w_0\||(Tu_n, u_n) - w_0| \rightarrow 0,
-\end{align*}
+Now let us take a minimising sequence $u_n$, $\|u_n\| = 1$ such that 
+$(Tu_n, u_n) \rightarrow w_0$.
+Then we have
+\begin{equation*}
+\|(T - w_0)u_n\|^2 = |\tau[u_n, (T - w_0)u_n]|^2  
+		   \leq \|T - w_0\|((T - w_0)u_n, u_n) 
+		   \leq \|T - w_0\||(Tu_n, u_n) - w_0| 
+		   \rightarrow 0,
+\end{equation*}
 and therefore $w_0 \in \Spec(T)$ by Theorem \ref{thm:approx-eigenvalue-thm}.
 The proof for the supremum $w_1$ is analogous with some sign changes.
 \end{proof}
-This corollary extends to self-adjoint \textbf{semibounded}\index{operator!semibounded} operators, which are operators such that their Rayleigh quotient is bounded above or below by some constant $c$ - the result holds for the supremum or infimum for operators which are semibounded above or below respectively. We omit this more general proof as we would require a significant tangent to acquire the prerequisite results: see e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a bounded operator is semibounded both above and below.
+This corollary extends to self-adjoint
+\textbf{semibounded}\index{operator!semibounded} operators, which are operators
+such that their Rayleigh quotient is bounded above or below by some constant $c$
+- the result holds for the supremum or infimum for operators which are
+semibounded above or below respectively. We omit this more general proof as we
+would require a significant tangent to acquire the prerequisite results: see
+e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a
+bounded operator is semibounded both above and below.
 
 \begin{corollary}
-Let $T$ be a self-adjoint, semibounded operator. Then spectral pollution does not occur outside of $\conv\Spec(T)$.
+  Let $T$ be a self-adjoint, semibounded operator.
+  Then spectral pollution does not occur outside of $\conv\Spec(T)$.
 \end{corollary}
 \begin{proof}
-Combine Corollary \ref{thm:self-adj-num-range} with Proposition \ref{thm:num-range-props}.\ref{item:proj-num-range}.
+Combine Corollary \ref{thm:self-adj-num-range} with Proposition
+\ref{thm:num-range-props}.\ref{item:proj-num-range}. 
 \end{proof}
 
-Is there a better bound? From heuristic evidence we may expect one - if we look at Example \ref{ex:schrodinger-ritz}, we can see that there is no pollution
-even within the negative semiaxis, even though the region plotted is well within $\conv\Spec(T)$. The numerical range has been refined in a variety
-of ways, one of which is particularly profitable when it comes to bounding spectral pollution. This shall be our next topic.
+Is there a better bound? From heuristic evidence we may expect one - if we look
+at Example \ref{ex:schrodinger-ritz}, we can see that there is no pollution even
+within the negative semiaxis, even though the region plotted is well within
+$\conv\Spec(T)$. The numerical range has been refined in a variety
+of ways, one of which is particularly profitable when it comes to bounding
+spectral pollution. This shall be our next topic.
 
-\subsection{Essential numerical range}\index{range!essential numerical}
-A similar notion to that of the numerical range is the essential numerical range, $\Num_e (T)$. This set lowers its aim to simply estimating the essential spectrum,
-but in the process manages to do so much more accurately for some operators.
+\subsection{Essential numerical range}
+\index{range!essential numerical}
+A similar notion to that of the numerical range is the essential numerical
+range, $\Num_e (T)$. This set lowers its aim to simply estimating the essential
+spectrum, but in the process manages to do so much more accurately for some
+operators.
 
-\begin{definition}{\textbf{(Essential numerical range)}} (adapted from \cite{fillmore1972essential})
-The essential numerical range of an operator $T$ is given by\footnote{Much like the essential spectrum, there are multiple definitions of the essential numerical range.
-However (at least for bounded operators) there is much more equivalence between the definitions than we have for essential spectrum! \cite{fillmore1972essential} We choose the definition with the most
-natural relation to our choice of definition for essential spectrum.}
+\begin{definition}{\textbf{(Essential numerical range)}} 
+  (adapted from \cite{fillmore1972essential})
+  The essential numerical range of an operator $T$ is given by\footnote{Much like
+  the essential spectrum, there are multiple definitions of the essential
+  numerical range. However (at least for bounded operators) there is much
+  more equivalence between the definitions than we have for essential
+  spectrum! \cite{fillmore1972essential} We choose the definition with the
+  most natural relation to our choice of definition for essential spectrum.}
 
-$$\Num_e (T) := \{\lim_{n \rightarrow \infty}( Tu_n, u_n ) : (u_n)_{n \in \mathbb{N}}\text{ in } \Dom(T), \|u_n\|=1, u_n \rightharpoonup 0.\}$$
+$$\Num_e (T) := \{\lim_{n \rightarrow \infty}( Tu_n, u_n ) 
+		  : (u_n)_{n \in \mathbb{N}}\text{ in } \Dom(T), \|u_n\|=1,
+		    u_n \rightharpoonup 0.\}$$
 \end{definition}
-Note the parallels with our definition of the essential spectrum, $\Spec_e(T)$. Indeed, these parallels are reflected in the properties of $\Num_e(T)$:
+Note the parallels with our definition of the essential spectrum, $\Spec_e(T)$.
+Indeed, these parallels are reflected in the properties of $\Num_e(T)$:
 
-\begin{proposition}\label{thm:nume-props} The essential numerical range $\Num_e(T)$ of an operator $T$ has the following properties:
-\begin{enumerate}
-\item\label{item:nume-convex} $\Num_e(T)$ is convex;
-\item\label{item:nume-in-clos-num} $\Num_e(T) \subseteq \overline{\Num(T)}$;
-\item\label{item:nume-is-hull} $\conv(\Spec_e(T)) \subseteq \Num_e(T)$, with equality if $T$ is self-adjoint and bounded.
+\begin{proposition}
+\label{thm:nume-props}
+  The essential numerical range $\Num_e(T)$ of an operator $T$ has the following properties:
+  \begin{enumerate}
+    \item
+    \label{item:nume-convex} 
+      $\Num_e(T)$ is convex;
+    \item
+    \label{item:nume-in-clos-num} 
+      $\Num_e(T) \subseteq \overline{\Num(T)}$;
+    \item
+    \label{item:nume-is-hull} 
+      $\conv(\Spec_e(T)) \subseteq \Num_e(T)$, with equality if $T$ is self-adjoint and bounded.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-(\ref{item:nume-convex}. \cite{bogli2020essential}) We prove this by applying the Toeplitz-Hausdorff theorem (Proposition \ref{thm:num-range-props}.\ref{item:toeplitz-hausdorff}) to a sequence. We take $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n), \mu = \lim_{n \rightarrow \infty}(Ty_n, y_n) \in \Num_e(T)$
-and define a sequence $$\nu_n = t(Tx_n, x_n) + (1-t)(Ty_n, y_n) \quad t \in [0, 1],$$ which obviously converges to $\nu = t\lambda + (1-t)\mu$ as 
+(\ref{item:nume-convex}. \cite{bogli2020essential}) We prove this by applying
+the Toeplitz-Hausdorff theorem (Proposition
+\ref{thm:num-range-props}.\ref{item:toeplitz-hausdorff}) to a sequence.
+We take $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n), \mu = \lim_{n
+\rightarrow \infty}(Ty_n, y_n) \in \Num_e(T)$ and define a sequence
+$$\nu_n = t(Tx_n, x_n) + (1-t)(Ty_n, y_n) \quad t \in [0, 1],$$ which
+obviously converges to $\nu = t\lambda + (1-t)\mu$ as 
 $n \rightarrow \infty$.
-We then create a sequence of compressions $T_n$, where each compression is to $\text{span}\{x_n, y_n\}$. By the Toeplitz-Hausdorff theorem,
-we know that $\nu_n$ is in $\Spec(T_n)$ and get a sequence $\nu_n = (Tz_n, z_n)$ converging to $\nu$; the elements $z_n$ are unit vectors in $\text{span}\{x_n, y_n\}$, and they weakly converge to 0 because $x_n$ and $y_n$ both do:
+We then create a sequence of compressions $T_n$, where each compression is to
+$\text{span}\{x_n, y_n\}$. By the Toeplitz-Hausdorff theorem, we know
+that $\nu_n$ is in $\Spec(T_n)$ and get a sequence $\nu_n = (Tz_n, z_n)$
+converging to $\nu$; the elements $z_n$ are unit vectors in
+$\text{span}\{x_n, y_n\}$, and they weakly converge to 0 because $x_n$
+and $y_n$ both do:
 $$(z_n, g) = (\alpha x_n + \beta y_n, g) = \alpha(x_n, g) + \beta(y_n, g) \rightarrow 0 \quad \forall g \in \hilbert.$$
 This means that $\nu = \lim_{n \rightarrow \infty}(Tz_n, z_n)$ is in $\Spec_e(T)$ as required.
 
-(\ref{item:nume-in-clos-num}.) This can be seen directly from looking at the two definitions. By definition, we have
-$$\overline{\Num(T)} = \{lim_{n \rightarrow \infty}( Tu_n, u_n ) : (u_n)_{n \in \mathbb{N}}\text{ in } \Dom(T), \|u_n\|=1\},$$ and $\Num_e(T)$ is the subset of this with the extra condition
+(\ref{item:nume-in-clos-num}.) This can be seen directly from looking at the two
+definitions. By definition, we have
+  $$\overline{\Num(T)} = \{lim_{n \rightarrow \infty}( Tu_n, u_n ) 
+			   : (u_n)_{n \in \mathbb{N}}\text{ in } \Dom(T),
+			   \|u_n\|=1\},$$
+and $\Num_e(T)$ is the subset of this with the extra condition
 that $u_n \rightharpoonup 0$.
-\\
-(\ref{item:nume-is-hull}.) The inclusion $\Spec_e(T) \subseteq \Num_e(T)$ comes from an analogous argument
-to that of Proposition \ref{thm:num-range-props}.\ref{item:spec-in-num}; then $\conv(\Spec_e(T)) \subseteq \Num_e(T)$
+
+(\ref{item:nume-is-hull}.) The inclusion $\Spec_e(T) \subseteq \Num_e(T)$ comes
+from an analogous argument to that of Proposition
+\ref{thm:num-range-props}.\ref{item:spec-in-num}; then
+$\conv(\Spec_e(T)) \subseteq \Num_e(T)$
 by this inclusion and that $\Num_e(T)$ is a convex set.
 \end{proof}
-It remains to show that $\conv(\Spec_e(T)) = \Num_e(T)$ when $T$ is self-adjoint and bounded. 
-This will be proven after the following theorem, which describes another similarity with essential spectra; invariance under compact perturbation.
+It remains to show that $\conv(\Spec_e(T)) = \Num_e(T)$ when $T$ is self-adjoint
+and bounded. This will be proven after the following theorem, which describes
+another similarity with essential spectra; invariance under compact
+perturbation.
 
 \begin{theorem}
-A value $\lambda$ is in the essential numerical range of an operator $T$ on a Hilbert space $\hilbert$ if and only if
-
-$$\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$$
-
-where $\mathcal{K}(\hilbert)$ is the set of all compact linear operators on $\hilbert$. 
+  A value $\lambda$ is in the essential numerical range of an operator $T$ on a
+  Hilbert space $\hilbert$ if and only if
+    $$\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$$
+  where $\mathcal{K}(\hilbert)$ is the set of all compact linear operators on $\hilbert$. 
 \end{theorem}
 \begin{proof}
-Let $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n)$ be in $\Num_e(T)$. Then $((T+K)x_n, x_n)$ = $(Tx_n, x_n) + (Kx_n, x_n)$ 
-which converges to $\lambda$ if $(Kx_n, x_n) \rightarrow 0$, which is true by the weak convergence of $x_n$ (using that $K$ is bounded as it is compact). Thus for any compact operator $K$, 
+Let $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n)$ be in $\Num_e(T)$. Then
+$((T+K)x_n, x_n)$ = $(Tx_n, x_n) + (Kx_n, x_n)$ which converges to
+$\lambda$ if $(Kx_n, x_n) \rightarrow 0$, which is true by the weak
+convergence of $x_n$ (using that $K$ is bounded as it is compact). Thus
+for any compact operator $K$, 
 $\lambda \in \Num_e(T+K) \subseteq \overline{\Num(T+K)}$.
 
 Conversely, %% TODO: finish
 \end{proof}
 
-We have seen that the essential numerical range estimates the bounds of the essential spectrum with quite astounding accuracy for some types of
-operator. But the essential numerical range far outdoes the regular numerical range on bounding spectral pollution; in fact, it provides an \emph{exact} set on which it is possible for pollution to occur! 
+We have seen that the essential numerical range estimates the bounds of the
+essential spectrum with quite astounding accuracy for some types of operator.
+But the essential numerical range far outdoes the regular numerical range on
+bounding spectral pollution; in fact, it provides an \emph{exact} set on which
+it is possible for pollution to occur! 
 
 We will require the following prerequisite lemmata:
 \begin{lemma}\label{thm:adjoint-spec-props}
-Let $T$ be a bounded operator on a Hilbert space $\hilbert$. Then:
-\begin{enumerate}
-\item\label{part:spec-of-adj} $\lambda$ is in $\Spec(T)$ if and only if $\overline{\lambda}$ is in $\Spec(T^*)$, and
-\item\label{part:adj-convergence} if $T_n$ is a sequence of operators converging strongly to $T$, i.e. $T_n f \rightarrow Tf$ for any fixed $f \in \hilbert$, then $T_n^*$ converges strongly to $T^*$.
-\end{enumerate}
+  Let $T$ be a bounded operator on a Hilbert space $\hilbert$. Then:
+  \begin{enumerate}
+  \item
+  \label{part:spec-of-adj}
+    $\lambda$ is in $\Spec(T)$ if and only if $\overline{\lambda}$ is in $\Spec(T^*)$, and
+  \item
+  \label{part:adj-convergence}
+    if $T_n$ is a sequence of operators converging strongly to $T$, i.e. $T_n f
+    \rightarrow Tf$ for any fixed $f \in \hilbert$, then $T_n^*$ converges
+    strongly to $T^*$.
+  \end{enumerate}
 \end{lemma}
 \begin{proof}
-(\ref{part:spec-of-adj}.) Let $\mu$ be in the resolvent $\rho(T)$, i.e. $(T - \rho)$ is invertible. Then we have
+(\ref{part:spec-of-adj}.) Let $\mu$ be in the resolvent $\rho(T)$,
+i.e. $(T - \rho)$ is invertible. Then we have
 \begin{align*}
 (T - \mu)(T - \mu)^{-1} & = I \\
 ((T - \mu)(T - \mu)^{-1})^* & = I^* = I \\
 ((T - \mu)^{-1})^*(T - \mu)^* & = I
 \end{align*}
-and similarly for $(T - \mu)^{-1}(T - \mu)$. Thus we have that $((T - \mu)^{-1})^*$ is the inverse of $(T - \mu)^* = (T^* - \overline{\mu})$, so $\overline{\mu} \in \rho(T^*)$. 
-We can repeat this argument for $(T^* - \overline{\mu})$, using that $T^{**} = T$. Thus $\mu \in \rho(T) \Leftrightarrow \overline{\mu} \in \rho(T^*)$, and the result follows.
+and similarly for $(T - \mu)^{-1}(T - \mu)$. Thus we have that 
+$((T - \mu)^{-1})^*$ is the inverse of $(T - \mu)^* = (T^* - \overline{\mu})$,
+so $\overline{\mu} \in \rho(T^*)$. We can repeat this argument for 
+$(T^* - \overline{\mu})$, using that $T^{**} = T$. Thus $\mu \in \rho(T)
+\Leftrightarrow \overline{\mu} \in \rho(T^*)$, and the result follows.
 
 (\ref{part:adj-convergence}.) %TODO
 \end{proof}
 
 \begin{theorem}{\textbf{(Pokrzywa \cite{pokrzywa1979method})}}
-Let $T$ be a bounded operator. All spectral pollution in the Ritz approximation of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can occur anywhere in $\Num_e(T) \setminus \Spec(T)$.
+  Let $T$ be a bounded operator. All spectral pollution in the Ritz approximation
+  of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can
+  occur anywhere in $\Num_e(T) \setminus \Spec(T)$.
 \end{theorem}
 
 \begin{proof}
-Let the sequence of approximating operators be denoted $T_n = P_n T\big|_{Ran(P_n)}$ for some projections $P_n$ (note that $P_n$ does not necessarily have to be a projection onto the first $n$ orthonormal basis functions, as the notation might suggest; it merely needs to be subspaces of increasing dimension!). If $\lambda \in \mathbb{C}$ is a point of spectral pollution, then there is some sequence of eigenpairs $(\lambda_n, f_n)$, with $f_n$ normalised so $\|f_n\| = 1$, such that:
+Let the sequence of approximating operators be denoted $T_n = P_n
+T\big|_{Ran(P_n)}$ for some projections $P_n$ (note that $P_n$ does not
+necessarily have to be a projection onto the first $n$ orthonormal basis
+functions, as the notation might suggest; it merely needs to be
+subspaces of increasing dimension!). If $\lambda \in \mathbb{C}$ is a
+point of spectral pollution, then there is some sequence of eigenpairs
+$(\lambda_n, f_n)$, with $f_n$ normalised so $\|f_n\| = 1$, such that:
 \begin{itemize}
-\item $(T_n - \lambda_n)f_n =0 \quad \forall n \in \mathbb{N}$;
-\item $\lambda_n \rightarrow \lambda$;
-\item $(T - \lambda)$ has a bounded inverse.
+  \item $(T_n - \lambda_n)f_n =0 \quad \forall n \in \mathbb{N}$;
+  \item $\lambda_n \rightarrow \lambda$;
+  \item $(T - \lambda)$ has a bounded inverse.
 \end{itemize}
 We then have that $(T_n - \lambda)f_n \rightarrow 0$:
 
-\begin{equation}\label{eqn:trunc-conv}
-(T_n - \lambda)f_n = (T_n - \lambda_n + \lambda_n - \lambda)f_n = (T_n - \lambda_n)f_n + (\lambda_n - \lambda)f_n \rightarrow 0.
+\begin{equation}
+\label{eqn:trunc-conv}
+(T_n - \lambda)f_n = (T_n - \lambda_n + \lambda_n - \lambda)f_n 
+		   = (T_n -\lambda_n)f_n + (\lambda_n - \lambda)f_n 
+		   \rightarrow 0. 
 \end{equation}
 
-Furthermore, as $(T - \lambda)$ has a bounded inverse, so does $(T^* - \overline{\lambda})$ by Lemma \ref{thm:adjoint-spec-props}.\ref{part:spec-of-adj}. Then for any $h \in \hilbert$, there is some $g \in hilbert$ such that $(T^* - \overline{\lambda})g = h$. As a result, we have
+Furthermore, as $(T - \lambda)$ has a bounded inverse, so does $(T^* -
+\overline{\lambda})$ by Lemma
+\ref{thm:adjoint-spec-props}.\ref{part:spec-of-adj}. Then for any $h \in
+\hilbert$, there is some $g \in hilbert$ such that $(T^* - \overline{\lambda})g = h$.
+As a result, we have
 \begin{align*}
 (f_n, h) & = (f_n, (T^* - \overline{\lambda})g) \\
 & = (f_n, (T^* - \overline{\lambda})g - (T_n^* - \overline{\lambda})g) + (f_n, (T_n^* - \overline{\lambda})g) \\
 & = (f_n, T^*g - T_n^*g) + ((T_n - \lambda)f_n, g) \\
 & \rightarrow 0
 \end{align*}
-by Equation \ref{eqn:trunc-conv} and Lemma \ref{thm:adjoint-spec-props}.\ref{part:adj-convergence}. Thus $f_n \rightharpoonup 0$.
+by Equation \ref{eqn:trunc-conv} and Lemma
+\ref{thm:adjoint-spec-props}.\ref{part:adj-convergence}. Thus 
+$f_n \rightharpoonup 0$.
 
 Finally, we need that $(T f_n, f_n) \rightarrow \lambda$:
 \begin{align*}
 \lambda_n = (T_n f_n, f_n) & = (P_n T\big|_{\Ran(P_n)} f_n, f_n)  \\
 & = (P_n T f_n, f_n) = (T f_n, f_n)
 \end{align*}
-as $P_n$ is self-adjoint, and $P_n f_n = f_n$. Thus $(T f_n, f_n) = \lambda_n \rightarrow \lambda$, and so $\lambda$ is in the essential range of $T$ as required.
-\end{proof}
+as $P_n$ is self-adjoint, and $P_n f_n = f_n$. Thus $(T f_n, f_n) = \lambda_n
+\rightarrow \lambda$, and so $\lambda$ is in the essential range of $T$ as
+required. \end{proof}
 
-For a bounded operator, this is the main result of a paper by Pokrzywa \parencite{pokrzywa1979method}. The main theorem of the paper has the
-corollary that for $\lambda \notin \Num_e(T)$, we have $\lambda \in \Spec(T)$ iff $\text{dist}(\lambda, \Spec(T_n)) \rightarrow 0$; that is, outside of the
-essential numerical range, every point in the approximate spectrum $\Spec(T_n)$ converges to a point in the actual spectrum of $T$. This is followed by
-a lemma which claims that for any sequence $(\lambda_n)_{n \in \mathbb{N}}$ in the interior of $\Num_e(T)$, there is a sequence of orthogonal projections such that $\lambda_{n-1} \in \Spec(T_n)$ - not only does all spectral pollution occur inside this range, but for \emph{any point} in 
-$\Num_e(T) \setminus \Spec(T)$, spectral pollution occurs there in some approximation.
+For a bounded operator, this is the main result of a paper by Pokrzywa
+\parencite{pokrzywa1979method}. The main theorem of the paper has the corollary
+that for $\lambda \notin \Num_e(T)$, we have $\lambda \in \Spec(T)$ iff
+$\text{dist}(\lambda, \Spec(T_n)) \rightarrow 0$; that is, outside of the
+essential numerical range, every point in the approximate spectrum $\Spec(T_n)$
+converges to a point in the actual spectrum of $T$. This is followed by a lemma
+which claims that for any sequence $(\lambda_n)_{n \in \mathbb{N}}$ in
+the interior of $\Num_e(T)$, there is a sequence of orthogonal projections such
+that $\lambda_{n-1} \in \Spec(T_n)$ - not only does all spectral pollution occur
+inside this range, but for \emph{any point} in $\Num_e(T) \setminus \Spec(T)$,
+spectral pollution occurs there in some approximation.
 
 \end{document}
