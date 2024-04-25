@@ -27,17 +27,18 @@ Python package written by the author. Please see Appendix
 
 We must first define our quantity of interest: the spectrum of an operator.
 \begin{definition}{\textbf{(Resolvent and spectrum)}}\index{resolvent}\index{spectrum}
-(Adapted from \parencite{edmunds2018spectral}) Let $T$ be a linear operator on a Banach space.
-\begin{itemize}
-\item The resolvent of $T$ is the set 
-      $\rho(T) := \{\eta \in \mathbb{C} : (T - \eta I)\text{ has a bounded inverse}\}$,
-      where I is the identity
-      operator. If it exists, we call its inverse $(T - \eta I)^{-1}$
-      the `resolvent operator' for $\eta$ and $T$.
-\item The spectrum of $T$, denoted $\Spec(T)$, 
-      is $\mathbb{C} \setminus \rho(T)$, i.e. the set of all complex numbers $\lambda$
-      such that the operator $(T - \lambda I)$ does not have a bounded inverse.
-\end{itemize}
+  (Adapted from \parencite{edmunds2018spectral})
+  Let $T$ be a linear operator on a Banach space.
+  \begin{itemize}
+  \item The resolvent of $T$ is the set 
+    $\rho(T) := \{\eta \in \mathbb{C} : (T - \eta I)\text{ has a bounded inverse}\}$,
+    where I is the identity
+    operator. If it exists, we call its inverse $(T - \eta I)^{-1}$
+    the `resolvent operator' for $\eta$ and $T$.
+  \item The spectrum of $T$, denoted $\Spec(T)$,is
+    $\mathbb{C} \setminus \rho(T)$, i.e. the set of all complex numbers $\lambda$
+    such that the operator $(T - \lambda I)$ does not have a bounded inverse.
+  \end{itemize}
 \end{definition}
 
 In the remainder of the text, the identity operator $I$ will be implicit in the
@@ -58,20 +59,20 @@ the real line; this makes it much more convenient to model, bound and calculate
 a wide range of results.
 
 \begin{definition}{\textbf{(Adjoint, symmetric, and self-adjoint operators)}}
-      (Adapted from \cite{hall2013quantum})
-      \index{operator!adjoint}\index{operator!symmetric}\index{operator!self-adjoint}
-\begin{itemize}
-\item Let $T$ be an operator on a Hilbert space $\hilbert$. Let $\Dom(T^*)$ be
-      the set of all $v \in \hilbert$ such that the functional
-	$$u \mapsto (Tu, v) \quad \text{on $u \in \Dom(T)$}$$
-      is bounded. We then define an \textbf{adjoint} operator $T^*$ to be the
-      operator such that 
-      $(Tu, v) = (u, T^*v)$ for all $u \in \Dom(T), v \in \Dom(T^*)$ 
-\item An operator $T$ is symmetric if 
-      for all $u, v \in \Dom(T)$, (Tu, v) = (u, Tv).
-\item An operator $T$ is self-adjoint if it is symmetric and $Dom(T^*) =
-      Dom(T)$, i.e. it is equal to its adjoint operator.
-\end{itemize}
+(Adapted from \cite{hall2013quantum})
+\index{adjoint operator}\index{symmetric operator}\index{self-adjoint operator}
+  \begin{itemize}
+  \item Let $T$ be an operator on a Hilbert space $\hilbert$. Let $\Dom(T^*)$ be
+    the set of all $v \in \hilbert$ such that the functional
+	    $$u \mapsto (Tu, v) \quad \text{on $u \in \Dom(T)$}$$
+    is bounded. We then define an \textbf{adjoint} operator $T^*$ to be the
+    operator such that 
+    $(Tu, v) = (u, T^*v)$ for all $u \in \Dom(T), v \in \Dom(T^*)$ 
+  \item An operator $T$ is symmetric if 
+    for all $u, v \in \Dom(T)$, (Tu, v) = (u, Tv).
+  \item An operator $T$ is self-adjoint if it is symmetric and $Dom(T^*) =
+    Dom(T)$, i.e. it is equal to its adjoint operator.
+  \end{itemize}
 \end{definition}
 
 Note that a bounded operator is symmetric if and only if it is self-adjoint;
@@ -89,7 +90,7 @@ their spectra from decades-long attempts at discovery.
 To this end, we must employ numerical methods.
 We shall find that even approximating spectra computationally is not so easy.
 
-\subsection{Approximating spectra; Ritz-Galerkin methods}
+\subsection{Approximating spectra; Ritz and Galerkin methods}
 
 It would be a reasonable hypothesis that we can approximate spectra by reducing
 the infinite-dimensional problem to a finite-dimensional one, where we are on
@@ -98,24 +99,95 @@ much firmer ground when it comes to finding eigenvalues.
 \begin{definition}{\textbf{(Compressions \& truncations)}}
 (Adapted from \parencite{davies1995spectral})
 \index{compression}\index{truncation}
-Let $T$ be an operator on a Hilbert space $\hilbert$, $\mathcal{L} \subseteq
-Dom(T)$ a closed linear subspace, and $P_\mathcal{L}$ the orthogonal
-projection of $\hilbert$ onto $\mathcal{L}$.
-\begin{itemize}
-\item The \textbf{compression} of the operator $T$, which we will often denote
-      $T_\mathcal{L}$, is defined 
+  Let $T$ be an operator on a Hilbert space $\hilbert$, $\mathcal{L} \subseteq
+  Dom(T)$ a closed linear subspace, and $P_\mathcal{L}$ the orthogonal
+  projection of $\hilbert$ onto $\mathcal{L}$.
+  \begin{itemize}
+  \item The \textbf{compression} of the operator $T$, which we will often denote
+    $T_\mathcal{L}$, is defined 
       $$T_\mathcal{L} \eqdef P_\mathcal{L} T\big|_{\mathcal{L}}$$
-      where $\big|_{\mathcal{L}}$ denotes domain restriction to $\mathcal{L}$. 
-\item If $\{\phi_n\}_{n \in \mathbb{N}}$ is an orthonormal basis
-      for $\hilbert$, the k'th \textbf{truncation} of $T$ is the compression
-      of $T$ to $\text{Span}\{\phi_1, \phi_2, \hdots, \phi_k\}$. If
-      there is no confusion, we will denote the k'th truncation $T_k$.
-\end{itemize}
+    where $\big|_{\mathcal{L}}$ denotes domain restriction to $\mathcal{L}$. 
+  \item If $\{\phi_n\}_{n \in \mathbb{N}}$ is an orthonormal basis
+    for $\hilbert$, the $k$'th \textbf{truncation} of $T$ is the compression
+    of $T$ to $\text{Span}\{\phi_1, \phi_2, \hdots, \phi_k\}$. If
+    there is no confusion, we will denote the k'th truncation $T_k$.
+  \end{itemize}
 \end{definition}
 
-We will now derive the Ritz-Galerkin method by example; we will motivate and
+\begin{proposition}{\textbf{(Ritz matrix method)}}
+\label{thm:ritz-method}
+  The $k$'th truncation of an operator $T$ defined on the whole Hilbert space
+  $\hilbert$ with orthonormal basis $\{\phi_n\}_{n \in \mathbb{N}}$ 
+  is equivalently the matrix with entries
+    $$T_{i,j} = (T\phi_i, \phi_j)$$
+  for $i, j \in \{1, \hdots, k\}$.
+  This matrix is known as the Ritz matrix of $T$ \cite{davies2003spectral}.
+\end{proposition}
+\begin{proof}
+Take the subspace $\mathcal{L} = \text{Span}\{\phi_1, \phi_2, \hdots, \phi_k\}$ and
+consider a solution
+of the eigenvalue problem restricted to $\mathcal{L}$, that is, we want a function
+$\tilde{u} \in \mathcal{L}$ such that $T\tilde{u} = \lambda\tilde{u}$; taking the inner
+product on both sides, we get 
+$(T\tilde{u}, \tilde{v}) = \lambda (\tilde{u}, \tilde{v})$ for all $\tilde{v}$
+in $\mathcal{L}$. As any $\tilde{v}$ is a combination of basis functions, $\tilde{u}$
+is a solution if and only if
+$(T\tilde{u}, \phi_j) = \lambda (\tilde{u}, \phi_j)$ for all $j \in
+\{1, \hdots, k\}$. Then as $\tilde{u} \in \mathcal{L},$ 
+$$\tilde{u} = \sum_{i=1}^k u_i \phi_i$$
+for some values $u_i$; if we substitute this into the problem we obtain a system
+of linear equations:
+\begin{align*}
+  (T\tilde{u}, \phi_j) & = \sum_{i=1}^k (T\phi_i, \phi_j) u_i \\
+  \lambda (\tilde{u}, \phi_j) & = \lambda u_j \\
+  \Rightarrow \sum_{i=1}^k (T\phi_i, \phi_j) u_i & = \lambda u_j
+\end{align*}
+
+making use of the orthonormality of $\phi_i$ and $\phi_j$. This is equivalently
+a matrix eigenvalue problem $M u = \lambda u$ where $M_{i,j} = (T\phi_i, \phi_j)$.
+\end{proof}
+
+One can use any sequence of truncations to finite-dimensional linear subspaces
+to perform a Ritz approximation. For numerical approximation, using the span of
+a subset of the orthonormal basis is a very suitable choice of subspace, as the
+orthonormal basis functions can be enumerated and numerically evaluated with relative ease.
+
+\begin{example}
+Consider the right-shift operator $S$ on $\ell^2(\mathbb{N})$, which has the action
+  $$Su_{n} = u_{n+1}.$$
+We take the orthonormal basis $\phi_i(n) = \delta_{i, n}$ where $\delta$ is the Kronecker delta.
+Then the 'infinite Ritz matrix' for $S$ is the matrix
+  $$
+    \begin{pmatrix*}[c]
+      0 & 1 & 0 & 0 & \hdots \\
+      0 & 0 & 1 & 0 & \hdots \\
+      0 & 0 & 0 & 1 & \ddots \\
+      \vdots & \vdots & \vdots & \ddots & \ddots \\ 
+    \end{pmatrix*}
+  $$
+which we can truncate to approximate the spectrum of $S$.
+\end{example}
+Note if we were discussing $S$ on $\ell^2(\mathbb{Z})$, we would need the Ritz matrix to 'go in
+both directions':
+  $$
+    \begin{pmatrix*}[c]
+      \ddots & \ddots & & & \\ 
+      \ddots & 0 & 1 & 0 & \\
+       & 0 & 0 & 1 & 0 & \\
+       & & 0 & 0 & 1 & \ddots \\
+       & & & & \ddots & \ddots \\ 
+    \end{pmatrix*}
+  $$
+taking care to not take this matrix 'too formally' (as the main diagonal is not well-defined
+for a na\"ively defined bi-infinite matrix \cite{lindner2013where}). In these cases, it is
+a natural choice to take the subspaces 
+$\mathcal{L} = \text{Span}\{\phi_{-k}, \phi_{-k+1}, \hdots, \phi_{k-1} \phi_k\}$, 
+intuitively 'cutting out the middle' of the bi-infinite matrix.
+
+In the case of differential operators, we use a modified method
+known as a Galerkin method; we will motivate and
 explain the method via constructing an approximation method for a
-one-dimensional Sturm-Liouville operator\index{operator!Sturm-Liouville},
+one-dimensional Sturm-Liouville operator\index{Sturm-Liouville operator},
 analogously to the Galerkin method for solving general symmetric second-order
 PDEs given in \cite{suli2003introduction} and \cite{pryce1993numerical}. 
 
@@ -145,7 +217,7 @@ To start, we will weaken the problem - currently, $u$ is required to be
 twice-differentiable. We multiply both sides by a `test' function $v$ in some
 suitable space, and integrate both sides to obtain
 \begin{equation}\label{eqn:weak-pde}
--[Pu'v]^a_b + \int_a^b P(x) u'(x) v'(x) + Q(x) u(x) v(x) dx = \lambda \int_a^b u(x) v(x) dx
+-[Pu'v]^b_a + \int_a^b P(x) u'(x) v'(x) + Q(x) u(x) v(x) dx = \lambda \int_a^b u(x) v(x) dx
 \end{equation}
 which we tidy up into the form 
 $\mathcal{A}[u, v] = \lambda (u, v)$
@@ -170,41 +242,17 @@ it is a strong solution (as we can reverse the operation done in
 (\ref{eqn:weak-pde}) to recover the initial problem)
 \cite{brezis2011functional}.
 
-The Ritz-Galerkin method\index{Ritz-Galerkin method} then involves approximating
-this weak formulation over some finite-dimensional subspace. Take the subspace
-$S = \text{Span}\{\phi_1, \phi_2, \hdots, \phi_k\}$ and consider the weak
-problem (\ref{eqn:weak-pde}) restricted to $S$, that is, we want a function
-$\tilde{u} \in S$ such that $\mathcal{A}[\tilde{u}, \tilde{v}] = \lambda
-(\tilde{u}, \tilde{v})$ for all $\tilde{v}$ in $S$. As any $\tilde{v}$ is a
-combination of basis functions, $\tilde{u}$ is a solution if and only if
-$\mathcal{A}[\tilde{u}, \phi_j] = \lambda (\tilde{u}, \phi_j)$ for all $j \in
-\{1, \hdots, k\}$. Then as $\tilde{u} \in S,$ 
-$$\tilde{u} = \sum_{i=1}^k u_i \phi_i$$
-for some values $u_i$; if we substitute this into the problem we obtain a system
-of linear equations:
-\begin{align*}
-\mathcal{A}[\tilde{u}, \phi_j] & = \sum_{i=1}^k \mathcal{A}[\phi_i, \phi_j] u_i \\
-\lambda (\tilde{u}, \phi_j) & = \lambda u_j \\
-\Rightarrow \sum_{i=1}^k \mathcal{A}[\phi_i, \phi_j] u_i & = \lambda u_j
-\end{align*}
-
-making use of the orthonormality of $\phi_i$ and $\phi_j$. This is equivalently
-a matrix eigenvalue problem $M u = \lambda u$ where $M_{i,j} =
-\mathcal{A}[\phi_i, \phi_j]$.
-
 Notice that if $u$ is in the domain of $L$, we have $\mathcal{A}[u, v] = (Lu,
-v)$. For an operator $T$ defined on the whole space (e.g. a bounded operator),
-we can approximate the spectrum by the eigenvalues of a matrix $M_{i, j} = (T
-\phi_i, \phi_j)$ \cite{davies2003spectral}. We will call these matrices Ritz
-matrices; \index{matrix!Ritz} in general, a wide variety of boundary value
-problems can be weakened and discretised to be represented by these methods. The
-following example shows that this method can be effective:
+v)$. Indeed, we can follow a similar argument to the proof of Proposition \ref{thm:ritz-method}
+by replacing $(Tu, v)$ with $\mathcal{A}[u, v]$ to get the same matrix form.
+
+The following example shows that this method can be effective:
 
 \begin{example}
 \label{ex:schrodinger-ritz}
 Consider the following Schr\"odinger operator, which describes the movement of a
 hydrogen atom's electron
-\cite{pryce1993numerical}:\index{operator!Schr\"odinger}
+\cite{pryce1993numerical}:\index{Schr\"odinger operator}
 
 $$Hu = -u'' + (-\frac{1}{x} + \frac{2}{x^2})u$$
 \end{example}
@@ -280,7 +328,7 @@ This brings us to our main subject; the study of these spurious eigenvalues, kno
 
 \begin{definition}{\textbf{(Spectral pollution)}}
 (Adapted from \parencite{davies1995spectral})
-\index{spectrum!pollution of}
+\index{spectral pollution}
 Let $(T_n)_{n \in \mathbb{N}}$ be an increasing sequence of truncations of an
 operator $T$. A value $\lambda \in \mathbb{C}$ is said to be a point of
 \textbf{spectral pollution} if there is a sequence $\lambda_n \in \Spec(T_n)$
@@ -289,20 +337,14 @@ such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \Spec(T)$.
 
 Points of spectral pollution are, intuitively, artefacts of the approximation
 which will never converge to a point in the actual spectrum. We will see that
-they exist, that they are relatively common, and that they \emph{get worse} as
+they exist for many types of operator, 
+that they are relatively common, and that they may \emph{get worse} as
 the approximation goes to higher iterations. Unless we already know what the
 spectrum of the operator is, it can be incredibly hard for us to decide whether
 a point is actually in the spectrum or whether it is
 spurious. In applications of spectral theory, this difference can be beyond a
-simple 'noisy data' nuisance - rather, a confounding problem.
-
-\begin{example}
-%TODO
-\end{example}
-
-We see in Figure \ref{fig:TODO} that this approximation does not work so well.
-It looks like it successfully covers the relevant parts of the spectrum, but
-there are a lot of additional eigenvalues which do not exist!
+simple 'noisy data' nuisance - rather, a confounding problem, as we will see
+in examples throughout.
 
 There are, of course, other methods for approximating operator spectra, such as
 the popular finite difference or `shooting' methods \cite{suli2003introduction},
@@ -310,7 +352,13 @@ or specialised methods such as Pr\"ufer and Pruess methods for Sturm-Liouville
 problems \cite{pryce1993numerical}, which are not subject to pollution. So why
 do we care about truncation methods?
 
-The central motivation for these methods is that they make \emph{almost no}
+Firstly, many of the methods for approximating operator spectra will discover eigenvalues
+in order. But for many operators, the spectrum contains continuous 'bands' of spectrum;
+then the spectrum is uncountable, so these iterative methods will be 'stuck' at these
+bands forever. Methods that 'globally' approximate spectra are few and far between
+\cite{pryce1993numerical}.
+
+Secondly, the central motivation for these methods is that they make \emph{almost no}
 assumptions about the operator itself or the location of its spectrum. Even for
 the operators covered by these specialised methods, eigenvalues in certain parts
 of the spectrum cannot be accessed without significant tweaking

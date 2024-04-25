@@ -31,7 +31,7 @@ and so $\|u_n\| \rightarrow 0$. But $\|u_n\| = 1$ for every $n$, so it cannot
 converge to zero! Thus this bounded inverse does not exist.
 \end{proof}
 We will call the subset of the spectrum created by this theorem the
-\textbf{approximate point spectrum}\index{spectrum!approximate point}, denoted
+\textbf{approximate point spectrum}\index{approximate point spectrum}, denoted
 $\Spec_{ap}$:
 $$\Spec_{ap}(T) \eqdef \{ \lambda \in \mathbb{C} : \exists u_n \text{ s.t. } \|u_n\| = 1\quad \forall n \in \mathbb{N},\text{ and }\lim_{n \rightarrow \infty}\|(T - \lambda)u_n\|  \rightarrow 0\}.$$
 Note that any eigenvalue is in the approximate point spectrum - if $\varphi$ is
@@ -89,7 +89,7 @@ the most popular usually denoted $\Spec_{e,i}$ for $i \in \{1,2,3,4,5\}$ in orde
 most well-behaved operators the definitions are equivalent. This particular definition 
 is known as Weyl's criterion, $\Spec_{e, 2}$. \cite{edmunds2018spectral}
 
-\begin{definition}{\textbf{(Essential spectrum)}}\index{spectrum!essential}\index{Weyl's criterion}
+\begin{definition}{\textbf{(Essential spectrum)}}\index{essential spectrum}\index{Weyl's criterion}
   The essential spectrum of an operator $T$ on a Hilbert space $\hilbert$ is
   defined as the set of all $\lambda \in \mathbb{C}$ such that a
   \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and
@@ -186,7 +186,7 @@ for $\lambda = \omega^2$:
   & \text{\emph{(by the product rule)}} \\
 & = \|T\rho_n - 2 \omega \frac{d}{dx}\rho_n\|_2 
   & \text{\emph{(see $\|\exp_{i \omega} \phi\|_2 = \|\phi\|_2$ for any $\phi \in L^2$)}} \\
-& \leq  \|-\frac{d^2}{dx^2}\rho_n\|_2 + 2\omega\|\frac{d}{dx}\rho_n\|_2 \rightarrow 0, & 
+& \leq  \|-\frac{d^2}{dx^2}\rho_n\|_2 + 2\omega\|\frac{d}{dx}\rho_n\|_2 \rightarrow 0, &
 \end{align*}
 
 converging by equation (\ref{eqn:rhokn-vanishes}).
@@ -250,10 +250,10 @@ One interesting property of the essential spectrum that is not easily visible
 from our earlier definition is that it is invariant under compact perturbations.
 This is not the case for eigenvalues!
 
-\begin{definition}{\textbf{(Compact operators and rank)}}\index{operator!compact}\index{rank of an operator}
-  An operator $T$ on a normed vector space $X$ is \emph{compact} if for every
+\begin{definition}{\textbf{(Compact operators and rank)}}\index{compact operator}\index{rank of an operator}
+  An operator $K$ on a normed vector space $X$ is \emph{compact} if for every
   bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $X$, the sequence
-  $(Tx_n)_{n \in \mathbb{N}}$ has a convergent subsequence.
+  $(Kx_n)_{n \in \mathbb{N}}$ has a convergent subsequence.
 
   The rank of an operator $T$, denoted $\rank T$, is the dimension of its range.
 \end{definition}
@@ -268,15 +268,18 @@ that $\|Tx_n\| \rightarrow \infty$, and then it would not be possible for
 $(Tx_n)_{n \rightarrow \infty}$ to have a bounded subsequence. 
 
 \begin{theorem}
+\label{thm:ess-spec-comp-ptb}
   Let $\lambda$ be in the essential spectrum of an operator $T$ on a Hilbert space
   $\hilbert$. Then
 
   \begin{equation}
   \label{eqn:weyl_spectrum}
-    \lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec_e(T + K)
+    \lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \Spec(T + K)
   \end{equation}
 
   where $\mathcal{K}(\hilbert)$ is the space of all compact linear operators on $\hilbert$.
+  Moreover, we have equality if $T$ is self-adjoint and bounded.
+  This is often called the Weyl spectrum, which we will denote $\Spec_{e,4}$
 \end{theorem}
 \begin{proof}
 First, let $\lambda \in \Spec_e(T)$ have the Weyl sequence $x_n$ for the operator $T$. Then 
@@ -296,7 +299,13 @@ of weak limits (i.e. if a sequence strongly converges to
 Thus $\|(T+K-\lambda)x_{n_k}\| \leq \|(T - \lambda)x_{n_k}\| + \|Kx_{n_k}\|
 \rightarrow 0$, so $x_{n_k}$ is a Weyl sequence for $\lambda$ and $T+K$
 for any compact operator $K$, so $\lambda \in \bigcap_{K \in
-\mathcal{K}(\hilbert)} \Spec_e(T + K)$.
+\mathcal{K}(\hilbert)} \Spec(T + K)$.
+
+  Conversely, consider $\lambda \in \Spec_{e,4}(T)$, and let $T$ be self-adjoint and bounded.
+  As the zero operator is compact, we have $\lambda \in \Spec(T)$. As $T$ is self-adjoint,
+  it is normal, so $\lambda$ is an approximate eigenvalue for $T$ by Theorem \ref{thm:normal-spec}.
+  Thus there is some sequence $x_n$ such that $\|Tx_n - \lambda x_n\| \rightarrow 0$. 
+  %TODO: finish or omit?
 \end{proof}
 
 \begin{remark}
@@ -328,7 +337,7 @@ it is suitable to replace $(Tu, u)$ with the relevant bilinear form
 $\mathcal{A}[u, u].$
 
 \begin{definition}{\textbf{(Numerical range of an operator)}}
-\index{range!numerical}
+\index{numerical range}
   Let $T$ be an operator on a Hilbert space. The
   numerical range $\Num(T)$ is defined $\Num(T) \eqdef \Ran(R_T)$.
 \end{definition}
@@ -348,7 +357,6 @@ useful for roughly approximating the location of spectra.
 	$\Num(T_\mathcal{L}) \subseteq \Num(T)$, where $T_\mathcal{L}$ is the compression of $T$ to the closed subspace $\mathcal{L}$;
     \item (Toeplitz-Hausdorff theorem)
     \label{item:toeplitz-hausdorff}
-    \index{theorem!Toeplitz-Hausdorff}
       $\Num(T)$ is a convex set;
     \item
     \label{item:spec-in-num} 
@@ -461,7 +469,7 @@ and therefore $w_0 \in \Spec(T)$ by Theorem \ref{thm:approx-eigenvalue-thm}.
 The proof for the supremum $w_1$ is analogous with some sign changes.
 \end{proof}
 This corollary extends to self-adjoint
-\textbf{semibounded}\index{operator!semibounded} operators, which are operators
+\textbf{semibounded}\index{semibounded operator} operators, which are operators
 such that their Rayleigh quotient is bounded above or below by some constant $c$
 - the result holds for the supremum or infimum for operators which are
 semibounded above or below respectively. We omit this more general proof as we
@@ -486,7 +494,7 @@ of ways, one of which is particularly profitable when it comes to bounding
 spectral pollution. This shall be our next topic.
 
 \subsection{Essential numerical range}
-\index{range!essential numerical}
+\index{essential numerical range}
 A similar notion to that of the numerical range is the essential numerical
 range, $\Num_e (T)$. This set lowers its aim to simply estimating the essential
 spectrum, but in the process manages to do so much more accurately for some
@@ -562,26 +570,60 @@ another similarity with essential spectra; invariance under compact
 perturbation.
 
 \begin{theorem}
+\label{thm:ess-ran-compact-ptb}
   A value $\lambda$ is in the essential numerical range of an operator $T$ on a
-  Hilbert space $\hilbert$ if and only if
+  Hilbert space $\hilbert$ if
     $$\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$$
-  where $\mathcal{K}(\hilbert)$ is the set of all compact linear operators on $\hilbert$. 
+  where $\mathcal{K}(\hilbert)$ is the set of all compact linear operators on $\hilbert$.
+  We will use the standard notation
+  $\Num_{e3}(T) \eqdef \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$. 
 \end{theorem}
 \begin{proof}
 Let $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n)$ be in $\Num_e(T)$. Then
-$((T+K)x_n, x_n)$ = $(Tx_n, x_n) + (Kx_n, x_n)$ which converges to
-$\lambda$ if $(Kx_n, x_n) \rightarrow 0$, which is true by the weak
-convergence of $x_n$ (using that $K$ is bounded as it is compact). Thus
-for any compact operator $K$, 
-$\lambda \in \Num_e(T+K) \subseteq \overline{\Num(T+K)}$.
+let $K$ be a compact operator, and $x_{n_k}$ a subsequence such that $Kx_{n_k}$
+is convergent (which exists as $K$ is compact). Let $Kx_{n_k} \rightarrow f \in \hilbert$. Then
+  $$|(Kx_{n_k}, x_{n_k})| = |(Kx_{n_k} - f + f, x_{n_k})| 
+    \leq \|Kx_{n_k} - f\|\|x_{n_k}\| + |(f, x_{n_k})| \rightarrow 0$$
+by the weak convergence of $x_n$. Then $((T+K)x_{n_k}, x_{n_k}) \rightarrow \lambda$, as
+$(Tx_{n_k}, x_{n_k}) \rightarrow \lambda$ by uniqueness of limits and 
+$(Kx_{n_k}, x_{n_k}) \rightarrow 0$. This means that
+$\lambda \in \Num_e(T+K) \subseteq \overline{\Num(T+K)}$ for all $K$, so $\lambda \in \Num_{e,3}(T).$
+\end{proof}
+The converse is also generally true; the proof of this involves considering the geometry of
+$Num_e(T)$ and how it relates to the geometry of $\overline{\Num(T)}$ \cite{bogli2020essential}.
+The following corollary will also show that they are equal for self-adjoint, bounded operators.
 
-Conversely, %% TODO: finish
+\begin{corollary}
+  Let $T$ be self-adjoint and bounded. Then $\conv(\Spec_e(T)) = \Num_e(T)$.
+\end{corollary}
+\begin{proof}\emph{(sketch)}
+We know that for any compact operator $K$,
+  \begin{equation*}
+  \tag{$\star$}
+  \label{eqn:inclusions}
+  \conv(\Spec_e(T)) \subseteq \Num_e(T) \subseteq \Num_{e,3}(T) \subseteq \overline{\Num(T+K)}.
+  \end{equation*}
+We then require an extension of one of our results, and an additional theorem:
+  \begin{enumerate}
+    \item\label{item:halmos} $\conv(\Spec(T)) = \Num(T)$ for any \emph{normal} bounded operator \cite{halmos1982hilbert}
+    \item\label{item:salinas} If $T$ is \emph{hyponormal} (a generalisation of normal operators) then there is some 
+      \emph{normal} compact $K$ such that $\Spec(T+K) = \Spec_{e,4}(T)$ \cite{salinas1972operators}
+  \end{enumerate}
+
+Then for this normal compact $K$, we have by (\ref{item:halmos}) that
+  $$\overline{\Num(T+K)} = \conv(\Spec(T+K))$$
+  and by (\ref{item:salinas}), $\conv(\Spec(T+K)) = \conv(\Spec_{e,4}(T))$.
+
+  Finally, we have that for self-adjoint $T$, $\Spec_{e,4}(T) = \Spec_e(T)$
+  (Theorem \ref{thm:ess-spec-comp-ptb}), and %TODO is it still there?)
+  thus $\overline{\Num(T+K)} \subseteq \conv(\Spec_e(T))$
+  so the inclusions ($\star$) become equalities, as required.
 \end{proof}
 
 We have seen that the essential numerical range estimates the bounds of the
 essential spectrum with quite astounding accuracy for some types of operator.
 But the essential numerical range far outdoes the regular numerical range on
-bounding spectral pollution; in fact, it provides an \emph{exact} set on which
+bounding spectral pollution; in fact, it provides the \emph{smallest} set on which
 it is possible for pollution to occur! 
 
 We will require the following prerequisite lemmata:
@@ -593,7 +635,7 @@ We will require the following prerequisite lemmata:
     $\lambda$ is in $\Spec(T)$ if and only if $\overline{\lambda}$ is in $\Spec(T^*)$, and
   \item
   \label{part:adj-convergence}
-    if $T_n$ is a sequence of operators converging strongly to $T$, i.e. $T_n f
+    if $T_n$ is a sequence of truncations converging strongly to $T$, i.e. $T_n f
     \rightarrow Tf$ for any fixed $f \in \hilbert$, then $T_n^*$ converges
     strongly to $T^*$.
   \end{enumerate}
@@ -612,10 +654,16 @@ so $\overline{\mu} \in \rho(T^*)$. We can repeat this argument for
 $(T^* - \overline{\mu})$, using that $T^{**} = T$. Thus $\mu \in \rho(T)
 \Leftrightarrow \overline{\mu} \in \rho(T^*)$, and the result follows.
 
-(\ref{part:adj-convergence}.) %TODO
+(\ref{part:adj-convergence}.) Let $T_n$ converge strongly to $T$. Then we have
+  \begin{align*}
+    \|T_n^*f\| = \|(P_n T)^* f\| & = \|T^* P_n^* f\| & \text{\emph{by antidistributivity}} \\
+    & = \|T^* P_n f\| & \text{\emph{as projections are self-adjoint}} \\
+    & \rightarrow \|T^* f\| & \text{\emph{when $n \rightarrow \infty$, $P_n \rightarrow I$}}.
+  \end{align*}
 \end{proof}
 
 \begin{theorem}{\textbf{(Pokrzywa \cite{pokrzywa1979method})}}
+\label{thm:pokrzywa}
   Let $T$ be a bounded operator. All spectral pollution in the Ritz approximation
   of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can
   occur anywhere in $\Num_e(T) \setminus \Spec(T)$.

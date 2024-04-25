@@ -2,10 +2,19 @@
 
 \begin{document}
 
-\section{Spectral pollution in a multiplication operator}
+\section{Multiplication operators and infinite matrices}
+In this section, we will focus on multiplication operators on $L^2(\Omega)$ and
+discrete operators on $\ell^2(\Omega)$. Operators on $\ell^2$ have intuitive
+interpretations for approximation, where we can treat them as 'infinite
+matrices' that we truncate by 'chopping off' the matrix beyond a certain number
+of rows or columns. While multiplication operators are not discrete in
+themselves, we will also see that they share a deep connection with one of the
+most well-known types of infinite matrix operator, that will prove fruitful for
+understanding their spectral pollution.
+
 \subsection{The spectrum of a multiplication operator}
-\begin{definition}{\textbf{(Multiplication operator)}
-}\index{operator!multiplication}
+\begin{definition}{\textbf{(Multiplication operator)}}
+\index{multiplication operator}
 Let $\hilbert$ be a function space. For a given $a \in \hilbert$, the
 multiplication operator $M_a$ on $\hilbert$ is defined by the action
 $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with
@@ -22,7 +31,7 @@ the function on a set of measure zero - two functions which are equal
 almost everywhere will have the same essential range.
 
 \begin{definition}{\textbf{(Essential range and essential supremum)}}
-\label{defn:essential-range}\index{range!essential}
+\label{defn:essential-range}\index{essential range}
 The essential range of a real-valued function $f$ is the set:
  $$\{k \in \mathbb{R} : \forall \varepsilon > 0, \mu\{x : |f(x) - k| < \varepsilon\} > 0\}$$
 where $\mu$ is the Lebesgue measure.
@@ -34,7 +43,7 @@ mutandis} for the infimum.
 
 The normed vector space $L^\infty$ is the space of all bounded measurable
 functions, and its norm is
- $$\|f\|_\infty = \text{esssup}(|f|).$$
+ $$\|f\|_\infty = \text{esssup}|f|.$$
 
 \begin{lemma}
 \label{thm:mult-symbol-char}
@@ -82,8 +91,8 @@ by definition, this means that $(M_a - \lambda)$ is invertible if and
 only if $\lambda$ is not in the essential range of $a$.
 \end{proof}
 
-We will now take advantage of the ability to create simple operators with easy-to-calculate
-spectra to observe the existence of spectral pollution.
+We will now estimate this known spectrum with a Ritz matrix to see how
+it is affected by spectral pollution.
 
 \begin{example}
 Let $M_f$ be the multiplication operator on $L^2(0, 1)$ with symbol
@@ -120,10 +129,7 @@ pollution doesn't fully dissipate.
 \end{figure}
 
 Some of these extra values seem to eventually converge into the correct part of
-the spectrum, but others stay around; in particular, for all of these
-approximations we have an eigenvalue of roughly 0.95 which does not exist in the
-operator's spectrum.
-
+the spectrum, but other values in the central gap seem to stay around.
 Of course, this is not particularly rigorous - we do not yet know anything about
 the asymptotic behaviour of the eigenvalues of these approximations (it may well
 converge far beyond our biggest estimate here of a $500 \times 500$ matrix) -
@@ -170,15 +176,12 @@ being represented by a Fourier series. Let us systematise what we have seen.
 
 \subsection{Toeplitz operators}\label{sec:toeplitz}
 
-The approximation of spectra provides a natural gateway to the study of Toeplitz
-operators, a type of operator with an elegant cluster of representations that
-will provide intuitive and concrete insight into spectral pollution. A full
-account of Toeplitz theory is the subject
+A full account of Toeplitz theory is the subject
 of whole monographs (such as \parencite{bottcher1990analysis}) and is an entire
 subfield in itself; here we will stick to exploring their spectra, and how these
 relate to the spectra of their multiplication operator neighbours. 
 
-\begin{definition}{\textbf{(Toeplitz matrix)}}\index{matrix!Toeplitz}
+\begin{definition}{\textbf{(Toeplitz matrix)}}\index{Toeplitz matrix}
   A matrix $A$ (finite or infinite) is Toeplitz if it is constant along its
   diagonals; that is, $A_{i,j} = A_{i+1,j+1}$ for any $i, j$ (where $i,j <
   N \in \mathbb{N}$ if $A$ is finite, or $i,j \in \mathbb{Z}_+$ when $A$
@@ -218,7 +221,7 @@ A generalised definition can be made for $H^p$ via any $L^p(\mathbb{T})$; we
 will almost entirely use $H^2$ (with the exception of needing $H^1$ later on),
 which is often defined as `the' Hardy space.
 
-\begin{definition}{\textbf{(Toeplitz operator)}}\index{operator!Toeplitz}
+\begin{definition}{\textbf{(Toeplitz operator)}}\index{Toeplitz operator}
   Let $\phi \in L^{\infty}(\mathbb{T})$ be bounded and measurable on the unit
   circle. The Toeplitz operator $T_\phi$ is the compression of $M_\phi$ to
   the Hardy space: $T_{\phi} = P_{H^2} M_\phi \big|_{H^2}$. We call $\phi$
@@ -226,20 +229,32 @@ which is often defined as `the' Hardy space.
 \end{definition}
 
 One may notice what appears like a clash of notation between the induced
-Toeplitz matrix that was just discussed with the Toeplitz operator. This is not
+Toeplitz matrix and the Toeplitz operator. This is not
 so; there is an elegant relation between Toeplitz operators and Toeplitz
 matrices.
 
 \begin{theorem}
-Let $A$ be a bounded operator on $H^2$ such that $(A \zeta^j, \zeta^k) =
-a_{j-k}$ for some sequence $(a_n)_{n \in \mathbb{Z}}$. Then there is
-some function $\phi \in L^\infty$ such that $A = T_\phi$ and $a_n$ are
-the Fourier coefficients of $\phi$.
+  Let $T_\phi$ be a Toeplitz operator. Then the matrix representation of $T_\phi$
+  is a Toeplitz matrix where the $n,m$'th entry is the $m-n$'th Fourier coefficient
+  of $\phi$.
 \end{theorem}
-\begin{proof}
-%%%%%TODO: DO WE PROVE THIS?
+\begin{proof}\cite{garcia2023operator}
+First, note that $\{\zeta^n\}_{n\in\mathbb{N}}$ is an orthonormal basis of
+the Hardy space (by definition).
+Then the $n,m$th entry of the matrix representation of the operator $T_\phi$ is given
+  \begin{align*}
+    (T_{\phi}\zeta^n, \zeta^m) & = (P_{H^2}(\phi\zeta^n), \zeta^m) & \\
+                               & = (\phi\zeta^n, P_{H^2}\zeta^m) 
+                                 & \text{\emph{(as $P_{H^2}$ is self-adjoint)}} \\
+                               & = (\phi\zeta^n, \zeta^m) &\\
+                               & = \int_{\mathbb{T}} \phi\zeta^n \zeta^{-m}
+                                 & \text{\emph{(by defn. of inner product on $L^2$)}}\\
+                               & = \int_{\mathbb{T}} \phi \zeta^{n-m} &\\
+  \end{align*}
+which is the $m-n$'th Fourier coefficient of $\phi$.
 \end{proof}
-
+The opposite is also true; every Toeplitz matrix admits a symbol $\phi$ which
+we can use to create a Toeplitz operator.\cite{garcia2023operator}
 Many properties of Toeplitz operators are hard to see via infinite matrices.
 Being able to represent them as both Fourier series and as the  compressions of
 multiplication operators puts us on the firmer ground of functional analysis,
@@ -262,31 +277,56 @@ $L^1(\mathbb{T})$'s Hardy space, $H^1$.
   \end{enumerate}
 \end{lemma}
 \begin{proof}
-(\ref{item:h2-products-in-h1}.) Let $f, g$ be in $H^2$. Then in particular, $f,
-g \in L^2$, and so their product $fg$ is in $L^1$ (this can be seen
-directly by the H\"older inequality).
+  Firstly, we note a property of Fourier series which will be used in both proofs:
+  Let the function $f$ have Fourier coefficients $c_n$, and its complex conjugate
+  $\overline{f}$ have the Fourier coefficients $d_n$. Then $d_n = \overline{c_{-n}}$
+  \begin{equation}
+  \label{eqn:fourier-conjugates}
+    \overline{c_{-n}} = \overline{\frac{1}{2\pi} \int_{-\pi}^{\pi}  f(x) e^{inx} dx} 
+		    = \frac{1}{2\pi} \int_{-\pi}^{\pi} \overline{f(x)} e^{-inx} dx
+        = d_n,
+  \end{equation}
+  In particular, if $f$ is real-valued, we have $c_n = \overline{c_{-n}}$.
 
-Now if $f$ has Fourier coefficients $a_k$ and $g$ has Fourier coefficients $b_k$,
-the $k$'th Fourier coefficient of $fg$ is given by 
-$\sum_{n \in \mathbb{Z}} a_n b_{k-n}$. For negative $k$, 
-we now have that either $n < 0$ so $a_n = 0$, or $n \geq 0$ so $b_{k-n} = 0$
-as $k-n < 0$; this means that the Fourier series of $fg$ satisfies
-the Hardy space property, but we must justify that the Fourier series of a
-product is equal to the product of the Fourier series
-- indeed, they converge to $f$ in $L^2$ as %TODO finish!! 
+  (\ref{item:h2-products-in-h1}.) Let $f, g$ be in $H^2$. Then in particular, $f,
+  g \in L^2$, and so their product $fg$ is in $L^1$ (this can be seen
+  directly by the H\"older inequality).
 
-(\ref{item:f-h1-const}.) For any real-valued function, we have the relation
-$\overline{c_{-n}} = c_n$ for the Fourier coefficients of $f$:
-  $$
-  \overline{c_{-n}} = \overline{\int f(x) e^{-inx} dx} 
-		    = \int \overline{f(x)} e^{inx} dx 
-		    = \int f(x) e^{inx} dx = c_n.
-  $$
-As $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c_n =
-\overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$. Thus the only
-coefficient remaining is $c_0$, and a function with a constant Fourier
-series is a constant function. (This proof is valid for any $H^p, p \in
-[1, \infty)$.)
+  Now if $f$ has Fourier coefficients $a_k$ and $g$ has Fourier coefficients $b_k$,
+  the $k'th$ entry of the product of their Fourier series is
+  \begin{equation}
+  \label{eqn:prod-fourier-series}
+    \sum_{n \in \mathbb{Z}} a_n b_{k-n}
+  \end{equation}
+  For negative $k$, 
+  we now have that either $n < 0$ so $a_n = 0$, or $n \geq 0$ so $b_{k-n} = 0$
+  as $k-n < 0$; this means that the product of the Fourier series satisfies
+  the Hardy space property. However, must justify that this reflects the behaviour
+  of the original functions, i.e. that in this case, the Fourier series of a product
+  is equal to the product of the Fourier series. This is true in $H^2$, via
+  Parseval's theorem \cite{halmos1982hilbert}:
+  
+  Parseval's theorem states that for any two square-integrable, $2\pi$-periodic functions $U, V$,
+  $$\frac{1}{2\pi} \int_{-\pi}^{\pi} U(x)\overline{V(x)} dx = \sum_{n \in \mathbb{Z}}u_n \overline{v_n}$$
+  where $u_n$, $v_n$ are the Fourier coefficients of $U$ and $V$ respectively.
+
+  All functions in $H^2$ are $2\pi$-periodic and square-integrable by definition.
+  The $n$'th Fourier coefficient of $fg$ is given by
+  $$\frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) g(x) e^{-inx}.$$
+  Then we apply this to Parseval's theorem, with $U = f$ and $V = \overline{g e^{-inx}}$.
+  Note that the $k$'th Fourier coefficient of $\overline{g e^{-inx}}$ is given by
+  $$\frac{1}{2\pi} \int_{-\pi}^{\pi} \overline{g(x)} e^{-i(k-n)x} = b'_{n-k}$$
+  where $b'_n$ is the $n$'th Fourier coefficient of $\overline{g}$.
+
+  Then applying Parseval's theorem,
+  $$\frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) g(x) e^{-inx} = \sum_{n \in \mathbb{Z}}a_n \overline{b'_{n-k}}$$
+  which equals the series (\ref{eqn:prod-fourier-series}) as $\overline{b'_{n-k}} = b_{k-n}$ by (\ref{eqn:fourier-conjugates}).
+
+
+(\ref{item:f-h1-const}.) As $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c_n =
+  \overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$, by (\ref{eqn:fourier-conjugates}).
+  Thus the only coefficient remaining is $c_0$, and a function with a constant Fourier series
+  is a constant function. (This proof is valid for any $H^p, p \in [1, \infty)$.)
 \end{proof}
 
 \begin{lemma}
@@ -312,7 +352,7 @@ $T_\phi$, following a proof outlined in an exercise of Arveson
 (\parencite{arveson2002short}, Chapter 4.6, exercises 2-5) which is itself based
 on a proof by Hartman and Wintner.
 
-\begin{theorem}{\textbf{(Hartman-Wintner)}}\index{theorem!Hartman-Wintner}\label{thm:hartman-wintner}
+\begin{theorem}{\textbf{(Hartman-Wintner)}}\index{Hartman-Wintner}\label{thm:hartman-wintner}
 Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$
 and $M$ are the infimum and supremum of the essential range of $\phi$
 (Definition \ref{defn:essential-range}) respectively. \end{theorem}
@@ -388,7 +428,7 @@ multiplication operator's spectrum, some subsequence of truncations will have an
 approximate eigenvalue converging to that point. 
 
 \begin{theorem}{\textbf{(Schmidt-Spitzer \parencite{schmidt1960toeplitz})}}
-\index{theorem!Schmidt-Spitzer}
+\index{Schmidt-Spitzer}
 Let $T_n$ be the $n \times n$ matrix created by taking the first $n$ rows and
 columns of a Toeplitz operator $T_\phi$. Consider the set $$B =
 \{\lambda \in \mathbb{C} : \lambda = \lim_{m \rightarrow \infty}
@@ -446,5 +486,6 @@ This is a striking result - for any point in the spectral gap $\Spec(T_\phi)
 polluting anything), we can choose a sequence of truncations such that there is
 guaranteed to be spectral pollution at that point! It also shows us that the
 Toeplitz operator itself does not have any pollution for real symbol.
-
+In Chapter \ref{chapter:bounds}, we will see that this is generally true for
+a wider variety of operators, albeit not so concretely.
 \end{document}
