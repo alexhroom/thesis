@@ -87,7 +87,7 @@ We now specialise to a subset of the approximate point spectrum, known as the
 essential spectrum. The essential spectrum has several definitions, 
 the most popular usually denoted $\Spec_{e,i}$ for $i \in \{1,2,3,4,5\}$ in order of size. For 
 most well-behaved operators the definitions are equivalent. This particular definition 
-is known as Weyl's criterion, $\Spec_{e, 2}$. \cite{edmunds2018spectral}
+is known as Weyl's criterion, $\Spec_{e, 2}$ \cite{edmunds2018spectral}.
 
 \begin{definition}{\textbf{(Essential spectrum)}}\index{essential spectrum}\index{Weyl's criterion}
   The essential spectrum of an operator $T$ on a Hilbert space $\hilbert$ is
@@ -279,7 +279,7 @@ $(Tx_n)_{n \rightarrow \infty}$ to have a bounded subsequence.
 
   where $\mathcal{K}(\hilbert)$ is the space of all compact linear operators on $\hilbert$.
   Moreover, we have equality if $T$ is self-adjoint and bounded.
-  This is often called the Weyl spectrum, which we will denote $\Spec_{e,4}$
+  This is often called the Weyl spectrum, which we will denote $\Spec_{e,4}$.
 \end{theorem}
 \begin{proof}
 First, let $\lambda \in \Spec_e(T)$ have the Weyl sequence $x_n$ for the operator $T$. Then 
@@ -323,7 +323,7 @@ discussing a method of detecting spectral pollution known as
 
 \subsection{Rayleigh quotients and numerical range}
 The gateway to bounding the spectrum (and pollution) of an operator $T$ on a
-Hilbert space lies in a functional known as the \textbf{Rayleigh
+Hilbert space lies in a function known as the \textbf{Rayleigh
 quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$,
 defined:
 \begin{equation*}
@@ -576,7 +576,7 @@ perturbation.
     $$\lambda \in \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$$
   where $\mathcal{K}(\hilbert)$ is the set of all compact linear operators on $\hilbert$.
   We will use the standard notation
-  $\Num_{e3}(T) \eqdef \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$. 
+  $\Num_{e,3}(T) \eqdef \bigcap_{K \in \mathcal{K}(\hilbert)} \overline{\Num(T+K)}$. 
 \end{theorem}
 \begin{proof}
 Let $\lambda = \lim_{n \rightarrow \infty}(Tx_n, x_n)$ be in $\Num_e(T)$. Then
@@ -605,9 +605,9 @@ We know that for any compact operator $K$,
   \end{equation*}
 We then require an extension of one of our results, and an additional theorem:
   \begin{enumerate}
-    \item\label{item:halmos} $\conv(\Spec(T)) = \Num(T)$ for any \emph{normal} bounded operator \cite{halmos1982hilbert}
+    \item\label{item:halmos} $\conv(\Spec(T)) = \Num(T)$ for any \emph{normal} bounded operator \cite{halmos1982hilbert};
     \item\label{item:salinas} If $T$ is \emph{hyponormal} (a generalisation of normal operators) then there is some 
-      \emph{normal} compact $K$ such that $\Spec(T+K) = \Spec_{e,4}(T)$ \cite{salinas1972operators}
+      \emph{normal} compact $K$ such that $\Spec(T+K) = \Spec_{e,4}(T)$ \cite{salinas1972operators}.
   \end{enumerate}
 
 Then for this normal compact $K$, we have by (\ref{item:halmos}) that
@@ -694,7 +694,7 @@ We then have that $(T_n - \lambda)f_n \rightarrow 0$:
 Furthermore, as $(T - \lambda)$ has a bounded inverse, so does $(T^* -
 \overline{\lambda})$ by Lemma
 \ref{thm:adjoint-spec-props}.\ref{part:spec-of-adj}. Then for any $h \in
-\hilbert$, there is some $g \in hilbert$ such that $(T^* - \overline{\lambda})g = h$.
+\hilbert$, there is some $g \in \hilbert$ such that $(T^* - \overline{\lambda})g = h$.
 As a result, we have
 \begin{align*}
 (f_n, h) & = (f_n, (T^* - \overline{\lambda})g) \\

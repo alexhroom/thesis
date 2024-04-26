@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       f979e530-7ce2-4bd6-b653-8bf37f87acaa
-:END:
-#+TITLE: Adjoint
-#+filetags: object definition
-
-The adjoint of a bounded operator $A$ is a bounded operator $A*$ such that
-$\langle A\xi, \nu \rangle = \langle \xi, A\nu \rangle$.

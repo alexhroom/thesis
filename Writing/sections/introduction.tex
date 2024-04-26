@@ -335,7 +335,7 @@ operator $T$. A value $\lambda \in \mathbb{C}$ is said to be a point of
 such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \Spec(T)$.
 \end{definition}
 
-Points of spectral pollution are, intuitively, artefacts of the approximation
+Points of spectral pollution are, intuitively, artefacts of an approximation
 which will never converge to a point in the actual spectrum. We will see that
 they exist for many types of operator, 
 that they are relatively common, and that they may \emph{get worse} as
@@ -345,6 +345,17 @@ a point is actually in the spectrum or whether it is
 spurious. In applications of spectral theory, this difference can be beyond a
 simple 'noisy data' nuisance - rather, a confounding problem, as we will see
 in examples throughout.
+
+Note that spectral pollution is caused by a variety of the 'moving parts' of
+an approximation: for example, pollution can be introduced by a poor choice
+of boundary condition \cite{cances2012periodic}, a truncation of the domain
+\cite{aceto2006numerical}, or the choice of subspaces \cite{levitin2002spectral}.
+One can easily intuit why the latter will affect the amount of pollution; it is
+obvious that if we chose the eigenfunctions of the operator as our orthonormal basis,
+then we would not have pollution (as our approximating matrices would be diagonal)
+but for a different basis, the Ritz matrix may well be dense and complicated. Indeed,
+some methods of avoiding pollution (e.g. \cite{boffi1999pollution}) rely on making
+a deft choice of approximating spaces.
 
 There are, of course, other methods for approximating operator spectra, such as
 the popular finite difference or `shooting' methods \cite{suli2003introduction},

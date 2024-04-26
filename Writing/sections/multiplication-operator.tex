@@ -3,14 +3,13 @@
 \begin{document}
 
 \section{Multiplication operators and infinite matrices}
-In this section, we will focus on multiplication operators on $L^2(\Omega)$ and
-discrete operators on $\ell^2(\Omega)$. Operators on $\ell^2$ have intuitive
+In this section, we will focus on multiplication operators on $L^2$ and
+discrete operators on $\ell^2$. Operators on $\ell^2$ have intuitive
 interpretations for approximation, where we can treat them as 'infinite
 matrices' that we truncate by 'chopping off' the matrix beyond a certain number
 of rows or columns. While multiplication operators are not discrete in
-themselves, we will also see that they share a deep connection with one of the
-most well-known types of infinite matrix operator, that will prove fruitful for
-understanding their spectral pollution.
+themselves, we will also see that their pollution can be concretely explained
+via a certain type of infinite matrix operator.
 
 \subsection{The spectrum of a multiplication operator}
 \begin{definition}{\textbf{(Multiplication operator)}}
@@ -123,7 +122,9 @@ pollution doesn't fully dissipate.
 \centering
 \includegraphics[scale=0.5]{mult-op-spec.png}
 \caption{The approximate spectrum of the multiplication operator $M_f$ for Ritz
-	matrices of increasing size. The shaded green areas correspond to the
+	matrices of increasing size, with an orthonormal basis of exponential
+  functions (as explained above).
+  The shaded green areas correspond to the
 	actual spectrum of the operator.}
 \label{fig:mult-op-spec}	
 \end{figure}
@@ -136,7 +137,23 @@ converge far beyond our biggest estimate here of a $500 \times 500$ matrix) -
 but this example is certainly motivating. If one had no knowledge of the actual
 spectrum of $M_f$, they would be forgiven for considering this to be strong
 empirical evidence that the spectrum contains the range $[0.8, 1.0]$ or at least
-some subset of it. 
+some subset of it.
+
+Indeed, we can see the effect of using different orthonormal bases here: if we
+use the orthonormal basis $\phi_n(x) = {sqrt{2}}\sin(\pi nx)$, the
+pollution appears in different places (plotted in Figure \ref{fig:mult-op-sin}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{mult-op-sin.png}
+\caption{The approximate spectrum of the multiplication operator $M_f$ for Ritz
+	matrices of increasing size, using the orthonormal basis of sines,
+  as explained above.
+  The shaded green areas correspond to the
+	actual spectrum of the operator. Note that the pollution appears in different
+  places to where it appears in Figure \ref{fig:mult-op-spec}.}
+\label{fig:mult-op-sin}	
+\end{figure}
 
 We have also raised a variety of other questions about the nature of this
 pollution - why are we only getting it in the gap between the intervals, and not
@@ -229,9 +246,8 @@ which is often defined as `the' Hardy space.
 \end{definition}
 
 One may notice what appears like a clash of notation between the induced
-Toeplitz matrix and the Toeplitz operator. This is not
-so; there is an elegant relation between Toeplitz operators and Toeplitz
-matrices.
+Toeplitz matrix and the Toeplitz operator. In fact, there is a correspondence
+between the matrix on $\ell^2(\mathbb{Z}_+)$ and the operator on $L^2(\mathbb{T})$.
 
 \begin{theorem}
   Let $T_\phi$ be a Toeplitz operator. Then the matrix representation of $T_\phi$
@@ -254,7 +270,7 @@ Then the $n,m$th entry of the matrix representation of the operator $T_\phi$ is 
 which is the $m-n$'th Fourier coefficient of $\phi$.
 \end{proof}
 The opposite is also true; every Toeplitz matrix admits a symbol $\phi$ which
-we can use to create a Toeplitz operator.\cite{garcia2023operator}
+we can use to create a Toeplitz operator \cite{garcia2023operator}.
 Many properties of Toeplitz operators are hard to see via infinite matrices.
 Being able to represent them as both Fourier series and as the  compressions of
 multiplication operators puts us on the firmer ground of functional analysis,

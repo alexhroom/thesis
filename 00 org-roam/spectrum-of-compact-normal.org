@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       a0210355-d3fb-47a5-9910-20e7a3c21cc0
-:END:
-#+TITLE: Spectrum of a compact normal operator
-#+FILETAGS: theorem
-
-Let $N$ be a bounded operator which is both [[id:491bae87-9dbf-4469-b966-1ed4e825d959][Normal]] and [[id:073bfb3a-dd5a-4e05-a710-ebb0961a35fd][Compact]]. Then its
-spectrum contains 0, and is either finite or a set $\{0, \lambda_1, \lambda_2, ...\}$
-where $\lambda_n \rightarrow 0$.

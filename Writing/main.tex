@@ -77,7 +77,14 @@
       {\Large \today}
     \end{center}
      \vspace{\fill}
-     {\normalsize\textbf{Abstract} {\blindtext}}
+     {\normalsize\textbf{Abstract} 
+     The wide variability and infinite-dimensional structure of a general operator makes it
+     difficult to directly calculate its spectrum, as one would do for a matrix. This means
+     approximation methods are often necessary, but these approximations can contain additional
+     spurious eigenvalues known as spectral pollution. We can use a variety of techniques to
+     bound, detect, and identify spectral pollution in a finite-dimensional approximation of
+     an infinite-dimensional operator. This allows us to effectively approximate the spectra of
+     a variety of operators, even when their structure is difficult to handle concretely.}
      \vspace*{\fill}
   \end{titlepage}
 \tableofcontents
@@ -95,7 +102,27 @@
 \titleformat{\section}[hang]{\newpage\fontfamily{put}\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
 \section{Note on numerical examples}\label{sec:numerical-note}
 All numerical examples in this document were calculated using the Python library \texttt{specpol}, written
-by the author. 
+by the author. The code is available from \url{https://github.com/alexhroom/specpol}, and the scripts for the
+numerical examples are available from \url{https://github.com/alexhroom/thesis}.
+
+\texttt{specpol} contains code for generating Ritz matrices of the various operators covered in the text,
+with underlying linear algebra routines (e.g. eigenvalue calculation) from \texttt{numpy} and \texttt{scipy}, both based on the
+well-established, universal and standard libraries \texttt{LAPACK} and \texttt{BLAS}. However, some routines used to calculate
+integrals and expressions had to be written by the author due to availabilty or stability of existing routines. These are:
+
+\begin{itemize}
+  \item Filon quadrature: an implementation of the algorithm by Chase \& Fosdick
+    \cite{chase1969algorithm}. Accuracy tested against a standard Fortran implementation
+    of the same algorithm by John Burkardt (\cite{burkardt2014filon}).
+  \item Laguerre polynomials and Gauss-Laguerre quadrature: a faster implementation
+    of generalised Laguerre polynomials (via recurrence relations rather than the definition)
+    tested against the state-of-the-art floating point library \texttt{mpmath}, which has
+    arbitrary precision but is much slower.
+    A more stable implementation of Gauss-Laguerre quadrature
+    than the standard version available in \texttt{scipy}, 
+    using the highly accurate \texttt{mpmath} polynomials. Tested against the \texttt{scipy}
+    version for node/weight numbers where the \texttt{scipy} version was stable.
+\end{itemize}
 
 \clearpage
 \printbibliography

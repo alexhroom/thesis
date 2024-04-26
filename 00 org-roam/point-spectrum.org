@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       7273df75-67d0-4226-994f-8972b618f1e3
-:END:
-#+TITLE: Point spectrum
-#+FILETAGS: object
-
-A complex number $\lambda$ is in the point spectrum of an operator $A$ if it
-is an eigenvalue of $A$ (a solution of $Ax = \lambda x$ for some $x$) with
-finite multiplicity.

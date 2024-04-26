@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       8e34e324-818c-4bb8-8446-7e08d0c13ee2
-:END:
-#+TITLE: Trace
-#+FILETAGS: object
-
-For a [[id:1565a16e-1b03-4b1a-91e9-0abc57eb6bf6][Positive operator]] $A$, the trace of $A$ is given
-$trA = \Sigma_{k=1} \langle Ae_k, e_k \rangle$.

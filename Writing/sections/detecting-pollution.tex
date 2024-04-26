@@ -88,9 +88,14 @@ such an eigenvalue \emph{does} exist.
   \includegraphics[width=0.9\linewidth, height=6cm]{sors}
   \caption{The spectrum of the multiplication operator with symbol described above, with the second-order
   relative spectrum overlaid in blue. Note the 'circle' of highly imaginary values that prevent us from
-  ruling out pollution anywhere in the essential numerical range of the operator!}
+  ruling out pollution anywhere in the essential numerical range of the operator!
+  (An intuitive way to
+	view these figures is to see them as a three-dimensional plot
+	of the complex plane over time, with the left figure `top-down',
+	and the right figure `from the east')}
   \label{fig:sors-mult}
 \end{figure}
+\clearpage
 
 \subsection{Properties of eigenfunctions}
 If there are only a small number of eigenvalues which we would like to learn
@@ -117,7 +122,7 @@ In some cases (below, we will prove this for a Sturm-Liouville operator on the
 half-line), we can prove that there is a specific structure to the eigenfunctions -
 for example, on $L^2[0, \infty)$, they must satisfy regularity and decay properties.
 
-\begin{theorem}[adapted from\cite{aljawi2023eigenvalues}]
+\begin{theorem}[adapted from \cite{aljawi2023eigenvalues}]
   Let $u$ be a solution of the boundary value problem 
     $$ 
     \begin{cases}
@@ -148,11 +153,11 @@ eigenfunction of $T_b$:
 
 It can be shown that $\Spec_e(T_b)$ is the same for all $b$ \cite{akhiezer2013theory}.
   We can now invoke (a simplification of) Lemma 3.1 in \cite{aljawi2023eigenvalues}:
-\begin{displayquote}
+  \begin{displayquote}\emph{
   Suppose $v$ solves the inhomogeneous boundary value problem
   $$
   \begin{cases}
-    (-\frac{d^2/dx^2} + q - \lambda)v = (-\frac{d^2/dx^2} + q - \lambda)F
+    (-\frac{d^2/dx^2} + q - \lambda)v = (-\frac{d^2/dx^2} + q - \lambda)F \\
     v(0) = 0
   \end{cases}
   $$
@@ -160,7 +165,7 @@ It can be shown that $\Spec_e(T_b)$ is the same for all $b$ \cite{akhiezer2013th
   $\mathrm{dist}(\lambda, \Spec((-\frac{d^2/dx^2} + q)) > \alpha > 0$.
   Then $v$ admits a representation $v(x) = e^{-\alpha(x-b)}\tilde{v}(x)$, where
   $\tilde{v}$ is weakly differentiable, twice-weakly differentiable locally,
-  and zero on the boundary.
+    and zero on the boundary.}
 \end{displayquote}
 We can then recover our original eigenfunction to be in the same form.
 \end{proof}
@@ -249,10 +254,7 @@ spectrum to be.
 	complex approximate spectrum where colour is used to donate the size of
 	the approximation. The green shaded regions correspond to the essential
 	spectrum of $\tilde{M}$, and the dotted lines are at $\mathrm{Re}(x) =
-	0.7$ to show where the added eigenvalue should be. (An intuitive way to
-	view these figures is to see them as a three-dimensional plot
-	of the complex plane over time, with the left figure `top-down',
-	and the right figure `from the east')}
+  0.7$ to show where the added eigenvalue should be.} 
 \label{fig:nodbm}
 \end{figure}
 
@@ -313,7 +315,7 @@ the n'th Laguerre polynomial (see \cite{szego1975orthogonal} for a proof
 that this is indeed an orthonormal basis). We will then use a dissipative
 barrier to attempt to clear up some spectral pollution.
 The result of this approximation is a relative success, 
-and is plotted in Figure \ref{fig:aceto-dbm}
+and is plotted in Figure \ref{fig:aceto-dbm}.
 
 Indeed, one benefit of the Galerkin method is that it does not require us to
 truncate infinite intervals, which many algebraic methods require; this also

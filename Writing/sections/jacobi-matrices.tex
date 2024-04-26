@@ -5,7 +5,8 @@
 
 \subsection{Finite differences}
 Now we move onto another type of 'infinite matrix' operator, which is used in
-practice to discretise differential problems to 'finite difference' problems.\cite{suli2003introduction}
+practice to discretise differential problems to 'finite difference' problems 
+\cite{suli2003introduction}.
 
 \begin{definition}{\textbf{(Central finite difference and discrete Laplacian)}}
   The central finite difference of a function $u: \mathbb{Z} \rightarrow
@@ -62,7 +63,7 @@ the multiplication operator $\diag(q)v(n) = q(n)v(n)$.
   $[0, \infty)$ on $L^2(\mathbb{R})$. On the other hand, the discrete Laplacian
   is a Toeplitz matrix, equivalent to the Toeplitz operator with symbol 
   $e^{i \theta} + e^{-i \theta} - 2$ (intuitively, $\Delta_c = S + S^* - 2I$ with S as the
-  shift operator, and multiplying a Fourier series by $z$
+  shift operator, and multiplying a Fourier series by $e^{i \theta}$
   'shifts all the coefficients along by 1') \cite{arveson2002short}.
   Then by Theorem \ref{thm:hartman-wintner}
   (Hartman-Wintner), it follows that the spectrum of the discrete Laplacian is
@@ -111,14 +112,14 @@ As one would expect, this is represented as the Jacobi matrix
   $$
 Of course, we could similarly define a singly infinite matrix of sequences defined on $\mathbb{N}$
 or $\mathbb{N}_0$. We will not require these beyond the following method that will be used
-later on in \ref{sec:dissipative-barrier.}
+later on in \ref{sec:dissipative-barrier}.
 
 \begin{example}
 \label{ex:finite-differences}
   A popular way to solve ODE problems numerically is via \emph{finite difference approximation},
   which is to approximate a differential operator with a singly-infinite Jacobi operator. For
   example, we may want to approximate the Schr\"odinger operator $Hu = -\frac{d^2}{dx^2}u + qu$
-  on the half-line $L^2(0, \infty)$, with boundary condition $u \cos(\alpha) + u' \sin(\alpha) = 0$
+  on the half-line $L^2[0, \infty)$, with boundary condition $u \cos(\alpha) + u' \sin(\alpha) = 0$
   as the finite difference operator
   $J(-h^{-2}, \tilde{q}, -h^{-2})$
   where $\tilde{q}$ is defined:
@@ -239,8 +240,7 @@ that $u(n+N) = zu(n).$
 
 In fact, we can obtain (see e.g. \cite{teschl2000jacobi}) that the eigenvalues
 of $M(\lambda)$ satisfy the property $z_1 z_2 = 1$, and thus are reciprocal to
-each other, i.e. are $z(\lambda), \frac{1}{z(\lambda)}$. We will denote their
-associated eigenvectors $u_+$ and $u_-$ respectively.
+each other, i.e. are $z(\lambda), \frac{1}{z(\lambda)}$.
 
 \begin{proposition}{\textbf{(Floquet-Bloch decomposition)}}
 \index{Floquet-Bloch decomposition} 
@@ -260,6 +260,12 @@ associated eigenvectors $u_+$ and $u_-$ respectively.
 Then if $|z|=1$, any eigenvalue $\lambda$ of $J_z$
 is in the essential spectrum of $J$.
 \end{proposition}
+
+The 'essential spectrum' will be discussed in more detail shortly, in section \ref{sec:ess-spec}.
+For now, it suffices to say that the essential spectrum $\Spec_e(T)$ is a subset of the spectrum
+characterised as the set of all $\lambda$ such that there is a 'Weyl singular sequence'
+$x_n$ satisfying $\|x_n\| = 1$, $(x_n, \phi) \rightarrow 0$ for all $\phi$ in $\hilbert$
+(weak convergence), and $\|Tx_n - \lambda x_n\| \rightarrow 0$.
 
 \begin{proof} For the infinite problem, we have that $\tilde{u}$ satisfies
   the eigenvalue equation for $J$ if
@@ -299,7 +305,7 @@ where
   The $\sqrt{k+1}$ is a normalising factor such that $\|v^{(k)}\|_{\ell^2} = 1$.
 
 We first show that $v^{(k)}$ weakly converges to 0. We can use Lemma
-\ref{thm:weak-conv-dense-subset} to restrict to the dense subset
+\ref{thm:weak-conv-dense-subset} to restrict to showing it for a dense subset
 $c_{00}$ of sequences with finite support (that is, sequences which are
 all zero for $n \notin [m, M]$, $m, M \in \mathbb{Z}$).
 
@@ -317,10 +323,10 @@ Then we have
 Finally, we show that $\|Jv^{(k)} - \lambda v^{(k)}\|_{\ell^2} \rightarrow 0$:
 \begin{align*}
     \|Jv^{(k)} - \lambda v^{(k)}\|_{\ell^2} & \leq \|Jv^{(k)}\|_{\ell^2}  - \|\lambda v^{(k)}\|_{\ell^2}  \\
-    & = \sum_{n \in \mathbb{Z}}|J\tilde{u}_n \rho_n^{(k)}|^2 + \sum_{n \in \mathbb{Z}}|\lambda\tilde{u}_n \rho_n^{(k)}|^2
+    & = \sum_{n \in \mathbb{Z}}|J\tilde{u}_n \rho_n^{(k)}|^2 + \sum_{n \in \mathbb{Z}}|\lambda\tilde{u}_n \rho_n^{(k)}|^2 \\
     & = \sum_{n \in [k/2, 3k/2]}|\frac{J\tilde{u}_n}{\sqrt{1+k}}|^2 + \sum_{n \in [k/2, 3k/2]}|\frac{\lambda\tilde{u}_n}{\sqrt{1+k}}|^2
 \end{align*}
-  where the summands are zero if $n \neq {1, N}\mod N+1$ (using that $|z| = 1$ to ensure the norm is periodic)
+  where the summands are zero if $n \neq {1, N}\mod N+1$ (using that $|z| = 1$ to ensure the norm is periodic).
   If $n = 1$, we have error
 \begin{align*}
   (\frac{1}{\sqrt{1+k}}|a_1 \tilde{u}_0 + b_1 \tilde{u}_1 + c_2 \tilde{u}_2|^2 - |\frac{a_1}{z}\tilde{u}_N + b_1 \tilde{u}_1 + c_2 \tilde{u}_2|)^2 \\
@@ -331,7 +337,7 @@ Finally, we show that $\|Jv^{(k)} - \lambda v^{(k)}\|_{\ell^2} \rightarrow 0$:
   (\frac{1}{\sqrt{1+k}}|a_N \tilde{u}_N-1 + b_N \tilde{u}_N + c_{N+1} \tilde{u}_N+1|^2 - |c_{N+1}z\tilde{u}_1 + a_N tilde{u}_N-1 + b_N \tilde{u}_N|)^2 \\
   \leq (\frac{1}{\sqrt{1+k}}|c_{N+1} \tilde{u}_{N+1}|^2 - |c_{N+1} \tilde{u}_1|)^2
 \end{align*}
-This error is always $O(\frac{1}{\sqrt{1 + k}}) \rightarrow 0$.
+This error is always of the order $O(\sqrt{1 + k}) \rightarrow 0$.
 
 Thus $\lambda$ is in $\Spec_e(J)$. \end{proof} From this we have the inclusion
 $$\bigcup_{|z|=1} \Spec(J_z) \subseteq \Spec_e(J)$$.
@@ -368,7 +374,7 @@ Let $b_n = 2\lambda \cos(2\pi (\omega + n \alpha))u(n)$, then
 \end{align*}
   as $x$ is an integer and $\cos(2\pi(\cdot))$ is 1-periodic. Thus we can compute the
 spectrum exactly via the Floquet-Bloch decomposition. Letting $\alpha$ vary, we can obtain
-the famous Hofstadter butterfly in Figure \ref{fig:hofstadter-butterfly} \cite{hofstadter1976energy}.
+the famous 'Hofstadter butterfly' \cite{hofstadter1976energy} in Figure \ref{fig:hofstadter-butterfly}.
 
 \begin{figure}[p!] \centering
 \includegraphics[width=\textwidth]{hofstadter-butterfly}
@@ -515,7 +521,7 @@ $\theta$, and calculate the eigenvalues in each case.
 In Figure \ref{fig:feinberg-zee} one can see a comparison between the Galerkin
 and supercell approximations for the Feinberg-Zee model. 
 
-\begin{figure}[p!]
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.4\textwidth}
   \includegraphics[width=\textwidth]{feinberg-zee-galerkin}
