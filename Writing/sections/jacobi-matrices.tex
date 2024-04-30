@@ -8,7 +8,7 @@ Now we move onto another type of 'infinite matrix' operator, which is used in
 practice to discretise differential problems to 'finite difference' problems 
 \cite{suli2003introduction}.
 
-\begin{definition}{\textbf{(Central finite difference and discrete Laplacian)}}
+\begin{definition}[\textbf{Central finite difference and discrete Laplacian}]
   The central finite difference of a function $u: \mathbb{Z} \rightarrow
   \mathbb{C}$ is $$D_c u (n) = \frac{u(n+1) - u(n-1)}{2}.$$
 
@@ -82,7 +82,7 @@ theory of section \ref{sec:toeplitz} applies to them. However, the diagonal
 operator is not Toeplitz, and the Jacobi matrix begins to be interesting where
 it ceases to be (generally) Toeplitz:
 
-\begin{definition}{\textbf{(General second-order finite difference operator)}}
+\begin{definition}[\textbf{General second-order finite difference operator}]
 \index{finite difference operator}\index{Jacobi operator}\index{Jacobi matrix}
   For any set X, let $X^\mathbb{Z}$ be the set of doubly infinite sequences $\mathbb{Z}
   \rightarrow X$. Consider three sequences:
@@ -242,8 +242,9 @@ In fact, we can obtain (see e.g. \cite{teschl2000jacobi}) that the eigenvalues
 of $M(\lambda)$ satisfy the property $z_1 z_2 = 1$, and thus are reciprocal to
 each other, i.e. are $z(\lambda), \frac{1}{z(\lambda)}$.
 
-\begin{proposition}{\textbf{(Floquet-Bloch decomposition)}}
+\begin{theorem}[\textbf{Floquet-Bloch decomposition}]
 \index{Floquet-Bloch decomposition} 
+  \label{thm:floquet-bloch}
   Let $J$ be the Jacobi operator $J(a_n, b_n, c_n)$. 
   Consider the finite eigenvalue problem $J_z u = \lambda u$, where
   \begin{equation}
@@ -259,7 +260,7 @@ each other, i.e. are $z(\lambda), \frac{1}{z(\lambda)}$.
   \end{equation}
 Then if $|z|=1$, any eigenvalue $\lambda$ of $J_z$
 is in the essential spectrum of $J$.
-\end{proposition}
+\end{theorem}
 
 The 'essential spectrum' will be discussed in more detail shortly, in section \ref{sec:ess-spec}.
 For now, it suffices to say that the essential spectrum $\Spec_e(T)$ is a subset of the spectrum
@@ -375,13 +376,23 @@ Let $b_n = 2\lambda \cos(2\pi (\omega + n \alpha))u(n)$, then
   as $x$ is an integer and $\cos(2\pi(\cdot))$ is 1-periodic. Thus we can compute the
 spectrum exactly via the Floquet-Bloch decomposition. Letting $\alpha$ vary, we can obtain
 the famous 'Hofstadter butterfly' \cite{hofstadter1976energy} in Figure \ref{fig:hofstadter-butterfly}.
+Note that we know for rational $\alpha$, the operator has purely essential spectrum
+by Theorem \ref{thm:floquet-bloch}; as a result,
+we know that the additional eigenvalues in the Ritz approximation are polluting. 
 
 \begin{figure}[p!] \centering
-\includegraphics[width=\textwidth]{hofstadter-butterfly}
-\caption{Floquet-Bloch calculation for the almost Mathieu operator, with matrix
-	size of one period. Colour is used on the supercell graph to
+\begin{subfigure}{0.9\textwidth}
+  \includegraphics[width=\textwidth]{ten-martini-ritz}
+  \end{subfigure}\\
+  \begin{subfigure}{0.9\textwidth}
+  \includegraphics[width=\textwidth]{ten-martini-floquet} \end{subfigure}
+\caption{Galerkin and Floquet-Bloch calculation for the almost Mathieu operator, 
+  with Floquet-Bloch matrix
+	size of one period, and Ritz matrix size of 750.
+  Colour is used on the supercell graph to
 	distinguish different values of $\theta$, which were 50 evenly
 	distributed values between $0$ and $2 \pi$.}
+
 \label{fig:hofstadter-butterfly}
 \end{figure}
 \clearpage
@@ -523,9 +534,10 @@ and supercell approximations for the Feinberg-Zee model.
 
 \begin{figure}[h!]
 \centering
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.9\textwidth}
   \includegraphics[width=\textwidth]{feinberg-zee-galerkin}
-  \end{subfigure} \begin{subfigure}{0.4\textwidth}
+  \end{subfigure}\\
+  \begin{subfigure}{0.9\textwidth}
   \includegraphics[width=\textwidth]{feinberg-zee-supercell} \end{subfigure}
   \caption{Galerkin and supercell approximations for the Feinberg-Zee operator,
 	with matrix size of 2000. Colour is used on the supercell graph to

@@ -16,7 +16,7 @@ themselves (e.g. \cite{soussi2006convergence}) or are currently open problems
 One method of detecting true eigenvalues (but not necessarily ruling out false ones,
 as we will see) is the \emph{second-order relative spectrum} first defined by Levitin and Shargorodsky;
 
-\begin{definition}{\textbf{(Second order relative spectrum \cite{levitin2002spectral})}}
+\begin{definition}[\textbf{Second order relative spectrum \cite{levitin2002spectral}}]
   \index{second order relative spectrum}
   Let $A$ be a self-adjoint operator on a Hilbert space $\hilbert$, and 
   $\mathcal{L}$ a finite-dimensional subspace of $\hilbert$. Then the second-order relative
@@ -122,7 +122,7 @@ In some cases (below, we will prove this for a Sturm-Liouville operator on the
 half-line), we can prove that there is a specific structure to the eigenfunctions -
 for example, on $L^2[0, \infty)$, they must satisfy regularity and decay properties.
 
-\begin{theorem}[adapted from \cite{aljawi2023eigenvalues}]
+\begin{theorem}[\textbf{Decay and regularity of eigenfunctions \cite{aljawi2023eigenvalues}}]
   Let $u$ be a solution of the boundary value problem 
     $$ 
     \begin{cases}
@@ -308,14 +308,17 @@ algebraic method finds the following eigenvalues:
 \end{tabular}
 \end{figure*}
 
-We will attempt to reproduce these eigenvalues using a
+We will attempt to reproduce these eigenvalues two ways; using a
 Ritz approximation on $[0, \infty)$, with the orthonormal basis
 $\{\phi_n\}_{n \in \mathbb{N}}, \phi_n = \exp(-x/2)L_n$, where $L_n$ is
 the n'th Laguerre polynomial (see \cite{szego1975orthogonal} for a proof
 that this is indeed an orthonormal basis). We will then use a dissipative
 barrier to attempt to clear up some spectral pollution.
-The result of this approximation is a relative success, 
+The result of this approximation is a relative success (with some issues
+to be discussed shortly), 
 and is plotted in Figure \ref{fig:aceto-dbm}.
+We will also plot the same operator with the interval truncated to $[0, 70\pi]$
+(as is done in Aceto et al.) which is Figure \ref{fig:aceto-bdd}.
 
 Indeed, one benefit of the Galerkin method is that it does not require us to
 truncate infinite intervals, which many algebraic methods require; this also
@@ -332,34 +335,32 @@ greatly alter the spectrum!
 	lines indicate where the algebraic method found eigenvalues in two
 	spectral gaps. Note that for larger approximations, the points in the
 	spectral gaps with imaginary part 1.0 are close to the algebraic
-	method's approximation. The dotted red line will be explained on
-  the following page.}
+	method's approximation.}
 \label{fig:aceto-dbm}
 \end{figure}
 
-Interestingly, the non-truncated operator seems to have an additional eigenvalue
-not present in the algebraic method, at roughly -0.24. This is denoted
-in Figure \ref{fig:aceto-dbm} by a dotted red line. A Galerkin approximation 
-of the truncated problem (plotted in Figure \ref{fig:aceto-dbm-bdd})
-does not have this eigenvalue, and neither does an approximation of the
-same truncated problem in (Marletta, 2010 \cite{marletta2010neumann}) which uses an
-oscillation-theory based shooting method \cite{greenberg1997algorithm}. 
-
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.9\linewidth, height=6cm]{aceto-dbm-bdd}
-\caption{The results of truncating the domain and applying a dissipative
-	barrier to the operator of Example \ref{ex:aceto}, with lines and bands
-  as above. It has less pollution (as expected; see \cite{aceto2006numerical})
-  but is missing the eigenvalue at the red dotted line.}
-\label{fig:aceto-dbm-bdd}
+\includegraphics[width=0.9\linewidth, height=6cm]{aceto-bdd}
+\caption{The results of truncating the domain of
+  the operator of Example \ref{ex:aceto}, with lines and bands
+  as above.}
+\label{fig:aceto-bdd}
 \end{figure}
 
+The bounded approximation in Figure \ref{fig:aceto-bdd} lets us see a result from
+the Aceto et al. paper - they have proven that in any spectral gap, there can only
+be exactly one point of pollution. Furthermore, we get a much more accurate approximation
+which matches the one in that paper for numerical reasons.
+
+There is an issue in the unbounded case, which is hard to resolve due to the large number of
+moving parts around the numerics - we seem to have a wider spectral band around zero than
+in the bounded case.
 This may be a problem with the dissipative barrier. Indeed, in more generality we can discuss
 dissipative barriers of two parameters, $R$ and $\gamma$, where the dissipative barrier is the
 quantity $i \gamma \1_{[0, R)}$. We call $R$ the 'length' of the barrier, and $\gamma$ the
 'coupling constant' \cite{stepanenko2022spectral}. It is entirely possible that when the barrier
-is too long, pollution near the essential spectrum 'jumps up' erroneously.
+is too long, pollution can 'jump up' erroneously.
 
 In figures \ref{fig:dbm-len} and \ref{fig:dbm-coup}, we can see what happens as we vary each of
 these parameters to a Galerkin approximation of matrix size 100.
@@ -386,10 +387,11 @@ appear to 'jump out' of the essential spectrum and move laterally!
 \end{figure}
 \clearpage
 
-Finally, this example has some small problems which are worth discussing, as they highlight
-a flaw of the Galerkin method in practice. One may notice that when we applied the dissipative barrier,
+Alternatively (and additionally), this example can highlight
+a flaw of the Galerkin method in practice. As well as the wider barrier near zero,
+one may notice that when we applied the dissipative barrier,
 there is still pollution below the bottom of the essential spectrum (indeed, this pollution
-is not there in Figure \ref{aceto-dbm-bdd}). But didn't we say that pollution cannot occur there,
+is not there in Figure \ref{fig:aceto-bdd}). But didn't we say that pollution cannot occur there,
 as this is outside of the essential numerical range? It is believed that this is due to inaccuracy
 in the numerics that are hard to resolve. 
 
@@ -404,9 +406,9 @@ calculated for $n$ nodes \cite{suli2003introduction}. Thus we either calculate a
 of nodes and thus suffer inaccuracy from the low-precision quadrature, or calculate a high
 number of nodes and suffer inaccuracy in calculating the \emph{nodes themselves}! Devising
 Gauss-Laguerre quadrature that remains accurate at high node sizes is a current topic of
-research (e.g. \cite{gil2019fast}). The author has seen experimentally that when either of
-these inaccuracies occur, they create a 'spread' of eigenvalues around each true eigenvalue,
-which is believed to be what is happening here.
+research (e.g. \cite{gil2019fast}). Experientially, the current author has seen that when either of
+these inaccuracies occur, they create a 'spread' of eigenvalues around true eigenvalues
+near zero, which is believed to be what is happening here.
 
 Moreover, this shows a flaw of the Ritz and Galerkin methods in general; we need to be able to
 accurately calculate inner products of basis functions. This often involves numerical integration

@@ -12,7 +12,7 @@ themselves, we will also see that their pollution can be concretely explained
 via a certain type of infinite matrix operator.
 
 \subsection{The spectrum of a multiplication operator}
-\begin{definition}{\textbf{(Multiplication operator)}}
+\begin{definition}[\textbf{Multiplication operator}]
 \index{multiplication operator}
 Let $\hilbert$ be a function space. For a given $a \in \hilbert$, the
 multiplication operator $M_a$ on $\hilbert$ is defined by the action
@@ -29,7 +29,7 @@ similar to the standard range of a function, but ignoring values taken by
 the function on a set of measure zero - two functions which are equal
 almost everywhere will have the same essential range.
 
-\begin{definition}{\textbf{(Essential range and essential supremum)}}
+\begin{definition}[\textbf{Essential range and essential supremum}]
 \label{defn:essential-range}\index{essential range}
 The essential range of a real-valued function $f$ is the set:
  $$\{k \in \mathbb{R} : \forall \varepsilon > 0, \mu\{x : |f(x) - k| < \varepsilon\} > 0\}$$
@@ -75,7 +75,7 @@ L^\infty$. \end{proof}
 
 Note from this lemma we also get that $\|M_a\| = \|a\|_\infty$.
 
-\begin{theorem}
+\begin{theorem}[\textbf{Spectrum of a multiplication operator}]
   \label{thm:mult-op-spec}
   The spectrum of the multiplication operator $M_a$ is the essential range of its symbol $a$.
 \end{theorem}
@@ -198,7 +198,7 @@ of whole monographs (such as \parencite{bottcher1990analysis}) and is an entire
 subfield in itself; here we will stick to exploring their spectra, and how these
 relate to the spectra of their multiplication operator neighbours. 
 
-\begin{definition}{\textbf{(Toeplitz matrix)}}\index{Toeplitz matrix}
+\begin{definition}[\textbf{Toeplitz matrix}]\index{Toeplitz matrix}
   A matrix $A$ (finite or infinite) is Toeplitz if it is constant along its
   diagonals; that is, $A_{i,j} = A_{i+1,j+1}$ for any $i, j$ (where $i,j <
   N \in \mathbb{N}$ if $A$ is finite, or $i,j \in \mathbb{Z}_+$ when $A$
@@ -216,7 +216,7 @@ matrices; indeed, an important part of our
 example was that $M_f \exp(2 \pi i j x)$ was well-defined. The following
 definitions are adapted from \parencite{arveson2002short}.
 
-\begin{definition}{\textbf{(Hardy space)}}\index{Hardy space}
+\begin{definition}[\textbf{Hardy space}]\index{Hardy space}
   Let $\zeta$ be the monomial function on $L^2(\mathbb{T})$, $\zeta(z) = z$, where
   $\mathbb{T}$ is the unit circle. Then the Hardy space $H^2$ is the span
   of all non-negative exponents of $\zeta$; $\text{span}\{1, \zeta,
@@ -238,7 +238,7 @@ A generalised definition can be made for $H^p$ via any $L^p(\mathbb{T})$; we
 will almost entirely use $H^2$ (with the exception of needing $H^1$ later on),
 which is often defined as `the' Hardy space.
 
-\begin{definition}{\textbf{(Toeplitz operator)}}\index{Toeplitz operator}
+\begin{definition}[\textbf{Toeplitz operator}]\index{Toeplitz operator}
   Let $\phi \in L^{\infty}(\mathbb{T})$ be bounded and measurable on the unit
   circle. The Toeplitz operator $T_\phi$ is the compression of $M_\phi$ to
   the Hardy space: $T_{\phi} = P_{H^2} M_\phi \big|_{H^2}$. We call $\phi$
@@ -281,7 +281,7 @@ with real-valued symbol.
 To begin, we require a pair of properties regarding functions in
 $L^1(\mathbb{T})$'s Hardy space, $H^1$. 
 
-\begin{lemma}{\textbf{(Properties of $H^1$ functions)}}
+\begin{lemma}[\textbf{Properties of $H^1$ functions}]
 \label{thm:h1-properties}
   Let $H^1$ be the space of all functions $f \in L^1(\mathbb{T})$ where $f$ has
   the Fourier series
@@ -368,7 +368,7 @@ $T_\phi$, following a proof outlined in an exercise of Arveson
 (\parencite{arveson2002short}, Chapter 4.6, exercises 2-5) which is itself based
 on a proof by Hartman and Wintner.
 
-\begin{theorem}{\textbf{(Hartman-Wintner)}}\index{Hartman-Wintner}\label{thm:hartman-wintner}
+\begin{theorem}[\textbf{Hartman-Wintner}]\index{Hartman-Wintner}\label{thm:hartman-wintner}
 Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$
 and $M$ are the infimum and supremum of the essential range of $\phi$
 (Definition \ref{defn:essential-range}) respectively. \end{theorem}
@@ -443,7 +443,7 @@ More rigorously, it is possible to show that for any point in a gap of the
 multiplication operator's spectrum, some subsequence of truncations will have an
 approximate eigenvalue converging to that point. 
 
-\begin{theorem}{\textbf{(Schmidt-Spitzer \parencite{schmidt1960toeplitz})}}
+\begin{theorem}[\textbf{Schmidt-Spitzer \parencite{schmidt1960toeplitz}}]
 \index{Schmidt-Spitzer}
 Let $T_n$ be the $n \times n$ matrix created by taking the first $n$ rows and
 columns of a Toeplitz operator $T_\phi$. Consider the set $$B =

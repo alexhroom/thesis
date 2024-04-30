@@ -8,7 +8,7 @@
 
 We begin by producing a result which allows us to constructively classify points
 in the spectrum of an operator.
-\begin{theorem}{\textbf{(Approximate eigenvalue theorem)}}
+\begin{theorem}[\textbf{Approximate eigenvalue theorem}]
 \label{thm:approx-eigenvalue-thm}
   Consider an operator $T$ on a Hilbert space $\hilbert$, and $\lambda \in
   \mathbb{C}$. $\lambda$ is in the spectrum of $T$ if there exists a
@@ -89,7 +89,7 @@ the most popular usually denoted $\Spec_{e,i}$ for $i \in \{1,2,3,4,5\}$ in orde
 most well-behaved operators the definitions are equivalent. This particular definition 
 is known as Weyl's criterion, $\Spec_{e, 2}$ \cite{edmunds2018spectral}.
 
-\begin{definition}{\textbf{(Essential spectrum)}}\index{essential spectrum}\index{Weyl's criterion}
+\begin{definition}[\textbf{Essential spectrum}]\index{essential spectrum}\index{Weyl's criterion}
   The essential spectrum of an operator $T$ on a Hilbert space $\hilbert$ is
   defined as the set of all $\lambda \in \mathbb{C}$ such that a
   \textbf{Weyl sequence}\index{Weyl sequence} $u_n$ exists for $T$ and
@@ -250,7 +250,7 @@ One interesting property of the essential spectrum that is not easily visible
 from our earlier definition is that it is invariant under compact perturbations.
 This is not the case for eigenvalues!
 
-\begin{definition}{\textbf{(Compact operators and rank)}}\index{compact operator}\index{rank of an operator}
+\begin{definition}[\textbf{Compact operators and rank}]\index{compact operator}\index{rank of an operator}
   An operator $K$ on a normed vector space $X$ is \emph{compact} if for every
   bounded sequence $(x_n)_{n \in \mathbb{N}}$ in $X$, the sequence
   $(Kx_n)_{n \in \mathbb{N}}$ has a convergent subsequence.
@@ -300,28 +300,33 @@ Thus $\|(T+K-\lambda)x_{n_k}\| \leq \|(T - \lambda)x_{n_k}\| + \|Kx_{n_k}\|
 \rightarrow 0$, so $x_{n_k}$ is a Weyl sequence for $\lambda$ and $T+K$
 for any compact operator $K$, so $\lambda \in \bigcap_{K \in
 \mathcal{K}(\hilbert)} \Spec(T + K)$.
-
-  Conversely, consider $\lambda \in \Spec_{e,4}(T)$, and let $T$ be self-adjoint and bounded.
-  As the zero operator is compact, we have $\lambda \in \Spec(T)$. As $T$ is self-adjoint,
-  it is normal, so $\lambda$ is an approximate eigenvalue for $T$ by Theorem \ref{thm:normal-spec}.
-  Thus there is some sequence $x_n$ such that $\|Tx_n - \lambda x_n\| \rightarrow 0$. 
-  %TODO: finish or omit?
 \end{proof}
+
+If the operator is self-adjoint, this becomes an equality and thus an equivalent
+definition of the essential spectrum \cite{edmunds2018spectral}!
 
 \begin{remark}
 As mentioned before, eigenvalues do not have this property: let $\lambda$ be an
 eigenvalue of $T$ with eigenvector $u$, and $P$ the orthogonal
-projection onto the space $\mathrm{span}\{u\}$ (so $\rank P = 1$). Then:
+projection onto the space $\mathrm{span}\{u\}$ (so $\rank P = 1$). Then we
+have that $\lambda$ is not an eigenvalue of $(T+P)$, as otherwise:
 
-$$(T+P) u = Tu + u = \lambda u + u = (\lambda + 1)u$$
+\begin{align*}
+  (T+P)u & = \lambda u \\
+  Tu + Pu & = \lambda u \\
+  \lambda u + u & = \lambda u
+  \rightarrow u & = 0.
+\end{align*}
 
-so $\lambda$ is not an eigenvalue of $(T+P)$. This will become critical in
+However, it is trivial to
+verify that $\lambda + 1$ is an eigenvalue of $(T+P)$ with eigenvector
+$u$!) This will become critical in
 discussing a method of detecting spectral pollution known as
 \emph{dissipative barrier methods}, which we will explore in section
 \ref{sec:dissipative-barrier}.
 \end{remark}
 
-\subsection{Rayleigh quotients and numerical range}
+\subsection{Rayleigh quotients and numerical range}\label{sec:num-range}
 The gateway to bounding the spectrum (and pollution) of an operator $T$ on a
 Hilbert space lies in a function known as the \textbf{Rayleigh
 quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$,
@@ -336,7 +341,11 @@ For operators where we want to weaken the domain (e.g. a differential operator)
 it is suitable to replace $(Tu, u)$ with the relevant bilinear form
 $\mathcal{A}[u, u].$
 
-\begin{definition}{\textbf{(Numerical range of an operator)}}
+One of the most important applications of the Rayleigh quotient (which is proven
+in Corollary \ref{thm:self-adj-num-range}) is the \emph{min-max principle}, which
+states for a self-adjoint operator which is bounded below,
+
+\begin{definition}[\textbf{Numerical range of an operator}]
 \index{numerical range}
   Let $T$ be an operator on a Hilbert space. The
   numerical range $\Num(T)$ is defined $\Num(T) \eqdef \Ran(R_T)$.
@@ -414,9 +423,9 @@ Cauchy-Schwarz inequality:
 $$|( (T - \lambda)u_n, u_n )| \leq \|(T - \lambda)u_n\| \rightarrow 0,\text{ and so}$$
 \begin{equation*}
 \begin{split}
-|( (T - \lambda)u_n, u_n )| &  = |( (Tu_n, u_n) ) - ( \lambda u_n, u_n )| \\
-& = |( (Tu_n, u_n) ) - \lambda \|u_n\|^2| \\
-& = |( (Tu_n, u_n) ) - \lambda| \rightarrow 0; \\
+|( (T - \lambda)u_n, u_n )| &  = |(Tu_n, u_n) - ( \lambda u_n, u_n )| \\
+& = |(Tu_n, u_n) - \lambda \|u_n\|^2| \\
+& = |(Tu_n, u_n) - \lambda| \rightarrow 0; \\
 & \Rightarrow ( Tu_n, u_n ) \rightarrow \lambda.
 \end{split}
 \end{equation*}
@@ -431,14 +440,14 @@ So $\lambda \in \overline{\Num(T)}$.
 Combine Theorem \ref{thm:normal-spec} with Theorem \ref{thm:num-range-props}.\ref{item:spec-in-num}.
 \end{proof}
 
-\begin{corollary}\label{thm:self-adj-num-range}
+\begin{theorem}\label{thm:self-adj-num-range}
   In particular, if $T$ is self-adjoint, $\Spec(T) \subseteq \mathbb{R}$.
   Furthermore, if $T$ is bounded, then we have 
   \begin{align*}
     \inf(\Spec(T)) & = \inf(\Num(T))\text{, and}\\
     \sup(\Spec(T)) & = \sup(\Num(T)).
   \end{align*}
-\end{corollary}
+\end{theorem}
 \begin{proof}
 We can see immediately that any self-adjoint operator is normal ($T = T^*
 \Rightarrow T^*T = TT = TT^*$); thus the entire spectrum of the
@@ -477,7 +486,7 @@ would require a significant tangent to acquire the prerequisite results: see
 e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a
 bounded operator is semibounded both above and below.
 
-\begin{corollary}
+\begin{corollary}\label{thm:poll-bound-num}
   Let $T$ be a self-adjoint, semibounded operator.
   Then spectral pollution does not occur outside of $\conv\Spec(T)$.
 \end{corollary}
@@ -486,7 +495,28 @@ Combine Corollary \ref{thm:self-adj-num-range} with Proposition
 \ref{thm:num-range-props}.\ref{item:proj-num-range}. 
 \end{proof}
 
-Is there a better bound? From heuristic evidence we may expect one - if we look
+\begin{remark}
+Finally, we will see an application of the Rayleigh quotient: we can use it
+to create variational principles on the eigenvalues of certain operators.
+  Let $T$ be a compact, self-adjoint operator on a Hilbert space $\hilbert$
+  (which only has eigenvalues as it is
+  compact), and list its eigenvalues in ascending order $\lambda_1 \leq \lambda_2 \leq \hdots$.
+  The smallest eigenvalue $\lambda_1$ can be found as \cite{evans2010partial}:
+$$\lambda_1 = \min_{u \in \hilbert} R_T(u).$$
+\begin{proof}
+  We see that by Theorem \ref{thm:self-adj-num-range},
+  $\lambda_1 \leq R_T(u)$; and of course, for the normalised eigenfunction
+  $\phi_1$ corresponding to $\lambda_1$, we have
+  $$R_T(\phi_1) = (T\phi_1, \phi_1) = \lambda_1(\phi_1, \phi_1) = \lambda_1.$$
+\end{proof}
+
+  Moreover, we can obtain the \emph{min-max principle} \cite{pryce1993numerical}:
+  if $S_k$ is any $k$-dimensional subspace of $\hilbert$,
+  $$\lambda_k = \min_{S_k} \max_{u \in S_k} R_T(u).$$
+\end{remark}
+
+Is there a better bound than the one in Corollary \ref{thm:poll-bound-num}? 
+From heuristic evidence we may expect one - if we look
 at Example \ref{ex:schrodinger-ritz}, we can see that there is no pollution even
 within the negative semiaxis, even though the region plotted is well within
 $\conv\Spec(T)$. The numerical range has been refined in a variety
@@ -500,7 +530,7 @@ range, $\Num_e (T)$. This set lowers its aim to simply estimating the essential
 spectrum, but in the process manages to do so much more accurately for some
 operators.
 
-\begin{definition}{\textbf{(Essential numerical range)}} 
+\begin{definition}[\textbf{Essential numerical range}]
   (adapted from \cite{fillmore1972essential})
   The essential numerical range of an operator $T$ is given by\footnote{Much like
   the essential spectrum, there are multiple definitions of the essential
@@ -615,7 +645,7 @@ Then for this normal compact $K$, we have by (\ref{item:halmos}) that
   and by (\ref{item:salinas}), $\conv(\Spec(T+K)) = \conv(\Spec_{e,4}(T))$.
 
   Finally, we have that for self-adjoint $T$, $\Spec_{e,4}(T) = \Spec_e(T)$
-  (Theorem \ref{thm:ess-spec-comp-ptb}), and %TODO is it still there?)
+  (Theorem \ref{thm:ess-spec-comp-ptb}), and
   thus $\overline{\Num(T+K)} \subseteq \conv(\Spec_e(T))$
   so the inclusions ($\star$) become equalities, as required.
 \end{proof}
@@ -662,7 +692,7 @@ $(T^* - \overline{\mu})$, using that $T^{**} = T$. Thus $\mu \in \rho(T)
   \end{align*}
 \end{proof}
 
-\begin{theorem}{\textbf{(Pokrzywa \cite{pokrzywa1979method})}}
+\begin{theorem}[\textbf{Pokrzywa \cite{pokrzywa1979method}}]
 \label{thm:pokrzywa}
   Let $T$ be a bounded operator. All spectral pollution in the Ritz approximation
   of $\Spec(T)$ will be located inside of $\Num_e(T)$; within this set, it can

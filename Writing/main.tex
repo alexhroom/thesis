@@ -1,5 +1,6 @@
 \documentclass{article}
-\setlength{\parskip}{0.75ex}
+\setlength{\parskip}{5pt}
+\setlength{\textwidth}{420pt}
 
 %% page formatting
 \usepackage[T1]{fontenc}
@@ -16,7 +17,7 @@
 \usepackage[style=numeric, sorting=none]{biblatex}
 \usepackage{imakeidx}
 \addbibresource{bibliography.bib}
-\makeindex
+\makeindex[intoc]
 
 %% prettification definitions
 \usepackage[x11names]{xcolor}
@@ -37,6 +38,7 @@
 
 %% theorem definitions
 \usepackage{amsthm}
+\usepackage{thmtools}
 \newtheorem*{definition}{Definition}
 \newtheorem*{remark}{Remark}
 \newtheorem{example}{Example}
@@ -125,6 +127,12 @@ integrals and expressions had to be written by the author due to availabilty or 
 \end{itemize}
 
 \clearpage
-\printbibliography
+\printbibliography[heading=bibintoc]
 \printindex
+\phantomsection
+\cleardoublepage
+\addcontentsline{toc}{section}{List of Definitions and Theorems}
+\listoftheorems[ignoreall,show={definition,lemma,theorem,proposition},
+title={List of Definitions and Theorems},
+swapnumber]
 \end{document}

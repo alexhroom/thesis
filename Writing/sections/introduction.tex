@@ -26,7 +26,7 @@ Python package written by the author. Please see Appendix
 \subsection{Spectra}
 
 We must first define our quantity of interest: the spectrum of an operator.
-\begin{definition}{\textbf{(Resolvent and spectrum)}}\index{resolvent}\index{spectrum}
+\begin{definition}[\textbf{Resolvent and spectrum}]\index{resolvent}\index{spectrum}
   (Adapted from \parencite{edmunds2018spectral})
   Let $T$ be a linear operator on a Banach space.
   \begin{itemize}
@@ -58,7 +58,7 @@ later that if an operator is self-adjoint, then its spectrum lies entirely on
 the real line; this makes it much more convenient to model, bound and calculate
 a wide range of results.
 
-\begin{definition}{\textbf{(Adjoint, symmetric, and self-adjoint operators)}}
+\begin{definition}[\textbf{Adjoint, symmetric, and self-adjoint operators}]
 (Adapted from \cite{hall2013quantum})
 \index{adjoint operator}\index{symmetric operator}\index{self-adjoint operator}
   \begin{itemize}
@@ -96,7 +96,7 @@ It would be a reasonable hypothesis that we can approximate spectra by reducing
 the infinite-dimensional problem to a finite-dimensional one, where we are on
 much firmer ground when it comes to finding eigenvalues.
 
-\begin{definition}{\textbf{(Compressions \& truncations)}}
+\begin{definition}[\textbf{Compressions \& truncations}]
 (Adapted from \parencite{davies1995spectral})
 \index{compression}\index{truncation}
   Let $T$ be an operator on a Hilbert space $\hilbert$, $\mathcal{L} \subseteq
@@ -114,7 +114,7 @@ much firmer ground when it comes to finding eigenvalues.
   \end{itemize}
 \end{definition}
 
-\begin{proposition}{\textbf{(Ritz matrix method)}}
+\begin{proposition}[\textbf{Ritz matrix method}]
 \label{thm:ritz-method}
   The $k$'th truncation of an operator $T$ defined on the whole Hilbert space
   $\hilbert$ with orthonormal basis $\{\phi_n\}_{n \in \mathbb{N}}$ 
@@ -242,9 +242,22 @@ it is a strong solution (as we can reverse the operation done in
 (\ref{eqn:weak-pde}) to recover the initial problem)
 \cite{brezis2011functional}.
 
-Notice that if $u$ is in the domain of $L$, we have $\mathcal{A}[u, v] = (Lu,
+Finally, notice that if $u$ is in the domain of $L$, we have $\mathcal{A}[u, v] = (Lu,
 v)$. Indeed, we can follow a similar argument to the proof of Proposition \ref{thm:ritz-method}
 by replacing $(Tu, v)$ with $\mathcal{A}[u, v]$ to get the same matrix form.
+
+\begin{remark}
+These two methods are also known as 'variational methods', due to a link they share with 
+the calculus of variations. It can be shown \cite{suli2003introduction} that 
+solving the Galerkin equation is equivalent to minimising the functional
+$$\mathcal{A}[u, u] - \lambda(u, u)$$
+over all $u$ for which $\mathcal{A}$ is well-defined. This variational problem
+is known as the \emph{Rayleigh-Ritz principle}. We will not use this (although
+we will see a similar quantity in Section \ref{sec:num-range}!) but it is important
+to note that this means our approximations only make concrete sense for self-adjoint
+operators, because 'minimisation' doesn't make sense in $\mathbb{C}\setminus\mathbb{R}$.
+Nonetheless, the methods seem to work relatively well for non-self-adjoint operators!
+\end{remark}
 
 The following example shows that this method can be effective:
 
@@ -267,8 +280,8 @@ The hydrogen atom's spectrum can be found concretely, and in the space $L^2(0,
 \mathbb{N}_0$.
 
 Let us see how well a Ritz-Galerkin method can approximate this known spectrum.
-We can see the results of an approximation in Figure \ref{fig:schrodinger-ritz}
-done via the \texttt{specpol} software. We choose the weighted Laguerre
+We can see the results of an approximation in Figure \ref{fig:schrodinger-ritz}.
+We choose the weighted Laguerre
 polynomial basis $\phi_n = \exp(-x/2)L_n$, where $L_n$ is the n'th Laguerre
 polynomial; this is a complete orthonormal set on the half-line
 \cite{szego1975orthogonal}. In this case, at a matrix size of 100, the 4
@@ -326,7 +339,7 @@ This brings us to our main subject; the study of these spurious eigenvalues, kno
 
 \subsection{Spectral pollution}
 
-\begin{definition}{\textbf{(Spectral pollution)}}
+\begin{definition}[\textbf{Spectral pollution}]
 (Adapted from \parencite{davies1995spectral})
 \index{spectral pollution}
 Let $(T_n)_{n \in \mathbb{N}}$ be an increasing sequence of truncations of an
@@ -354,7 +367,7 @@ One can easily intuit why the latter will affect the amount of pollution; it is
 obvious that if we chose the eigenfunctions of the operator as our orthonormal basis,
 then we would not have pollution (as our approximating matrices would be diagonal)
 but for a different basis, the Ritz matrix may well be dense and complicated. Indeed,
-some methods of avoiding pollution (e.g. \cite{boffi1999pollution}) rely on making
+some methods of avoiding pollution (e.g. \cite{boffi1999problem}) rely on making
 a deft choice of approximating spaces.
 
 There are, of course, other methods for approximating operator spectra, such as
