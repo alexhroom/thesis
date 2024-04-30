@@ -57,11 +57,11 @@ def plot_sors(ritz_results, sors):
     # where we expect the spectrum to be
 
     fig, ax1, ax2 = plot_ritz(ritz_results)
-    ax1.axhspan(0, 1/2, facecolor="green", alpha=0.2)
+    ax1.axhspan(0, 1 / 2, facecolor="green", alpha=0.2)
     ax1.axhspan(1, 1.5, facecolor="green", alpha=0.2)
-    ax2.axvspan(0, 1/2, facecolor="green", alpha=0.2)
+    ax2.axvspan(0, 1 / 2, facecolor="green", alpha=0.2)
     ax2.axvspan(1, 1.5, facecolor="green", alpha=0.2)
-    ax2.scatter(sors[0].real, sors[0].imag, alpha=0.3, color='blue')
+    ax2.scatter(sors[0].real, sors[0].imag, alpha=0.3, color="blue")
     fig.suptitle("Ritz approximation and second-order relative spectrum")
 
     plt.savefig("mult_sors.png")
@@ -72,6 +72,7 @@ def plot_sors(ritz_results, sors):
 def step_slope(x):
     return x if x < 1 / 2 else x + 1 / 2
 
+
 # `create_m_op` creates a multiplication operator with supplied symbol
 step_operator = create_m_op(step_slope)
 
@@ -80,13 +81,11 @@ spec_step_slope = {}
 for i in tqdm(range(50, 251, 25), desc="Approximating spectrum for exponentials..."):
     spec_step_slope[i] = np.linalg.eigvals(ritz_bounded_L2(step_operator, 1, i, 321))
 
-plot_1(spec_step_slope, basis='exp')
+plot_1(spec_step_slope, basis="exp")
 
 
 # we define the script for sine from scratch
-def ritz_bounded_L2_sin(
-    operator, matrix_size: int, quad_mesh_size: int
-) -> np.array:
+def ritz_bounded_L2_sin(operator, matrix_size: int, quad_mesh_size: int) -> np.array:
     """Ritz approximation on L2(0, b) with sine functions.
 
     Parameters
@@ -108,7 +107,7 @@ def ritz_bounded_L2_sin(
     """
 
     def onb_func(n: int):
-        return lambda x: np.sin(np.pi*n*x)
+        return lambda x: np.sin(np.pi * n * x)
 
     def integrand(n: int):
         return lambda x: 2 * operator(onb_func(n))(x)
@@ -120,9 +119,7 @@ def ritz_bounded_L2_sin(
         where e_k = 1/sqrt(2)sin(pi*n*x)
         """
         # the Filon quadrature has the second iexp as implicit
-        return (
-            filon_fun_sin(integrand(i), 0, 1, j * np.pi, quad_mesh_size)
-        )
+        return filon_fun_sin(integrand(i), 0, 1, j * np.pi, quad_mesh_size)
 
     ritz_matrix = generate_matrix(
         entry_func,
@@ -134,9 +131,11 @@ def ritz_bounded_L2_sin(
 
 
 for i in tqdm(range(50, 251, 25), desc="Approximating spectrum for sines..."):
-    spec_step_slope[i] = np.linalg.eigvals(ritz_bounded_L2_sin(step_operator, 1, i, 321))
+    spec_step_slope[i] = np.linalg.eigvals(
+        ritz_bounded_L2_sin(step_operator, 1, i, 321)
+    )
 
-plot_1(spec_step_slope, basis='sin')
+plot_1(spec_step_slope, basis="sin")
 
 print("Calculating second-order relative spectrum...")
 sors = mult_sors(step_slope, 1, 150, 321)

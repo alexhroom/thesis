@@ -9,6 +9,7 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def step_slope(x):  # the symbol of our multiplication operator
     return x if x < 1 / 2 else x + 1 / 2
 
@@ -28,7 +29,8 @@ def plot(ritz_results, dbm=False):
     ax2.set_xlim(0, 1.5)
     ax2.axvline(0.7, linestyle="dotted", alpha=0.3)
 
-    plt.savefig(f"perturbed_mult_{'dbm' if dbm else ''}.png", bbox_inches='tight')
+    plt.savefig(f"perturbed_mult_{'dbm' if dbm else ''}.png", bbox_inches="tight")
+
 
 ptb_specs = dict()
 ptb_specs_dbm = dict()
@@ -38,4 +40,3 @@ for i in tqdm(range(50, 251, 25), desc="Approximating spectra..."):
 
 plot(ptb_specs)
 plot(ptb_specs_dbm, dbm=True)
-

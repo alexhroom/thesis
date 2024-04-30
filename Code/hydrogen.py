@@ -16,7 +16,8 @@ def plot(ritz_results: Dict[int, np.array], dbm=None):
     # plot the approximation with some added bars and lines
     if dbm is not None:
         specs = {
-            key: np.array([v for v in ritz_results[key] if v.imag > dbm]) for key in ritz_results
+            key: np.array([v for v in ritz_results[key] if v.imag > dbm])
+            for key in ritz_results
         }
     else:
         specs = ritz_results
@@ -35,23 +36,23 @@ def plot(ritz_results: Dict[int, np.array], dbm=None):
     ax1.set_ylabel("real part of eigenvalues of the Ritz matrix")
 
     ax1.set_ylim(-0.1, 0)
-    ax1.axhline(-1/16, linestyle="--", alpha=0.6)
-    ax1.axhline(-1/36, linestyle="--", alpha=0.6)
-    ax1.axhline(-1/64, linestyle="--", alpha=0.6)
-    ax1.axhline(-1/100, linestyle="--", alpha=0.6)
-    ax1.axhline(-1/144, linestyle="--", alpha=0.6)
-    ax1.axhline(-1/196, linestyle="--", alpha=0.6)
+    ax1.axhline(-1 / 16, linestyle="--", alpha=0.6)
+    ax1.axhline(-1 / 36, linestyle="--", alpha=0.6)
+    ax1.axhline(-1 / 64, linestyle="--", alpha=0.6)
+    ax1.axhline(-1 / 100, linestyle="--", alpha=0.6)
+    ax1.axhline(-1 / 144, linestyle="--", alpha=0.6)
+    ax1.axhline(-1 / 196, linestyle="--", alpha=0.6)
 
     plt.savefig("hydrogen.png")
 
 
 def potential(x):  # the potential Q(x) of the Sturm-Liouville operator
-    return -1/x + 2/(x**2)
+    return -1 / x + 2 / (x**2)
 
 
 rusl = {}
 vc = {}
 for i in tqdm(range(50, 175, 25), desc="Approximating spectrum..."):
-    rusl[i] = sturm_liouville_halfline(potential, i, 200, np.pi/2)
+    rusl[i] = sturm_liouville_halfline(potential, i, 200, np.pi / 2)
 
 plot(rusl)

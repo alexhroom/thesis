@@ -15,10 +15,7 @@ from matplotlib import colormaps
 from specpol.ritz import sturm_liouville_bdd, sturm_liouville_halfline
 
 
-def plot_ritz(
-    ritz_results: Dict[int, np.array],
-    *,
-    dbm: int | None = None, iv: str):
+def plot_ritz(ritz_results: Dict[int, np.array], *, dbm: int | None = None, iv: str):
     """Plot a Ritz approximation.
 
     Parameters
@@ -39,7 +36,8 @@ def plot_ritz(
     """
     if dbm is not None:
         specs = {
-            key: np.array([v for v in ritz_results[key] if v.imag > dbm]) for key in ritz_results
+            key: np.array([v for v in ritz_results[key] if v.imag > dbm])
+            for key in ritz_results
         }
     else:
         specs = ritz_results
@@ -76,6 +74,7 @@ def plot_ritz(
     )
 
     return fig, ax1, ax2
+
 
 def plot(ritz_results: Dict[int, np.array], title="", dbm=None, iv="", notes=""):
     # plot the approximation with some added bars and lines
@@ -115,16 +114,20 @@ def plot(ritz_results: Dict[int, np.array], title="", dbm=None, iv="", notes="")
     ax2.axvspan(1.2931662851, 2.2851569481, facecolor="green", alpha=0.2)
 
     # get lowercase first word of title and iv for
-    tis = title.casefold().split(' ', 1)[0]
-    ivs = iv.casefold().split(' ', 1)[0]
+    tis = title.casefold().split(" ", 1)[0]
+    ivs = iv.casefold().split(" ", 1)[0]
     plt.savefig(f"aceto_{tis}_{ivs}_{notes}.png")
 
-def plot_eigfn(eigfn, title="", typ=""):
 
+def plot_eigfn(eigfn, title="", typ=""):
     fig = plt.figure(figsize=(13, 5))
     ax1 = fig.add_subplot()
 
-    ax1.plot(np.linspace(0, 500, 1500), [complex(eigfn(x)).real for x in np.linspace(0, 500, 1500)], color='green')
+    ax1.plot(
+        np.linspace(0, 500, 1500),
+        [complex(eigfn(x)).real for x in np.linspace(0, 500, 1500)],
+        color="green",
+    )
     ax1.set_title(title)
     ax1.set_xlabel("$x$")
     ax1.set_ylabel("Value of eigenfunction $\phi(x)$")
@@ -138,42 +141,99 @@ mat_size = "size of Ritz matrix (number of rows/columns)"
 coup = "coupling constant $\gamma$"
 length = "barrier length $R$"
 
+
 def potential(x):  # the potential Q(x) of the Sturm-Liouville operator
-    return np.sin(x) - 40/(1+x**2)
+    return np.sin(x) - 40 / (1 + x**2)
+
 
 sl_spec = {}
 sl_spec_dbm = {}
 
 for i in tqdm(range(50, 121, 10), desc="Approximating truncated operator..."):
-    sl_spec[i] = sturm_liouville_bdd(potential, (0, 70 * np.pi), i, 321, (np.pi/8, np.pi/2))
-    sl_spec_dbm[i] = sturm_liouville_bdd(potential, (0, 70 * np.pi), i, 321, (np.pi/8, np.pi/2), dbm=(lambda x: (x<=150)))
+    sl_spec[i] = sturm_liouville_bdd(
+        potential, (0, 70 * np.pi), i, 321, (np.pi / 8, np.pi / 2)
+    )
+    sl_spec_dbm[i] = sturm_liouville_bdd(
+        potential,
+        (0, 70 * np.pi),
+        i,
+        321,
+        (np.pi / 8, np.pi / 2),
+        dbm=(lambda x: (x <= 150)),
+    )
 
-plot(sl_spec, title="Truncated Galerkin approximation of Sturm-Liouville operator", iv=mat_size)
-plot(sl_spec_dbm, title="Truncated Galerkin approximation of Sturm-Liouville operator, dissipative barrier applied", iv=mat_size, notes='dbm')
+plot(
+    sl_spec,
+    title="Truncated Galerkin approximation of Sturm-Liouville operator",
+    iv=mat_size,
+)
+plot(
+    sl_spec_dbm,
+    title="Truncated Galerkin approximation of Sturm-Liouville operator, dissipative barrier applied",
+    iv=mat_size,
+    notes="dbm",
+)
 
 
 rusl_mat = {}
 rusl_len = {}
 rusl_coup = {}
 
-for i in tqdm(range(50, 121, 10), desc="Approximating non-truncated operator with varying matrix size..."):
-    rusl_mat[i] = sturm_liouville_halfline(potential, i, 250, alpha=np.pi/8, dbm=(lambda x: (x<=100)))
-for i in tqdm(range(50, 151, 10), desc="Approximating non-truncated operator with varying barrier length..."):
-    rusl_len[i] = sturm_liouville_halfline(potential, 100, 250, alpha=np.pi/8, dbm=(lambda x: (x<=i)))
-for i in tqdm(np.linspace(0, 1, 25), desc="Approximating non-truncated operator with varying coupling constant..."):
-    rusl_coup[i] = sturm_liouville_halfline(potential, 100, 250, alpha=np.pi/8, dbm=(lambda x: i*(x<=100)))
+for i in tqdm(
+    range(50, 121, 10),
+    desc="Approximating non-truncated operator with varying matrix size...",
+):
+    rusl_mat[i] = sturm_liouville_halfline(
+        potential, i, 250, alpha=np.pi / 8, dbm=(lambda x: (x <= 100))
+    )
+for i in tqdm(
+    range(50, 151, 10),
+    desc="Approximating non-truncated operator with varying barrier length...",
+):
+    rusl_len[i] = sturm_liouville_halfline(
+        potential, 100, 250, alpha=np.pi / 8, dbm=(lambda x: (x <= i))
+    )
+for i in tqdm(
+    np.linspace(0, 1, 25),
+    desc="Approximating non-truncated operator with varying coupling constant...",
+):
+    rusl_coup[i] = sturm_liouville_halfline(
+        potential, 100, 250, alpha=np.pi / 8, dbm=(lambda x: i * (x <= 100))
+    )
 
-plot(rusl_mat, title="Galerkin approximation of Sturm-Liouville operator on half-line, dissipative barrier applied", iv=mat_size)
-plot(rusl_len, title="Galerkin approximation of Sturm-Liouville operator on half-line, dissipative barrier applied", dbm=0.95, iv=length)
-plot(rusl_coup, title="Galerkin approximation of Sturm-Liouville operator on half-line, dissipative barrier applied", iv=coup)
+plot(
+    rusl_mat,
+    title="Galerkin approximation of Sturm-Liouville operator on half-line, dissipative barrier applied",
+    iv=mat_size,
+)
+plot(
+    rusl_len,
+    title="Galerkin approximation of Sturm-Liouville operator on half-line, dissipative barrier applied",
+    dbm=0.95,
+    iv=length,
+)
+plot(
+    rusl_coup,
+    title="Galerkin approximation of Sturm-Liouville operator on half-line, dissipative barrier applied",
+    iv=coup,
+)
 
 # approximate and save eigenfunctions
-rusl_eigpairs = sturm_liouville_halfline(potential, 120, 250, alpha=np.pi/8, dbm=(lambda x: x<=100), returns='vectors')
+rusl_eigpairs = sturm_liouville_halfline(
+    potential, 120, 250, alpha=np.pi / 8, dbm=(lambda x: x <= 100), returns="vectors"
+)
+
 
 def disc_eigfunc(vec):
-    return lambda x: sum(weight * mp.laguerre(i, 0, x) * np.exp(-x/2) for i, weight in enumerate(vec, start=0))
+    return lambda x: sum(
+        weight * mp.laguerre(i, 0, x) * np.exp(-x / 2)
+        for i, weight in enumerate(vec, start=0)
+    )
 
-safe_val = rusl_eigpairs.filter(lambda x: x.real < 0.5 and x.real > 0.25 and x.imag > 0.95)
+
+safe_val = rusl_eigpairs.filter(
+    lambda x: x.real < 0.5 and x.real > 0.25 and x.imag > 0.95
+)
 sval, svec = list(safe_val.data.items())[0]
 seigfn = disc_eigfunc(svec)
 plot_eigfn(seigfn, title="Eigenfunction corresponding to a true eigenvalue", typ="true")
@@ -181,4 +241,6 @@ plot_eigfn(seigfn, title="Eigenfunction corresponding to a true eigenvalue", typ
 poll_val = rusl_eigpairs.filter(lambda x: x.real < 0.25 and x.real > 0)
 pval, pvec = list(poll_val.data.items())[0]
 peigfn = disc_eigfunc(pvec)
-plot_eigfn(peigfn, title="Eigenfunction corresponding to a polluting eigenvalue", typ="poll")
+plot_eigfn(
+    peigfn, title="Eigenfunction corresponding to a polluting eigenvalue", typ="poll"
+)
