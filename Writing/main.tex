@@ -25,7 +25,7 @@
 
 %% section header formatting
 \usepackage[explicit]{titlesec}
-\titleformat{\section}[hang]{\newpage\fontfamily{put}\color{IKB}\Large\scshape\bfseries}{\Roman{section}}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
+\titleformat{\section}[hang]{\fontfamily{put}\color{IKB}\Large\scshape\bfseries}{\Roman{section}}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
 
 %% hyperlink formatting
 \usepackage{hyperref}
@@ -90,15 +90,22 @@
      \vspace*{\fill}
   \end{titlepage}
 \tableofcontents
+\clearpage
+
 \subfile{sections/introduction}
+\clearpage
 
 \subfile{sections/multiplication-operator}
+\clearpage
 
 \subfile{sections/jacobi-matrices}
+\clearpage
 
 \subfile{sections/pollution-bounds}
+\clearpage
 
 \subfile{sections/detecting-pollution}
+\clearpage
 
 \appendix
 \titleformat{\section}[hang]{\newpage\fontfamily{put}\color{IKB}\Large\scshape\bfseries}{\thesection}{0.61803cm}{\rule[-0.25cm]{1.5pt}{1cm}\quad#1}
@@ -128,11 +135,11 @@ integrals and expressions had to be written by the author due to availabilty or 
 
 \clearpage
 \printbibliography[heading=bibintoc]
+\clearpage
 \printindex
-\phantomsection
-\cleardoublepage
+\clearpage
 \addcontentsline{toc}{section}{List of Definitions and Theorems}
-\listoftheorems[ignoreall,show={definition,lemma,theorem,proposition},
+\listoftheorems[ignoreall,show={definition,lemma,theorem,proposition,corollary},
 title={List of Definitions and Theorems},
 swapnumber]
 \end{document}

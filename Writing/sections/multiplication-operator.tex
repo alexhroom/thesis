@@ -4,7 +4,10 @@
 
 \section{Multiplication operators and infinite matrices}
 In this section, we will focus on multiplication operators on $L^2$ and
-discrete operators on $\ell^2$. Operators on $\ell^2$ have intuitive
+discrete operators on $\ell^2$.\footnote{We will take the convention that
+$L^2$ denotes $L^2(\Omega)$ for an arbitrary implicit measure space $\Omega$,
+and similarly for $\ell^2$.}
+Operators on $\ell^2$ have intuitive
 interpretations for approximation, where we can treat them as 'infinite
 matrices' that we truncate by 'chopping off' the matrix beyond a certain number
 of rows or columns. While multiplication operators are not discrete in
@@ -14,7 +17,7 @@ via a certain type of infinite matrix operator.
 \subsection{The spectrum of a multiplication operator}
 \begin{definition}[\textbf{Multiplication operator}]
 \index{multiplication operator}
-Let $\hilbert$ be a function space. For a given $a \in \hilbert$, the
+Let $\hilbert$ be a Hilbert space. For a given $a \in \hilbert$, the
 multiplication operator $M_a$ on $\hilbert$ is defined by the action
 $M_af(x) = a(x)f(x)$; that is, it acts by pointwise multiplication with
 $a$. We call $a$ the `symbol' of the multiplication operator.
@@ -47,11 +50,12 @@ functions, and its norm is
 \begin{lemma}
 \label{thm:mult-symbol-char}
 (Adapted from \cite{arveson2002short})
-  A multiplication operator on $L^2$ is bounded if and only if its symbol is in
-  $L^\infty$.
+  Let $\Omega$ be a $\sigma$-finite measure space.
+  A multiplication operator on $L^2(\Omega)$ is bounded if and only if its symbol is in
+  $L^\infty(\Omega)$.
 \end{lemma}
 \begin{proof}
-Let $M_a$ be a multiplication operator on a Hilbert space $\hilbert$ with symbol
+Let $M_a$ be a multiplication operator on $L^2$ with symbol
 $a \in L^\infty$. We see that $|f(z)| \leq \|a\|_\infty$ for almost all
 $z$, so for any $g \in \hilbert$, $|a g| = |a||g| \leq \|a\|_\infty |g|$
 pointwise almost everywhere; thus
@@ -94,7 +98,7 @@ We will now estimate this known spectrum with a Ritz matrix to see how
 it is affected by spectral pollution.
 
 \begin{example}
-Let $M_f$ be the multiplication operator on $L^2(0, 1)$ with symbol
+  Let $M_f$ be the multiplication operator on $L^2[0, 1]$ with symbol
 $$
 f: x \mapsto \begin{cases}
 x & x < 1/2 \\
@@ -140,8 +144,8 @@ empirical evidence that the spectrum contains the range $[0.8, 1.0]$ or at least
 some subset of it.
 
 Indeed, we can see the effect of using different orthonormal bases here: if we
-use the orthonormal basis $\phi_n(x) = {sqrt{2}}\sin(\pi nx)$, the
-pollution appears in different places (plotted in Figure \ref{fig:mult-op-sin}.
+use the orthonormal basis $\phi_n(x) = {\sqrt{2}}\sin(\pi nx)$, the
+pollution appears in different places (plotted in Figure \ref{fig:mult-op-sin}).
 
 \begin{figure}[h]
 \centering
@@ -155,22 +159,20 @@ pollution appears in different places (plotted in Figure \ref{fig:mult-op-sin}.
 \label{fig:mult-op-sin}	
 \end{figure}
 
-We have also raised a variety of other questions about the nature of this
+These numerical examples raise a question about the nature of this
 pollution - why are we only getting it in the gap between the intervals, and not
-far outside? Is it particular to our choice of sequence for our orthogonal
-projections (in particular, is there some choice which avoids pollution
-entirely)?
+far outside?
 
-We will first discuss the nature of spectral pollution for a multiplication
-operator, taking advantage of an underlying structure to its Ritz matrices which
+For multiplication operators, there is an
+an underlying structure to its Ritz matrices which
 make it possible to concretely identify the existence and location of spectral
 pollution. Following chapters will then devise technology that allows us to 
 answer these questions in greater generality.
 
 If we take a closer look at the structure of our approximating Ritz matrices we
-uncover deeper structure, which will lead to our next topic.
+uncover that they have a 'banded' structure.
 \begin{example}\label{exp:mult-op-toeplitz}
-Let $M_f$ be a multiplication operator on $L^2(0, 1)$. Now we create the Ritz
+Let $M_f$ be a multiplication operator on $L^2[0, 1]$. Now we create the Ritz
 matrix, $A_{j,k} = (M_f \phi_j, \phi_k)$, choosing the orthonormal basis
 $\phi_n(x) = \exp(2 \pi i n x).$
 
@@ -180,7 +182,7 @@ We now note that there is a structure to our matrix:
 & = \int_0^1 f(x) \exp(2 \pi i (j-k) x)\\
 & = c_{j-k}
 \end{align*}
-where $c_n$ is the n'th Fourier coefficient. Thus our Ritz matrix depends only
+where $c_n$ is the n'th Fourier coefficient of $f$. Thus our Ritz matrix depends only
 on the value of $j-k$; in particular, it is constant along each
 diagonal. This is a special type of matrix known as a Toeplitz matrix.
 \end{example}
@@ -196,7 +198,8 @@ being represented by a Fourier series. Let us systematise what we have seen.
 A full account of Toeplitz theory is the subject
 of whole monographs (such as \parencite{bottcher1990analysis}) and is an entire
 subfield in itself; here we will stick to exploring their spectra, and how these
-relate to the spectra of their multiplication operator neighbours. 
+relate to the spectra of their multiplication operator neighbours. The following
+definitions are adapted from \parencite{arveson2002short}.
 
 \begin{definition}[\textbf{Toeplitz matrix}]\index{Toeplitz matrix}
   A matrix $A$ (finite or infinite) is Toeplitz if it is constant along its
@@ -205,21 +208,10 @@ relate to the spectra of their multiplication operator neighbours.
   is infinite).
 \end{definition}
 
-Note that an infinite Toeplitz matrix induces an operator on
-$\ell^2(\mathbb{Z}_+)$. We see from our example that if $f \in L^\infty$ is
-represented by the Fourier series
-$$f(z) = \sum_{k=-\infty}^{\infty} c_k e^{i n \theta},$$
-then it induces a Toeplitz matrix $T_f$ with $(T_f)_{j,k} = c_{j-k}$. A natural
-question is to then ask whether a Toeplitz matrix induces a function, and the
-answer is affirmative. Firstly, we must define a relevant setting for our
-matrices; indeed, an important part of our
-example was that $M_f \exp(2 \pi i j x)$ was well-defined. The following
-definitions are adapted from \parencite{arveson2002short}.
-
 \begin{definition}[\textbf{Hardy space}]\index{Hardy space}
   Let $\zeta$ be the monomial function on $L^2(\mathbb{T})$, $\zeta(z) = z$, where
   $\mathbb{T}$ is the unit circle. Then the Hardy space $H^2$ is the span
-  of all non-negative exponents of $\zeta$; $\text{span}\{1, \zeta,
+  of all non-negative exponents of $\zeta$; $\textrm{span}\{1, \zeta,
   \zeta^2 \hdots\}$.
 \end{definition}
 
@@ -230,13 +222,13 @@ square-integrable function defined on the unit circle with the Fourier series
 $$f(e^{i \theta}) \sim \sum_{k=0}^\infty c_k e^{i k \theta},$$
 
 that is, with all negative Fourier coefficients equal to zero. This can be
-identified with the operator on $\ell^2(\mathbb{Z}+)$ via the isomorphism
+identified with the infinite matrix on $\ell^2(\mathbb{Z}+)$ via the isomorphism
 $\sum_{k=0}^\infty c_k e^{i k \theta} \mapsto (c_k)_{k \in \mathbb{Z}_+}$
 \parencite{bottcher1990analysis}.
 
-A generalised definition can be made for $H^p$ via any $L^p(\mathbb{T})$; we
-will almost entirely use $H^2$ (with the exception of needing $H^1$ later on),
-which is often defined as `the' Hardy space.
+A generalised definition can be made for $H^p$ via any $L^p(\mathbb{T})$.
+However, in the literature, $H^2$ is often referred to as \emph{the}
+Hardy space.
 
 \begin{definition}[\textbf{Toeplitz operator}]\index{Toeplitz operator}
   Let $\phi \in L^{\infty}(\mathbb{T})$ be bounded and measurable on the unit
@@ -281,7 +273,7 @@ with real-valued symbol.
 To begin, we require a pair of properties regarding functions in
 $L^1(\mathbb{T})$'s Hardy space, $H^1$. 
 
-\begin{lemma}[\textbf{Properties of $H^1$ functions}]
+\begin{lemma}[\textbf{Properties of Hardy functions}]
 \label{thm:h1-properties}
   Let $H^1$ be the space of all functions $f \in L^1(\mathbb{T})$ where $f$ has
   the Fourier series
@@ -295,12 +287,12 @@ $L^1(\mathbb{T})$'s Hardy space, $H^1$.
 \begin{proof}
   Firstly, we note a property of Fourier series which will be used in both proofs:
   Let the function $f$ have Fourier coefficients $c_n$, and its complex conjugate
-  $\overline{f}$ have the Fourier coefficients $d_n$. Then $d_n = \overline{c_{-n}}$
+  $\overline{f}$ have the Fourier coefficients $d_n$. Then $d_n = \overline{c_{-n}}:$
   \begin{equation}
   \label{eqn:fourier-conjugates}
     \overline{c_{-n}} = \overline{\frac{1}{2\pi} \int_{-\pi}^{\pi}  f(x) e^{inx} dx} 
 		    = \frac{1}{2\pi} \int_{-\pi}^{\pi} \overline{f(x)} e^{-inx} dx
-        = d_n,
+        = d_n.
   \end{equation}
   In particular, if $f$ is real-valued, we have $c_n = \overline{c_{-n}}$.
 
@@ -336,11 +328,11 @@ $L^1(\mathbb{T})$'s Hardy space, $H^1$.
 
   Then applying Parseval's theorem,
   $$\frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) g(x) e^{-inx} = \sum_{n \in \mathbb{Z}}a_n \overline{b'_{n-k}}$$
-  which equals the series (\ref{eqn:prod-fourier-series}) as $\overline{b'_{n-k}} = b_{k-n}$ by (\ref{eqn:fourier-conjugates}).
-
+  which equals the series of equation (\ref{eqn:prod-fourier-series})
+  as $\overline{b'_{n-k}} = b_{k-n}$ by (\ref{eqn:fourier-conjugates}).
 
 (\ref{item:f-h1-const}.) As $f$ is in Hardy space, $c_{-n} = 0$ for all $n \in \mathbb{N}$, and so $c_n =
-  \overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$, by (\ref{eqn:fourier-conjugates}).
+  \overline{c_{-n}} = 0$ for all $n \in \mathbb{N}$, by equation (\ref{eqn:fourier-conjugates}).
   Thus the only coefficient remaining is $c_0$, and a function with a constant Fourier series
   is a constant function. (This proof is valid for any $H^p, p \in [1, \infty)$.)
 \end{proof}
@@ -370,8 +362,8 @@ on a proof by Hartman and Wintner.
 
 \begin{theorem}[\textbf{Hartman-Wintner}]\index{Hartman-Wintner}\label{thm:hartman-wintner}
 Let $\phi \in L^\infty$ be real-valued. Then $\Spec(T_\phi) = [m, M]$, where $m$
-and $M$ are the infimum and supremum of the essential range of $\phi$
-(Definition \ref{defn:essential-range}) respectively. \end{theorem}
+and $M$ are the infimum and supremum of the essential range of $\phi$ respectively.
+\end{theorem}
 \begin{proof}
 Note we already know by Lemma \ref{thm:toeplitz-self-adjoint} that as $\phi$ is
 real-valued, $T_\phi$ is self-adjoint, and so its spectrum is on the
@@ -446,7 +438,7 @@ approximate eigenvalue converging to that point.
 \begin{theorem}[\textbf{Schmidt-Spitzer \parencite{schmidt1960toeplitz}}]
 \index{Schmidt-Spitzer}
 Let $T_n$ be the $n \times n$ matrix created by taking the first $n$ rows and
-columns of a Toeplitz operator $T_\phi$. Consider the set $$B =
+columns of a Toeplitz matrix $T_\phi$. Consider the set $$B =
 \{\lambda \in \mathbb{C} : \lambda = \lim_{m \rightarrow \infty}
 \lambda_{i_m}, \lambda_{i_m} \in \Spec(T_{i_m}), i_m \rightarrow \infty
 \}.$$
@@ -500,7 +492,7 @@ required.
 This is a striking result - for any point in the spectral gap $\Spec(T_\phi)
 \setminus \Spec(M_\phi)$ (or indeed in $\Spec(M_\phi)$, but they aren't really
 polluting anything), we can choose a sequence of truncations such that there is
-guaranteed to be spectral pollution at that point! It also shows us that the
+guaranteed to be spectral pollution at that point. It also shows us that the
 Toeplitz operator itself does not have any pollution for real symbol.
 In Chapter \ref{chapter:bounds}, we will see that this is generally true for
 a wider variety of operators, albeit not so concretely.

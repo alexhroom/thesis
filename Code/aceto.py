@@ -116,7 +116,7 @@ def plot(ritz_results: Dict[int, np.array], title="", dbm=None, iv="", notes="")
     # get lowercase first word of title and iv for
     tis = title.casefold().split(" ", 1)[0]
     ivs = iv.casefold().split(" ", 1)[0]
-    plt.savefig(f"aceto_{tis}_{ivs}_{notes}.png")
+    plt.savefig(f"aceto_{tis}_{ivs}_{notes}.png", bbox_inches="tight")
 
 
 def plot_eigfn(eigfn, title="", typ=""):
@@ -132,7 +132,7 @@ def plot_eigfn(eigfn, title="", typ=""):
     ax1.set_xlabel("$x$")
     ax1.set_ylabel("Value of eigenfunction $\phi(x)$")
 
-    plt.savefig(f"eigfn_{typ}.png")
+    plt.savefig(f"eigfn_{typ}.png", bbox_inches="tight")
 
 
 ###### NUMERICS START HERE #####################################################

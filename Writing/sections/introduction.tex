@@ -4,17 +4,16 @@
 \section{Introduction: the spectrum and its approximation}
 
 The computation of spectra can be considered the 'fundamental problem of
-operator theory' \parencite{arveson2002short}. The spectrum of an operator holds
-the same key to the entire structure as eigenvalues do for linear algebra,
+operator theory' \cite{arveson2002short}. The eigenvalues of a general operator
+are as important as those of a finite-dimensional matrix, 
 however (as often occurs when passing from the finite- to infinite-dimensional
 case) the problem is less tractable for general operators. For practical
 applications, it is often necessary to rely on numerical techniques and
 approximate methods to locate the spectrum, but we will see that these have
 their own problems.
 
-Our focus will be on differential, discrete difference, and multiplication
-operators. As a result, we will not generally assume that the operator is
-bounded (many texts use `operator' to mean `bounded operator'). However, we will
+Throughout, we will not generally assume that operators are bounded
+(many texts use `operator' to mean `bounded operator'). However, we will
 focus mainly on Hilbert spaces, and assume that the operator has the properties
 required for the spectrum and adjoint to exist and make sense - these properties
 are subtle and will not be an excessive restriction (merely allowing us to avoid
@@ -22,7 +21,7 @@ fiddly arguments required to deal with pathological examples).
 
 All numerical examples shown below were calculated using \texttt{specpol}, a
 Python package written by the author. Please see Appendix
-\ref{sec:numerical-note} for more details on the technical implementation.
+\ref{sec:numerical-note} for more details on the implementation.
 \subsection{Spectra}
 
 We must first define our quantity of interest: the spectrum of an operator.
@@ -44,13 +43,14 @@ We must first define our quantity of interest: the spectrum of an operator.
 In the remainder of the text, the identity operator $I$ will be implicit in the
 operator - i.e. we will simply write $(T - \lambda I)$ as $(T - \lambda)$.
 
-We must keep this generality (rather than just defining eigenvalues of a linear
-operator like we do for matrices) because in infinite dimensions, the failure of
-invertibility can come about in a variety of ways. In finite-dimensional spaces,
+Why do we not just define the spectrum as the set of eigenvalues, like we often
+do for matrices in linear algebra? In finite-dimensional spaces,
 the rank-nullity theorem asserts that if $(T - \lambda)$ is not invertible, then
 it is not injective. As a result, $(T - \lambda)u = (T - \lambda)v$ for some $u
 \neq v$; so $T(u - v) = \lambda(u-v)$, and thus any point in the spectrum is an
-eigenvalue. The variety of ways in which invertibility can generally fail will
+eigenvalue. However, in infinite dimensions, the failure of
+invertibility can come about in a variety of ways.
+The variety of ways in which invertibility can generally fail will
 be explored in Section \ref{sec:ess-spec}.
 
 We will find many of our physical examples to be self-adjoint. We will prove
@@ -65,7 +65,7 @@ a wide range of results.
   \item Let $T$ be an operator on a Hilbert space $\hilbert$. Let $\Dom(T^*)$ be
     the set of all $v \in \hilbert$ such that the functional
 	    $$u \mapsto (Tu, v) \quad \text{on $u \in \Dom(T)$}$$
-    is bounded. We then define an \textbf{adjoint} operator $T^*$ to be the
+    is bounded. We then define the \textbf{adjoint} operator $T^*$ to be the
     operator such that 
     $(Tu, v) = (u, T^*v)$ for all $u \in \Dom(T), v \in \Dom(T^*)$ 
   \item An operator $T$ is symmetric if 
@@ -80,10 +80,10 @@ bounded operators are defined on the whole of $\hilbert$, so these issues with
 the domain do not occur. 
 
 As we have alluded to, there is no universal algorithm for the calculation of
-operator spectra in the way that there is the QR algorithm
-\cite{suli2003introduction} for matrices. To devise a formula for the spectrum
-of even a specific subset of a class of operators is a mathematical feat, and
-varieties of operators important to fields such as quantum physics
+operator spectra in the way that there are many algorithms 
+\cite{suli2003introduction} for matrices. It is a mathematical feat to devise
+a method or formula for the spectrum of even a subset of a specific type of
+operator, and varieties of operators important to fields such as quantum physics
 (\cite{lewin2010spectral}), hydrodynamics (\cite{manning2008descriptor}), and
 crystallography (\cite{cances2012periodic}) still withhold the structure of
 their spectra from decades-long attempts at discovery. 
@@ -91,10 +91,6 @@ To this end, we must employ numerical methods.
 We shall find that even approximating spectra computationally is not so easy.
 
 \subsection{Approximating spectra; Ritz and Galerkin methods}
-
-It would be a reasonable hypothesis that we can approximate spectra by reducing
-the infinite-dimensional problem to a finite-dimensional one, where we are on
-much firmer ground when it comes to finding eigenvalues.
 
 \begin{definition}[\textbf{Compressions \& truncations}]
 (Adapted from \parencite{davies1995spectral})
@@ -118,7 +114,7 @@ much firmer ground when it comes to finding eigenvalues.
 \label{thm:ritz-method}
   The $k$'th truncation of an operator $T$ defined on the whole Hilbert space
   $\hilbert$ with orthonormal basis $\{\phi_n\}_{n \in \mathbb{N}}$ 
-  is equivalently the matrix with entries
+  is the matrix with entries
     $$T_{i,j} = (T\phi_i, \phi_j)$$
   for $i, j \in \{1, \hdots, k\}$.
   This matrix is known as the Ritz matrix of $T$ \cite{davies2003spectral}.
@@ -147,9 +143,12 @@ making use of the orthonormality of $\phi_i$ and $\phi_j$. This is equivalently
 a matrix eigenvalue problem $M u = \lambda u$ where $M_{i,j} = (T\phi_i, \phi_j)$.
 \end{proof}
 
-One can use any sequence of truncations to finite-dimensional linear subspaces
+The \emph{Ritz method} for approximating an operator is to take a sequence of truncated
+matrices and treat them as a finite-dimensional approximation to the infinite-dimensional
+operator.
+One can use any increasing sequence of compressions to finite-dimensional linear subspaces
 to perform a Ritz approximation. For numerical approximation, using the span of
-a subset of the orthonormal basis is a very suitable choice of subspace, as the
+a subset of the orthonormal basis is a natural choice of subspace, as the
 orthonormal basis functions can be enumerated and numerically evaluated with relative ease.
 
 \begin{example}
@@ -181,11 +180,11 @@ both directions':
 taking care to not take this matrix 'too formally' (as the main diagonal is not well-defined
 for a na\"ively defined bi-infinite matrix \cite{lindner2013where}). In these cases, it is
 a natural choice to take the subspaces 
-$\mathcal{L} = \text{Span}\{\phi_{-k}, \phi_{-k+1}, \hdots, \phi_{k-1} \phi_k\}$, 
+$\mathcal{L} = \text{Span}\{\phi_{-k}, \phi_{-k+1}, \hdots, \phi_{k-1}, \phi_k\}$, 
 intuitively 'cutting out the middle' of the bi-infinite matrix.
 
-In the case of differential operators, we use a modified method
-known as a Galerkin method; we will motivate and
+In the case of differential operators, it is usually more suitable to
+take a weak formulation of the operator; we will motivate and
 explain the method via constructing an approximation method for a
 one-dimensional Sturm-Liouville operator\index{Sturm-Liouville operator},
 analogously to the Galerkin method for solving general symmetric second-order
@@ -253,13 +252,13 @@ solving the Galerkin equation is equivalent to minimising the functional
 $$\mathcal{A}[u, u] - \lambda(u, u)$$
 over all $u$ for which $\mathcal{A}$ is well-defined. This variational problem
 is known as the \emph{Rayleigh-Ritz principle}. We will not use this (although
-we will see a similar quantity in Section \ref{sec:num-range}!) but it is important
+we will see a similar quantity in Section \ref{sec:num-range}) but it is important
 to note that this means our approximations only make concrete sense for self-adjoint
 operators, because 'minimisation' doesn't make sense in $\mathbb{C}\setminus\mathbb{R}$.
-Nonetheless, the methods seem to work relatively well for non-self-adjoint operators!
+Nonetheless, the methods heuristically work relatively well for non-self-adjoint operators!
 \end{remark}
 
-The following example shows that this method can be effective:
+The following example shows that this method can be effective in practice:
 
 \begin{example}
 \label{ex:schrodinger-ritz}
@@ -325,17 +324,21 @@ the calculation of basis functions or in the quadrature used).
 \hspace{0pt}
 \pagebreak
 
-Indeed, comparing this derivation to the earlier definitions of truncations, we
-can see that we are calculating the eigenvalues of truncations $T_n$ of the
-operator $T$. The natural question which follows is to ask about the convergence
+While these approximations lose some accuracy as they get closer to zero, they are more than
+effective enough for a 'global' method. There are several methods (see \cite{pryce1993numerical})
+by which we can find eigenvalues to high accuracy given a close enough approximation.
+
+When we calculate the eigenvalues of truncations $T_n$ of the
+operator $T$, the natural question which follows is to ask about the convergence
 of these methods as $n$ becomes large. The answer is that this
-convergence is not perfect - in fact,  for Schr\"odinger operators in particular
+convergence is not perfect - in fact, for Schr\"odinger operators in particular
 it has been shown that a `perfect' truncation algorithm is impossible
 \cite{colbrook2019how}. In our case, the spectrum of the operator will be
 approximated, but in many cases there will also be a lot of other spurious
 values in the spectrum.
 
-This brings us to our main subject; the study of these spurious eigenvalues, known as spectral pollution.
+This brings us to our main subject; 
+the study of these spurious eigenvalues, known as spectral pollution.
 
 \subsection{Spectral pollution}
 
@@ -350,14 +353,12 @@ such that $\lambda_n \rightarrow \lambda$ but $\lambda \notin \Spec(T)$.
 
 Points of spectral pollution are, intuitively, artefacts of an approximation
 which will never converge to a point in the actual spectrum. We will see that
-they exist for many types of operator, 
-that they are relatively common, and that they may \emph{get worse} as
-the approximation goes to higher iterations. Unless we already know what the
+unless we already know what the
 spectrum of the operator is, it can be incredibly hard for us to decide whether
 a point is actually in the spectrum or whether it is
 spurious. In applications of spectral theory, this difference can be beyond a
-simple 'noisy data' nuisance - rather, a confounding problem, as we will see
-in examples throughout.
+simple 'noisy data' nuisance - it can be a confounding problem, as we will see
+in examples throughout, completely drowning out the actual spectrum.
 
 Note that spectral pollution is caused by a variety of the 'moving parts' of
 an approximation: for example, pollution can be introduced by a poor choice
@@ -377,9 +378,9 @@ problems \cite{pryce1993numerical}, which are not subject to pollution. So why
 do we care about truncation methods?
 
 Firstly, many of the methods for approximating operator spectra will discover eigenvalues
-in order. But for many operators, the spectrum contains continuous 'bands' of spectrum;
+iteratively, one-by-one. But for many operators, the spectrum contains continuous 'bands' of spectrum;
 then the spectrum is uncountable, so these iterative methods will be 'stuck' at these
-bands forever. Methods that 'globally' approximate spectra are few and far between
+bands forever. Methods that 'globally' approximate spectra are rare 
 \cite{pryce1993numerical}.
 
 Secondly, the central motivation for these methods is that they make \emph{almost no}
@@ -388,6 +389,6 @@ the operators covered by these specialised methods, eigenvalues in certain parts
 of the spectrum cannot be accessed without significant tweaking
 \cite{aceto2006numerical}, not to mention that many methods only apply to
 problems in one dimension. If the spectral pollution for a sequence of
-truncations can be discarded, detected or otherwise dealt with, it would provide
+truncations can be discarded, detected, or otherwise dealt with, it would provide
 a unified and powerful approach to numerical spectral theory for almost any operator.
 \end{document}

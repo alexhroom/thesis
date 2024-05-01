@@ -199,7 +199,7 @@ the multiplication operator:
 
 \begin{example}
   Consider $f \in C(0, 1) \cap L^\infty (0, 1)$. The essential spectrum of the
-  operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the range of $f$.
+  operator $M_f$ on $L^2(0, 1)$, where $M_f u(x) = f(x)u(x)$, is the essential range of $f$.
 \end{example}
 \begin{proof}
 Similar to before, our initial idea comes from an 'almost-eigenvector'. In this
@@ -248,7 +248,7 @@ operator has no eigenvalues.
 
 One interesting property of the essential spectrum that is not easily visible
 from our earlier definition is that it is invariant under compact perturbations.
-This is not the case for eigenvalues!
+This is not the case for eigenvalues.
 
 \begin{definition}[\textbf{Compact operators and rank}]\index{compact operator}\index{rank of an operator}
   An operator $K$ on a normed vector space $X$ is \emph{compact} if for every
@@ -303,31 +303,29 @@ for any compact operator $K$, so $\lambda \in \bigcap_{K \in
 \end{proof}
 
 If the operator is self-adjoint, this becomes an equality and thus an equivalent
-definition of the essential spectrum \cite{edmunds2018spectral}!
+definition of the essential spectrum \cite{edmunds2018spectral}.
 
 \begin{remark}
 As mentioned before, eigenvalues do not have this property: let $\lambda$ be an
 eigenvalue of $T$ with eigenvector $u$, and $P$ the orthogonal
 projection onto the space $\mathrm{span}\{u\}$ (so $\rank P = 1$). Then we
 have that $\lambda$ is not an eigenvalue of $(T+P)$, as otherwise:
-
 \begin{align*}
   (T+P)u & = \lambda u \\
   Tu + Pu & = \lambda u \\
-  \lambda u + u & = \lambda u
+  \lambda u + u & = \lambda u \\
   \rightarrow u & = 0.
 \end{align*}
-
 However, it is trivial to
 verify that $\lambda + 1$ is an eigenvalue of $(T+P)$ with eigenvector
-$u$!) This will become critical in
+$u$. This will become critical in
 discussing a method of detecting spectral pollution known as
 \emph{dissipative barrier methods}, which we will explore in section
 \ref{sec:dissipative-barrier}.
 \end{remark}
 
 \subsection{Rayleigh quotients and numerical range}\label{sec:num-range}
-The gateway to bounding the spectrum (and pollution) of an operator $T$ on a
+The simplest bound on the spectrum (and pollution) of an operator $T$ on a
 Hilbert space lies in a function known as the \textbf{Rayleigh
 quotient}\index{Rayleigh quotient}, $R_T: \Dom(T) \rightarrow \mathbb{C}$,
 defined:
@@ -340,10 +338,6 @@ or equivalently (by linearity) $R_T: u \mapsto (Tu, u)$ on the domain $\{u \in
 For operators where we want to weaken the domain (e.g. a differential operator)
 it is suitable to replace $(Tu, u)$ with the relevant bilinear form
 $\mathcal{A}[u, u].$
-
-One of the most important applications of the Rayleigh quotient (which is proven
-in Corollary \ref{thm:self-adj-num-range}) is the \emph{min-max principle}, which
-states for a self-adjoint operator which is bounded below,
 
 \begin{definition}[\textbf{Numerical range of an operator}]
 \index{numerical range}
@@ -486,6 +480,20 @@ would require a significant tangent to acquire the prerequisite results: see
 e.g. (\cite{frank2022schrodinger}, Corollary 1.11). Moreover, note that a
 bounded operator is semibounded both above and below.
 
+\begin{example}
+  We can see this concretely with a multiplication operator $M_f$ on $L^2[0, 1]$,
+  where the spectrum is the essential range of its symbol $f$:
+  \begin{align*}
+    (M_f u, u) & = \int_0^1 f(x)u(x)\overline{u(x)} dx & \\
+               & = \int_0^1 f(x)|u(x)|^2 & \\
+               & \leq \int_0^1 \mathrm{esssup} f |u(x)^2| 
+                 & \text{\emph{as $f \leq \mathrm{esssup}f$ almost everywhere}} \\
+               & = \mathrm{esssup} f \|u\|_2^2 = \mathrm{esssup} f 
+                 & \text{\emph{as $\|u\|_2 = 1$}} \\
+  \end{align*}
+  and similarly for the essential infimum.
+\end{example}
+
 \begin{corollary}\label{thm:poll-bound-num}
   Let $T$ be a self-adjoint, semibounded operator.
   Then spectral pollution does not occur outside of $\conv\Spec(T)$.
@@ -573,7 +581,7 @@ obviously converges to $\nu = t\lambda + (1-t)\mu$ as
 $n \rightarrow \infty$.
 We then create a sequence of compressions $T_n$, where each compression is to
 $\text{span}\{x_n, y_n\}$. By the Toeplitz-Hausdorff theorem, we know
-that $\nu_n$ is in $\Spec(T_n)$ and get a sequence $\nu_n = (Tz_n, z_n)$
+that $\nu_n$ is in $\Num(T_n)$ and get a sequence $\nu_n = (T_n z_n, z_n) = (Tz_n, z_n)$
 converging to $\nu$; the elements $z_n$ are unit vectors in
 $\text{span}\{x_n, y_n\}$, and they weakly converge to 0 because $x_n$
 and $y_n$ both do:
@@ -582,7 +590,7 @@ This means that $\nu = \lim_{n \rightarrow \infty}(Tz_n, z_n)$ is in $\Spec_e(T)
 
 (\ref{item:nume-in-clos-num}.) This can be seen directly from looking at the two
 definitions. By definition, we have
-  $$\overline{\Num(T)} = \{lim_{n \rightarrow \infty}( Tu_n, u_n ) 
+  $$\overline{\Num(T)} = \{\lim_{n \rightarrow \infty}( Tu_n, u_n ) 
 			   : (u_n)_{n \in \mathbb{N}}\text{ in } \Dom(T),
 			   \|u_n\|=1\},$$
 and $\Num_e(T)$ is the subset of this with the extra condition
@@ -620,7 +628,7 @@ $(Kx_{n_k}, x_{n_k}) \rightarrow 0$. This means that
 $\lambda \in \Num_e(T+K) \subseteq \overline{\Num(T+K)}$ for all $K$, so $\lambda \in \Num_{e,3}(T).$
 \end{proof}
 The converse is also generally true; the proof of this involves considering the geometry of
-$Num_e(T)$ and how it relates to the geometry of $\overline{\Num(T)}$ \cite{bogli2020essential}.
+$\Num_e(T)$ and how it relates to the geometry of $\overline{\Num(T)}$ \cite{bogli2020essential}.
 The following corollary will also show that they are equal for self-adjoint, bounded operators.
 
 \begin{corollary}
@@ -742,7 +750,7 @@ Finally, we need that $(T f_n, f_n) \rightarrow \lambda$:
 & = (P_n T f_n, f_n) = (T f_n, f_n)
 \end{align*}
 as $P_n$ is self-adjoint, and $P_n f_n = f_n$. Thus $(T f_n, f_n) = \lambda_n
-\rightarrow \lambda$, and so $\lambda$ is in the essential range of $T$ as
+\rightarrow \lambda$, and so $\lambda$ is in the essential numerical range of $T$ as
 required. \end{proof}
 
 For a bounded operator, this is the main result of a paper by Pokrzywa

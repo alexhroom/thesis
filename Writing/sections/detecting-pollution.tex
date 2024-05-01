@@ -9,8 +9,7 @@ numerical spectral theory.
 
 This section will mostly stick to heuristic derivations and numerical examples.
 Proofs are often highly non-trivial, and tend to be worth an entire paper to
-themselves (e.g. \cite{soussi2006convergence}) or are currently open problems
-(e.g. \cite{chandler-wilde2012spectrum}).
+themselves (e.g. \cite{soussi2006convergence}, \cite{stepanenko2022spectral}).
 
 \subsection{Second-order relative spectrum}
 One method of detecting true eigenvalues (but not necessarily ruling out false ones,
@@ -21,7 +20,7 @@ as we will see) is the \emph{second-order relative spectrum} first defined by Le
   Let $A$ be a self-adjoint operator on a Hilbert space $\hilbert$, and 
   $\mathcal{L}$ a finite-dimensional subspace of $\hilbert$. Then the second-order relative
   spectrum of $A$ relative to $\mathcal{L}$ is defined as the set of all $z \in \mathbb{C}$
-  such that $P_{\mathcal{L}}(A - z)\big|_{\mathcal{L}}$ is not invertible.
+  such that $P_{\mathcal{L}}(A - z)^2\big|_{\mathcal{L}}$ is not invertible.
 \end{definition}
 
 This quantity is more difficult to calculate numerically than the regular Ritz matrix (owing to
@@ -243,10 +242,11 @@ satisfies the normalisation condition at $\lambda = 0.7$ but also at $\lambda
 the figure to improve illustration of the idea.} In Figure \ref{fig:dbm} we see
 the same approximation but with the dissipative barrier $iP$ where $P$ is the
 projection onto $\mathrm{span}\{\phi_n, |n| \leq 25\}$. Note that the spectrum
-on the line ${(x, y) : \mathrm{Imag}(x) = 1}$ converges to what we'd expect the
+on the line ${(x, y) : \mathrm{Im}(x) = 1}$ converges to what we'd expect the
 spectrum to be.
 
-\begin{figure}[p!] 
+\begin{figure}[h!]
+\centering
 \includegraphics[width=0.9\linewidth, height=6cm]{ptb-mult-nodbm}
 \caption{The real part of the approximate spectrum for $\tilde{M}$; on the
 	left, the real parts of the approximate
@@ -258,7 +258,8 @@ spectrum to be.
 \label{fig:nodbm}
 \end{figure}
 
-\begin{figure}[p!] 
+\begin{figure}[h!] 
+\centering
 \includegraphics[width=0.9\linewidth, height=6cm]{ptb-mult-dbm}
 \caption{The real part of the approximate spectrum for $\tilde{M}+iP$; compare
 	with Figure \ref{fig:nodbm}. See that the line at 1.0 on the imaginary
@@ -272,11 +273,21 @@ spectrum to be.
 One may also note that there are bands corresponding to the
 essential spectrum with imaginary part 1. The reason why dissipative
 barriers `replicate' the essential spectrum is an open problem; it has
-recently been investigated specifically for Schr\"odinger operators
+been investigated specifically for Schr\"odinger operators
 \cite{stepanenko2022spectral} but in general remains unknown.
 
 Furthermore, additional polluting values can pop up in the complex plane
-above the real line, as the operator is no longer self-adjoint!
+above the real line, as the operator is no longer self-adjoint! However,
+even if a self-adjoint operator $T$ is unbounded, pollution cannot
+occur above the perturbed spectrum:
+  \begin{align*}
+    \mathrm{Im}(((T + iP) u, u)) & = \mathrm{Im}((Tu, u) + i(Pu, u)) \\
+                       & = (Pu, u)  \\
+                       & \leq \|Pu\|\|u\| \leq 1.
+  \end{align*}
+which then means that the numerical range of $T + iP$ is below imaginary part 1,
+  so there cannot be spectral pollution above there by Proposition 
+  \ref{thm:num-range-props}.\ref{item:proj-num-range}.
 \end{remark}
 
 As a second example, let us try to replicate some results from Aceto et al.
@@ -292,8 +303,10 @@ $$ \begin{cases} -y'' + (\sin(x) - \frac{40}{1+x^2})y = \lambda y \\ y(0)
 \cos(\pi/8) + y'(0) \cos(\pi/8) = 0. \end{cases} $$
 
 This operator has a `band-gap' structure; it has intervals (bands) of essential
-spectrum, with eigenvalues dotted in the gaps between bands. In two of
-the spectral gaps $J_2 = (-0.34767, 0.59480)$ and $J_3 = (0.91806,
+spectrum, with eigenvalues dotted in the gaps between bands. In particular,
+there is a sequence of eigenvalues accumulating from below to the lower boundary
+of each band due to the perturbation \cite{schmidt2000critical}.
+In two of the spectral gaps $J_2 = (-0.34767, 0.59480)$ and $J_3 = (0.91806,
 1.2932)$ (denoted in line with the paper and rounded to 5sf) the
 algebraic method finds the following eigenvalues:
 
@@ -326,32 +339,9 @@ means that we do not have to justify said truncation, which in general may
 greatly alter the spectrum!
 \end{example}
 
-\begin{figure}[p!]
-\centering
-\includegraphics[width=0.9\linewidth, height=6cm]{aceto-dbm}
-\caption{The results of a Galerkin approximation with a dissipative
-	barrier to the operator of Example \ref{ex:aceto}. The green bands
-	represent the essential spectrum of the operator, and the dotted blue
-	lines indicate where the algebraic method found eigenvalues in two
-	spectral gaps. Note that for larger approximations, the points in the
-	spectral gaps with imaginary part 1.0 are close to the algebraic
-	method's approximation.}
-\label{fig:aceto-dbm}
-\end{figure}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.9\linewidth, height=6cm]{aceto-bdd}
-\caption{The results of truncating the domain of
-  the operator of Example \ref{ex:aceto}, with lines and bands
-  as above.}
-\label{fig:aceto-bdd}
-\end{figure}
-
 The bounded approximation in Figure \ref{fig:aceto-bdd} lets us see a result from
 the Aceto et al. paper - they have proven that in any spectral gap, there can only
-be exactly one point of pollution. Furthermore, we get a much more accurate approximation
-which matches the one in that paper for numerical reasons.
+be exactly one point of pollution.
 
 There is an issue in the unbounded case, which is hard to resolve due to the large number of
 moving parts around the numerics - we seem to have a wider spectral band around zero than
@@ -366,6 +356,28 @@ In figures \ref{fig:dbm-len} and \ref{fig:dbm-coup}, we can see what happens as 
 these parameters to a Galerkin approximation of matrix size 100.
 Interestingly, one can see that with a larger coupling constant, eigenvalues
 appear to 'jump out' of the essential spectrum and move laterally!
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\linewidth, height=6cm]{aceto-dbm}
+\caption{The results of a Galerkin approximation with a dissipative
+	barrier to the operator of Example \ref{ex:aceto}. The green bands
+	represent the essential spectrum of the operator, and the dotted blue
+	lines indicate where the algebraic method found eigenvalues in two
+	spectral gaps. Note that for larger approximations, the points in the
+	spectral gaps with imaginary part 1.0 are close to the algebraic
+	method's approximation.}
+\label{fig:aceto-dbm}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth, height=6cm]{aceto-bdd}
+\caption{The results of truncating the domain of
+  the operator of Example \ref{ex:aceto}, with lines and bands
+  as above.}
+\label{fig:aceto-bdd}
+\end{figure}
 
 \begin{figure}[p!]
   \centering

@@ -6,12 +6,13 @@
 \subsection{Finite differences}
 Now we move onto another type of 'infinite matrix' operator, which is used in
 practice to discretise differential problems to 'finite difference' problems 
-\cite{suli2003introduction}.
+\cite{suli2003introduction}. Much of this section is adapted from \cite{stolz2004seminar}
+  and \cite{teschl2000jacobi}.
 
 \begin{definition}[\textbf{Central finite difference and discrete Laplacian}]
   The central finite difference of a function $u: \mathbb{Z} \rightarrow
-  \mathbb{C}$ is $$D_c u (n) = \frac{u(n+1) - u(n-1)}{2}.$$
-
+  \mathbb{C}$ is 
+  $$D_c u (n) = \frac{u(n+1) - u(n-1)}{2}.$$
   We can then define the second finite difference, or discrete Laplacian, as
   $\Delta_c = D_c^2$.
 \end{definition}
@@ -77,10 +78,10 @@ below) to fall back on raises some issues that must be addressed: if the matrix
 is doubly infinite, it doesn't make sense as just an array of values without
 taking care to define where the `main diagonal' even is \cite{lindner2013where}!
 
-The reader may notice that the finite difference matrices are Toeplitz, and the
+The above remark showed that the finite difference matrices were Toeplitz, and the
 theory of section \ref{sec:toeplitz} applies to them. However, the diagonal
-operator is not Toeplitz, and the Jacobi matrix begins to be interesting where
-it ceases to be (generally) Toeplitz:
+operator is not generally Toeplitz, and the Jacobi matrix begins to be interesting where
+it ceases to be generally Toeplitz:
 
 \begin{definition}[\textbf{General second-order finite difference operator}]
 \index{finite difference operator}\index{Jacobi operator}\index{Jacobi matrix}
@@ -111,8 +112,7 @@ As one would expect, this is represented as the Jacobi matrix
   \end{pmatrix*}.
   $$
 Of course, we could similarly define a singly infinite matrix of sequences defined on $\mathbb{N}$
-or $\mathbb{N}_0$. We will not require these beyond the following method that will be used
-later on in \ref{sec:dissipative-barrier}.
+or $\mathbb{N}_0$.
 
 \begin{example}
 \label{ex:finite-differences}
@@ -164,8 +164,8 @@ for any eigenvalue $\lambda$, is also two-dimensional.
 \end{proposition}
 \begin{proof}
 For some Jacobi matrix $J$, define a `solution map' 
-$S: \mathbb{C}^2 \rightarrow \mathbb{C}^2$ which maps pairs of
-complex numbers $(a, b)$ to the solution of 
+$S: \mathbb{C}^2 \rightarrow \mathbb{C}^\mathbb{Z}$ which maps pairs of
+complex numbers $(a, b)$ to the solution $u$ of 
   $$
   \begin{cases} 
     Ju = 0\\
@@ -240,7 +240,9 @@ that $u(n+N) = zu(n).$
 
 In fact, we can obtain (see e.g. \cite{teschl2000jacobi}) that the eigenvalues
 of $M(\lambda)$ satisfy the property $z_1 z_2 = 1$, and thus are reciprocal to
-each other, i.e. are $z(\lambda), \frac{1}{z(\lambda)}$.
+each other, i.e. are $z(\lambda), \frac{1}{z(\lambda)}$. We can also use
+Floquet solutions in the following \emph{exact} method of calculating
+the spectrum for a periodic Jacobi operator.
 
 \begin{theorem}[\textbf{Floquet-Bloch decomposition}]
 \index{Floquet-Bloch decomposition} 
@@ -293,17 +295,16 @@ application of the procedure will again give the same results for some exponent 
 Thus a solution to our finite problem (\ref{eqn:floquet-bloch}) extends to an `almost-eigenvector'
 $\tilde{u}$ (note that $\tilde{u}$ is generally not in $\ell^2$ as it is periodic).
 
-We can now construct the Weyl singular sequence indexed by $k$
-  $$v_n^{(k)} = {\tilde{u}_n} \rho_n^{(k)}$$
-where 
-  $$
+We can now construct the Weyl singular sequence indexed by $k$:
+$$
+  v_n^{(k)} = {\tilde{u}_n} \rho_n^{(k)}, \text{ where }
   \rho_n^{(k)} =
   \begin{cases}
     \frac{1}{\sqrt{k+1}} & \text{if } |k-n| < k/2 \\
     0 & \text{otherwise.}
   \end{cases}
-  $$
-  The $\sqrt{k+1}$ is a normalising factor such that $\|v^{(k)}\|_{\ell^2} = 1$.
+$$
+  The term $\sqrt{k+1}$ is a normalising factor such that $\|v^{(k)}\|_{\ell^2} = 1$.
 
 We first show that $v^{(k)}$ weakly converges to 0. We can use Lemma
 \ref{thm:weak-conv-dense-subset} to restrict to showing it for a dense subset
@@ -343,7 +344,8 @@ This error is always of the order $O(\sqrt{1 + k}) \rightarrow 0$.
 Thus $\lambda$ is in $\Spec_e(J)$. \end{proof} From this we have the inclusion
 $$\bigcup_{|z|=1} \Spec(J_z) \subseteq \Spec_e(J)$$.
 
-We can, in fact, find equality in this case. This decomposition is much more
+We can, in fact, find equality in this case \cite{teschl2000jacobi}. 
+This decomposition is much more
 computationally tractable; if we calculate the spectrum of these finite
 matrices for some sample of values on the unit circle, we can thus find the
 entire spectrum with no pollution. Furthermore, if the period is sufficiently
@@ -353,7 +355,7 @@ than what we would use for the Ritz spectrum.
 \begin{example}
 \index{almost Mathieu operator} 
 The \emph{almost Mathieu operator} on $\ell^2(\mathbb{Z})$, arising in quantum physics,
-is famous for being the subject of the `Ten Martini Problem'\footnote{so-called
+is famous for being the subject of the `Ten Martini Problem' \footnote{so-called
 for the prize offered by Mark Kac - who conjectured a stronger form known as the
 `Dry Ten Martini Problem' - for its solution \cite{simon1982almost}.
 The conjecture, solved by Avila and Jitomirskaya in 2006 \cite{avila2006ten},
@@ -399,12 +401,12 @@ we know that the additional eigenvalues in the Ritz approximation are polluting.
 \end{example}
 
 \subsection{Supercell methods}\index{supercell method} For discrete systems with
-a random element, we can use the Floquet-Bloch decomposition of the previous
-section to avoid spectral pollution entirely, via an approach first devised for
-studying defects in materials with crystal structure
+a random element, we can adapt the Floquet-Bloch decomposition
+via an approach first devised for studying defects in materials with crystal structure
 \cite{nieminen2007supercell}. We will discuss these via a physically motivated
-example called the \textbf{Feinberg-Zee random hopping model}.
-\index{Feinberg-Zee model}
+example called the \textbf{Feinberg-Zee random hopping model},
+\index{Feinberg-Zee model} in the process giving an intuitive explanation
+of how the Floquet-Bloch matrix encapsulates periodic behaviour.
 
 These methods are often used heuristically by physicists and crystallographers
 and have only been made rigorous in certain cases (e.g. Soussi
@@ -511,7 +513,7 @@ equation (\ref{eqn:periodising}) by adding two `corners' to our truncated
 tridiagonal matrix. This appears to be a good situation numerically, as we
 require almost no extra effort to (apparently) lose far less information.\\
 
-In general, the answer to `what if $u$ is not periodic' brings us back to the
+Returning to our generality (where $u$ is not generally $k$-periodic) brings us back to the
 Floquet-Bloch decomposition of the operator. If we have the following matrices
 $A^{per}_{k, \theta}$ for $\theta \in (0, 2 \pi]$:
   $$ 
@@ -547,8 +549,8 @@ and supercell approximations for the Feinberg-Zee model.
 	difference between the two; the hole in the supercell approximation.
 	Chandler-Wilde and Davies \cite{chandler-wilde2012spectrum} conjecture
 	that this hole is in fact present in the actual spectrum of $A^{per}$,
-        suggesting that the Galerkin approximation is quite far from the truth
-        in this case.}
+  suggesting that the Galerkin approximation is quite far from the truth
+  in this case.}
 \label{fig:feinberg-zee}
 \end{figure}
 \clearpage
