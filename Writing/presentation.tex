@@ -2,7 +2,7 @@
 \useoutertheme[subsection=false]{miniframes}
 \setbeamertemplate{navigation symbols}{}
 
-\usepackage[style=authoryear, sorting=none]{biblatex}
+\usepackage[style=authoryear, sorting=none, uniquename=false]{biblatex}
 \addbibresource{bibliography.bib}
 
 \graphicspath{{./images/}}
@@ -15,7 +15,7 @@
 \newcommand{\dist}{\mathrm{dist}} % distance
 \newcommand{\Num}{\mathrm{W}} % numerical range
 \newcommand{\eqdef}{\mathrel{\mathop:}=} % 'defined by' symbol
-
+\newcommand{\1}{\mathbf{1}}
 
 \title{Spectral Pollution}
 \author{Alex H. Room}
@@ -63,9 +63,9 @@
 \section{Pollution}
 \begin{frame}{Numerical methods wishlist}
   We want spectral inclusivity:
-  $$\dist(\lambda, \Spec(T_n)) < \varepsilon \quad \forall \lambda \in \Spec(T)$$
-  And spectral exactness:
-  $$\dist(\lambda_n, \Spec(T)) < \varepsilon \quad \forall \lambda_n \in \Spec(T_n)$$
+  $$\dist(\lambda, \Spec(T_n)) \rightarrow 0 \quad \forall \lambda \in \Spec(T)$$
+  And spectral exactness: for all sequences $\lambda_n \in \Spec(T_n)$,
+  $$\lambda_n \rightarrow \lambda \Rightarrow \lambda \in \Spec(T)$$
   Sometimes we can only choose one! (\textcite{colbrook2019how})
 \end{frame}
 
@@ -121,9 +121,9 @@
 \begin{frame}{Properties of the numerical range}
   \begin{itemize}
     \item $\Num(T)$ is convex 
-    \item $\Spec(T) \subseteq \Num(T)$ if $T$ is normal
+    \item $\Spec(T) \subseteq \overline{\Num(T)}$ if $T$ is normal
     \item From these we can derive classic spectral properties (e.g. self-adjoint $T$ has real spectrum)
-    \item[!] $\Num(PTP) \subseteq \Num(T)$ for any truncation $PTP$
+    \item[!] $\Num(T_n) \subseteq \Num(T)$ for any truncation $T_n$
   \end{itemize}
 \end{frame}
 
@@ -147,7 +147,7 @@
     \item $\Num_e(T) \subseteq \overline{\Num(T)}$
     \item $\Spec_e(T) \subseteq \Num_e(T)$
     \item[!] Both invariant under compact perturbations
-    \item[!] $\Num_e(T)$ is the smallest set containing all pollution\footnote{\textcite{pokrzywa1979method}, \textcite{bogli2020essential}}
+    \item[!] In many cases, $\Num_e(T)$ is the smallest set containing all pollution\footnote{\textcite{pokrzywa1979method}, \textcite{bogli2020essential}}
       \begin{itemize}
         \item If $T$ self-adjoint, $\Num_e(T) = \mathrm{conv}\Spec_e(T)$
       \end{itemize}
@@ -173,7 +173,7 @@
 \begin{frame}{Dissipative barrier methods}
   $T_n \leadsto T_n + i\gamma K$: what K? e.g.
   \begin{itemize}
-    \item $\mathbf{1}_{[0, R]}$ (\textcite{stepanenko2022spectral})
+    \item $\1_{[0, R]}$ (\textcite{stepanenko2022spectral}) (relatively compact...)
     \item projection onto $\mathrm{span}\{\varphi_1, ..., \varphi_{n/2}\}$
   \end{itemize}
 \end{frame}
@@ -185,7 +185,7 @@
 \end{frame}
 
 \begin{frame}{What else is there?}
-  Our moving parts: $T,\mathcal{H}$, \varphi_i
+  Our moving parts: $T,\mathcal{H}, \varphi_i$
   \begin{itemize}
     \item Auxiliary operator bounds\footnote{\textcite{levitin2002spectral}, \textcite{davies2003spectral}}
     \item Changing boundary conditions or domain\footnote{\textcite{cances2012periodic}, \textcite{aceto2006numerical}}
